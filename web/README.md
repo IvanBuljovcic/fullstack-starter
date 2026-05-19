@@ -20,6 +20,7 @@ A modern, production-ready Next.js template with a comprehensive development set
 -   [Commit Conventions](#-commit-conventions)
 -   [Styling System](#-styling-system)
 -   [Configuration](#-configuration)
+-   [Documentation](#-documentation)
 -   [Deployment](#-deployment)
 -   [Contributing](#-contributing)
 
@@ -709,21 +710,61 @@ Format and lint settings in `biome.json`:
 -   Double quotes
 -   ES5 trailing commas
 
-## 📚 Learn More
+## 📚 Documentation
 
-### Next.js Resources
+Comprehensive documentation for all features and patterns used in this template:
+
+### Core Documentation
+
+-   **[Adapter Pattern Guide](./docs/ADAPTERS.md)** - Deep dive into the adapter pattern for API-agnostic data fetching
+    -   Creating custom adapters
+    -   Real-world examples (Shopify, GitHub, WordPress)
+    -   Testing with adapters
+    -   Best practices
+
+-   **[Custom Hooks Reference](./docs/HOOKS.md)** - Complete guide to all 15+ custom hooks
+    -   useInfiniteData, useInfiniteScroll
+    -   useDebounce, useThrottle
+    -   useKeyboardNavigation, useGridNavigation
+    -   useLocalStorage, useMediaQuery
+    -   And more...
+
+-   **[Component Library](./docs/COMPONENTS.md)** - All shared UI components
+    -   Input, Select, Checkbox, Radio
+    -   Toast notification system
+    -   Loader
+    -   SmartErrorBoundary (3-level error handling)
+    -   Accessibility components
+
+-   **[Styling System](./docs/STYLING.md)** - CSS architecture and best practices
+    -   CSS Modules with TypeScript
+    -   Design tokens (CSS custom properties)
+    -   Utility classes
+    -   Dark mode support
+    -   PostCSS configuration
+
+-   **[Testing Guide](./docs/TESTING.md)** - Complete testing documentation
+    -   Unit testing with Vitest
+    -   Component testing with React Testing Library
+    -   Testing custom hooks
+    -   Testing with adapters
+    -   Visual testing with Storybook
+    -   E2E testing with Playwright
+
+### Learn More
+
+#### Next.js Resources
 
 -   [Next.js Documentation](https://nextjs.org/docs)
 -   [Learn Next.js](https://nextjs.org/learn)
 -   [Next.js GitHub](https://github.com/vercel/next.js)
 
-### Additional Resources
+#### Additional Resources
 
 -   [TanStack Query Docs](https://tanstack.com/query/latest)
 -   [Storybook Documentation](https://storybook.js.org/docs)
 -   [Biome Documentation](https://biomejs.dev/)
 -   [Vitest Documentation](https://vitest.dev/)
--   [Adapter Pattern Guide](src/adapters/README.md) - Local documentation
 
 ## 🚢 Deployment
 
