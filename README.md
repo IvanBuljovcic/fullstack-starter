@@ -474,7 +474,6 @@ Built with:
 
 - **Issues**: Open an issue on GitHub
 - **Documentation**: Check [docs/](./docs/) folder
-- **Community**: Join discussions
 
 ---
 
