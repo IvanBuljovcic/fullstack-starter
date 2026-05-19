@@ -9,13 +9,13 @@ Write-Host ""
 # Get project name
 $PROJECT_NAME = Read-Host "Enter your project name (e.g., my-awesome-app)"
 if ([string]::IsNullOrWhiteSpace($PROJECT_NAME)) {
-    Write-Host "❌ Project name cannot be empty. Exiting." -ForegroundColor Red
+    Write-Host "Error: Project name cannot be empty. Exiting." -ForegroundColor Red
     exit 1
 }
 
 # Validate project name (alphanumeric, hyphens, underscores only)
 if ($PROJECT_NAME -notmatch '^[a-zA-Z0-9_-]+$') {
-    Write-Host "❌ Project name can only contain letters, numbers, hyphens, and underscores." -ForegroundColor Red
+    Write-Host "Error: Project name can only contain letters, numbers, hyphens, and underscores." -ForegroundColor Red
     exit 1
 }
 
@@ -77,12 +77,12 @@ Write-Host ""
 
 $CONFIRM = Read-Host "Is this correct? (y/n)"
 if ($CONFIRM -ne "y") {
-    Write-Host "❌ Setup cancelled." -ForegroundColor Red
+    Write-Host "Setup cancelled." -ForegroundColor Red
     exit 0
 }
 
 Write-Host ""
-Write-Host "📝 Updating configuration files..." -ForegroundColor Green
+Write-Host "Updating configuration files..." -ForegroundColor Green
 Write-Host ""
 
 # Update package.json
@@ -90,7 +90,7 @@ if (Test-Path "package.json") {
     $content = Get-Content "package.json" -Raw
     $content = $content -replace '"name": "fullstack-starter"', "`"name`": `"$PROJECT_NAME`""
     $content | Set-Content "package.json" -NoNewline
-    Write-Host "  ✓ Updated package.json" -ForegroundColor Green
+    Write-Host "  [OK] Updated package.json" -ForegroundColor Green
 }
 
 # Update api/package.json
@@ -98,7 +98,7 @@ if (Test-Path "api\package.json") {
     $content = Get-Content "api\package.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
     $content | Set-Content "api\package.json" -NoNewline
-    Write-Host "  ✓ Updated api/package.json" -ForegroundColor Green
+    Write-Host "  [OK] Updated api/package.json" -ForegroundColor Green
 }
 
 # Update web/package.json
@@ -106,7 +106,7 @@ if (Test-Path "web\package.json") {
     $content = Get-Content "web\package.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
     $content | Set-Content "web\package.json" -NoNewline
-    Write-Host "  ✓ Updated web/package.json" -ForegroundColor Green
+    Write-Host "  [OK] Updated web/package.json" -ForegroundColor Green
 }
 
 # Update libs/shared/types/package.json
@@ -114,7 +114,7 @@ if (Test-Path "libs\shared\types\package.json") {
     $content = Get-Content "libs\shared\types\package.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
     $content | Set-Content "libs\shared\types\package.json" -NoNewline
-    Write-Host "  ✓ Updated libs/shared/types/package.json" -ForegroundColor Green
+    Write-Host "  [OK] Updated libs/shared/types/package.json" -ForegroundColor Green
 }
 
 # Update tsconfig.base.json
@@ -122,7 +122,7 @@ if (Test-Path "tsconfig.base.json") {
     $content = Get-Content "tsconfig.base.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
     $content | Set-Content "tsconfig.base.json" -NoNewline
-    Write-Host "  ✓ Updated tsconfig.base.json" -ForegroundColor Green
+    Write-Host "  [OK] Updated tsconfig.base.json" -ForegroundColor Green
 }
 
 # Update docker-compose.yml
@@ -135,7 +135,7 @@ if (Test-Path "docker-compose.yml") {
     $content = $content -replace "'\d+:5432'", "'${DB_PORT}:5432'"
     $content = $content -replace 'pg_isready -U starter_user -d starter_dev', "pg_isready -U $DB_USER -d $DB_NAME"
     $content | Set-Content "docker-compose.yml" -NoNewline
-    Write-Host "  ✓ Updated docker-compose.yml" -ForegroundColor Green
+    Write-Host "  [OK] Updated docker-compose.yml" -ForegroundColor Green
 }
 
 # Update api/.env.example
@@ -146,15 +146,15 @@ if (Test-Path "api\.env.example") {
     $content = $content -replace 'PORT=\d+', "PORT=$API_PORT"
     $content = $content -replace 'CORS_ORIGIN=.*', "CORS_ORIGIN=http://localhost:$WEB_PORT"
     $content | Set-Content "api\.env.example" -NoNewline
-    Write-Host "  ✓ Updated api/.env.example" -ForegroundColor Green
+    Write-Host "  [OK] Updated api/.env.example" -ForegroundColor Green
 }
 
 # Create api/.env from api/.env.example
 if ((Test-Path "api\.env.example") -and (-not (Test-Path "api\.env"))) {
     Copy-Item "api\.env.example" "api\.env"
-    Write-Host "  ✓ Created api/.env" -ForegroundColor Green
+    Write-Host "  [OK] Created api/.env" -ForegroundColor Green
 } elseif (Test-Path "api\.env") {
-    Write-Host "  ⚠ api/.env already exists, skipping..." -ForegroundColor Yellow
+    Write-Host "  [SKIP] api/.env already exists" -ForegroundColor Yellow
 }
 
 # Update README.md
@@ -168,35 +168,35 @@ if (Test-Path "README.md") {
     $content = $content -replace ':4200', ":$WEB_PORT"
     $content = $content -replace ':5433', ":$DB_PORT"
     $content | Set-Content "README.md" -NoNewline
-    Write-Host "  ✓ Updated README.md" -ForegroundColor Green
+    Write-Host "  [OK] Updated README.md" -ForegroundColor Green
 }
 
 Write-Host ""
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host " ✅ Setup Complete!" -ForegroundColor Green
+Write-Host " Setup Complete!" -ForegroundColor Green
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📋 Next steps:" -ForegroundColor Yellow
+Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "  1. pnpm install" -ForegroundColor White
-Write-Host "     └─ Install dependencies" -ForegroundColor Gray
+Write-Host "     Install dependencies" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  2. docker compose up -d" -ForegroundColor White
-Write-Host "     └─ Start PostgreSQL container" -ForegroundColor Gray
+Write-Host "     Start PostgreSQL container" -ForegroundColor Gray
 Write-Host ""
-Write-Host "  3. cd api && npx prisma migrate dev --name init" -ForegroundColor White
-Write-Host "     └─ Initialize database schema" -ForegroundColor Gray
+Write-Host "  3. cd api; npx prisma migrate dev --name init" -ForegroundColor White
+Write-Host "     Initialize database schema" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  4. pnpm nx serve api" -ForegroundColor White
-Write-Host "     └─ Start backend API (http://localhost:$API_PORT)" -ForegroundColor Gray
+Write-Host "     Start backend API (http://localhost:$API_PORT)" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  5. pnpm nx serve web" -ForegroundColor White
-Write-Host "     └─ Start frontend (http://localhost:$WEB_PORT)" -ForegroundColor Gray
+Write-Host "     Start frontend (http://localhost:$WEB_PORT)" -ForegroundColor Gray
 Write-Host ""
-Write-Host "📚 Documentation:" -ForegroundColor Yellow
-Write-Host "  • SETUP.md - Detailed setup instructions" -ForegroundColor Gray
-Write-Host "  • CUSTOMIZATION.md - Guide to customizing the template" -ForegroundColor Gray
-Write-Host "  • TEMPLATE_GUIDE.md - Architecture and best practices" -ForegroundColor Gray
+Write-Host "Documentation:" -ForegroundColor Yellow
+Write-Host "  - SETUP.md - Detailed setup instructions" -ForegroundColor Gray
+Write-Host "  - CUSTOMIZATION.md - Guide to customizing the template" -ForegroundColor Gray
+Write-Host "  - TEMPLATE_GUIDE.md - Architecture and best practices" -ForegroundColor Gray
 Write-Host ""
-Write-Host "🎉 Happy coding!" -ForegroundColor Green
+Write-Host "Happy coding!" -ForegroundColor Green
 Write-Host ""
