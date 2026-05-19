@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Add your models below this line
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum ListAccessPermission {
+  READ
+  WRITE
+}
+
+// Example models (feel free to remove or modify these)
+model User {
+  id           String       @id @default(cuid())
+  name         String // Display name
+  email        String       @unique // Used for login
+  passwordHash String // bcrypt hashed
+  role         UserRole // ADMIN | EDITOR | VIEWER
+  lastLogoutAt DateTime? // Track when user logged out
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  lists        ListAccess[]
+
+  @@index([email])
+}
+
+model Item {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  quantity    Int
+  unit        String?
+  barcode     String?
+  qrCode      String?
+  listId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  list        List     @relation(fields: [listId], references: [id])
+}
+
+model List {
+  id          String       @id @default(cuid())
+  name        String // e.g. "Pantry", "Tools"
+  description String? // Optional description
+  parentId    String? // Self-relation - `null` means top-level
+  parent      List?        @relation("ParentChild", fields: [parentId], references: [id]) // Parent list relation
+  children    List[]       @relation("ParentChild") // Sub-lists
+  items       Item[] // Items in this list
+  ownerId     String // User who created the list
+  accesses    ListAccess[] // Users who can see this list
+  createdAt   DateTime     @default(now()) // Auto-managed
+}
+
+model ListAccess {
+  id          String               @id @default(cuid())
+  userId      String // User being granted access
+  listId      String // List being shared
+  permission  ListAccessPermission
+  grantedById String // Admin who granted access
+  createdAt   DateTime             @default(now())
+  list        List                 @relation(fields: [listId], references: [id])
+  user        User                 @relation(fields: [userId], references: [id])
+}

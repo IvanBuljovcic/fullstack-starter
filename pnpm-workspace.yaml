@@ -1,0 +1,6 @@
+packages:
+  - 'packages/*'
+  - 'web'
+  - 'api'
+  - 'api-e2e'
+  - 'libs/shared/*'
