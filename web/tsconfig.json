@@ -1,47 +1,34 @@
 {
-	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
-		"jsx": "preserve",
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
 		"noEmit": true,
-		"emitDeclarationOnly": false,
 		"esModuleInterop": true,
 		"module": "esnext",
 		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
 		"incremental": true,
 		"plugins": [
 			{
 				"name": "next"
+			},
+			{
+				"name": "typescript-plugin-css-modules",
+				"options": {
+					"classnameTransform": "camelCase",
+					"customMatcher": "\\.module\\.(c|le|sc|sa)ss$"
+				}
 			}
 		],
 		"paths": {
 			"@/*": ["./src/*"]
-		},
-		"outDir": "dist",
-		"rootDir": "src",
-		"tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+		}
 	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.tsx",
-		"src/**/*.js",
-		"src/**/*.jsx",
-		"../web/.next/types/**/*.ts",
-		"../dist/web/.next/types/**/*.ts",
-		"next-env.d.ts"
-	],
-	"exclude": [
-		"out-tsc",
-		"dist",
-		"node_modules",
-		"jest.config.ts",
-		"jest.config.cts",
-		"src/**/*.spec.ts",
-		"src/**/*.test.ts",
-		".next"
-	]
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "eslint.config.mjs"],
+	"exclude": ["node_modules", "scripts/templates/**/*.template"]
 }

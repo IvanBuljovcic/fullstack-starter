@@ -1,0 +1,121 @@
+:root {
+	--size: 1.25rem;
+	--tick-size: 0.375rem;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-sm);
+}
+
+.label {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-primary);
+	cursor: pointer;
+	user-select: none;
+}
+
+.required {
+	margin-left: var(--spacing-xs);
+	color: var(--color-action-primary);
+}
+
+.errorText {
+	margin: 0;
+	font-size: var(--font-size-sm);
+	color: #dc2626; /* red-600 */
+}
+
+.helperText {
+	margin: 0;
+	font-size: var(--font-size-sm);
+	color: var(--color-text-tertiary);
+}
+
+.radio {
+	flex-shrink: 0;
+	appearance: none;
+	width: var(--size);
+	aspect-ratio: 1;
+	border: 2px solid var(--color-input-border);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-input-background);
+	cursor: pointer;
+	border-radius: 100%;
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+	position: relative;
+}
+
+.radio:checked {
+	background-color: var(--color-action-primary);
+	border-color: var(--color-action-primary);
+}
+
+.radio:checked::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) rotate(45deg);
+	width: var(--tick-size);
+	aspect-ratio: 1;
+	border-radius: 100%;
+	background-color: white;
+}
+
+.radio:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px hsla(240, 50%, 26%, 0.1);
+}
+
+.radio:hover:not(:disabled) {
+	border-color: var(--color-input-focus);
+}
+
+/* Size variants */
+.radio--sm {
+	--size: 1rem;
+	--tick-size: 0.3rem;
+}
+
+.radio--md {
+	--size: 1.25rem;
+	--tick-size: 0.375rem;
+}
+
+.radio--lg {
+	--size: 1.5rem;
+	--tick-size: 0.5rem;
+}
+
+/* Error state */
+.radio--error {
+	border-color: #dc2626; /* red-600 */
+}
+
+.radio--error:focus {
+	box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Disabled state */
+.radio--disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+	background-color: var(--color-subtle);
+}
+
+.radio--disabled + .label {
+	cursor: not-allowed;
+	opacity: 0.6;
+}

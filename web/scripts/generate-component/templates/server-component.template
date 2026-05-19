@@ -1,0 +1,13 @@
+{{PROPS_TYPE_DEFINITION}}
+
+const {{COMPONENT_NAME}} = ({{PROPS_DESTRUCTURING}}{{PROPS_TYPE}}) => {
+  return (
+    <div className="{{FILE_NAME}}">
+      <h1>{{COMPONENT_NAME}} Component</h1>
+      <p>This is a server-side component.</p>
+    </div>
+  );
+};
+
+export default {{COMPONENT_NAME}};
+export type { {{COMPONENT_NAME}}Props };
