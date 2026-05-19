@@ -1,8 +1,8 @@
 {
-	"name": "inventory-system",
+	"name": "fullstack-starter",
 	"version": "0.0.0",
 	"license": "MIT",
-	"description": "Production-ready Nx monorepo with NestJS, Next.js, Prisma, and PostgreSQL",
+	"description": "Production-ready full-stack starter template with NestJS, Next.js, Prisma, and PostgreSQL",
 	"scripts": {
 		"format": "biome format",
 		"format:write": "biome format --write",

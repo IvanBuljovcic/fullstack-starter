@@ -1,5 +1,5 @@
 {
-	"name": "@org/api",
+	"name": "@starter/api",
 	"version": "0.0.1",
 	"private": true,
 	"nx": {
@@ -60,7 +60,7 @@
 				"executor": "@nx/js:node",
 				"defaultConfiguration": "development",
 				"options": {
-					"buildTarget": "@org/api:build",
+					"buildTarget": "@starter/api:build",
 					"runBuildTargetDependencies": false,
 					"watch": true,
 					"buildTargetOptions": {
@@ -72,7 +72,7 @@
 				},
 				"configurations": {
 					"development": {
-						"buildTarget": "@org/api:build:development",
+						"buildTarget": "@starter/api:build:development",
 						"buildTargetOptions": {
 							"args": [
 								"--node-env=development",
@@ -81,7 +81,7 @@
 						}
 					},
 					"production": {
-						"buildTarget": "@org/api:build:production"
+						"buildTarget": "@starter/api:build:production"
 					}
 				}
 			},
@@ -115,17 +115,12 @@
 		"@nestjs/common": "^11.0.0",
 		"@nestjs/config": "^4.0.3",
 		"@nestjs/core": "^11.0.0",
-		"@nestjs/jwt": "^11.0.2",
-		"@nestjs/passport": "^11.0.5",
 		"@nestjs/platform-express": "^11.0.0",
 		"@prisma/adapter-pg": "^7.4.2",
 		"@prisma/client": "^7.4.2",
 		"@prisma/client-runtime-utils": "^7.4.2",
-		"bcryptjs": "^3.0.3",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.15.1",
-		"passport": "^0.7.0",
-		"passport-jwt": "^4.0.1",
 		"pg": "^8.20.0",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^7.8.0",
@@ -133,15 +128,10 @@
 	},
 	"devDependencies": {
 		"@nestjs/testing": "^11.0.0",
-		"@types/bcryptjs": "^3.0.0",
 		"@types/jest": "^30.0.0",
-		"@types/passport-jwt": "^4.0.1",
 		"@types/pg": "^8.18.0",
 		"dotenv": "^17.3.1",
 		"prisma": "^7.4.2",
 		"tsx": "^4.21.0"
-	},
-	"prisma": {
-		"seed": "tsx prisma/seed.ts"
 	}
 }
