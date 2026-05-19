@@ -1,445 +1,502 @@
-# Nx Full-Stack Template
+# Full-Stack Starter Template
 
-A production-ready monorepo template for building modern full-stack TypeScript applications with NestJS backend, Next.js frontend, Prisma ORM, and PostgreSQL database.
+A production-ready monorepo template for building modern full-stack TypeScript applications with **NestJS** backend, **Next.js 16** frontend, **Prisma** ORM, and **PostgreSQL** database.
 
-## Features
+---
 
-- **Nx Monorepo**: Advanced build system with computation caching and dependency graph
-- **NestJS Backend**: Scalable Node.js framework with TypeScript and dependency injection
-- **Next.js Frontend**: React 19 with Next.js 16 for modern web applications
-- **Prisma ORM**: Type-safe database access with migrations and introspection
-- **PostgreSQL**: Reliable relational database with Docker Compose setup
-- **Shared Libraries**: Type-safe communication between frontend and backend
-- **E2E Testing**: Playwright for both API and web application testing
-- **Code Quality**: Biome for fast linting and formatting
-- **Git Hooks**: Husky with Commitizen for conventional commits
-- **Type Safety**: Full TypeScript coverage across the monorepo
+## ✨ Features
 
-## Perfect For
+### Backend (NestJS 11)
+- 🏗️ **Modular Architecture** - Scalable NestJS with dependency injection
+- 🗄️ **Prisma ORM** - Type-safe database access with PostgreSQL 16
+- 🔒 **Validation** - Automatic DTO validation with class-validator
+- 🐳 **Docker** - PostgreSQL via Docker Compose
+- ✅ **Testing** - Jest for unit tests, Playwright for E2E
+
+### Frontend (Next.js 16 + React 19)
+- ⚡ **Turbopack** - Lightning-fast development builds
+- 🎨 **Component Library** - 8+ production-ready UI components
+- 🪝 **Custom Hooks** - 15+ utility hooks (infinite scroll, keyboard nav, etc.)
+- 📊 **TanStack Query** - Powerful server state management
+- 🧩 **Adapter Pattern** - Swappable API backends
+- 📝 **Form Validation** - React Hook Form + Zod
+- 🧪 **Testing** - Vitest + React Testing Library
+- 📖 **Storybook** - Component documentation and testing
+- ♿ **Accessibility** - Built-in screen reader support and keyboard navigation
+- 🎭 **Error Boundaries** - Multi-level error handling with retry
+
+### Monorepo (Nx 22.5)
+- 🚀 **Intelligent Caching** - Fast incremental builds
+- 📦 **Shared Libraries** - Type-safe code sharing
+- 🔧 **Code Quality** - Biome for linting and formatting
+- 🪝 **Git Hooks** - Husky + Commitlint for conventional commits
+- 📏 **Consistent** - Single source of truth for dependencies
+
+---
+
+## 🎯 Perfect For
 
 - SaaS applications
 - Internal tools and dashboards
 - E-commerce platforms
-- Inventory management systems
 - CRM/ERP systems
 - Booking and scheduling applications
+- API-first applications
 - Any full-stack TypeScript project requiring scalability
 
-## Tech Stack
+---
 
-| Layer | Technology |
-|-------|-----------|
-| **Monorepo** | Nx 22.5 |
-| **Backend** | NestJS 11 |
-| **Frontend** | Next.js 16 + React 19 |
-| **Database** | PostgreSQL 16 + Prisma 5 |
-| **Package Manager** | pnpm |
-| **Language** | TypeScript 5.9 |
-| **Testing** | Playwright, Jest |
-| **Code Quality** | Biome, Husky, Commitlint |
+## 🛠️ Tech Stack
 
-## Project Structure
+| Layer | Technology | Version |
+|-------|-----------|---------|
+| **Monorepo** | Nx | 22.5 |
+| **Backend** | NestJS | 11 |
+| **Frontend** | Next.js | 16 |
+| **UI** | React | 19 |
+| **Database** | PostgreSQL | 16 |
+| **ORM** | Prisma | 7.4 |
+| **State Management** | TanStack Query | 5 |
+| **Forms** | React Hook Form + Zod | 7 + 4 |
+| **Testing** | Vitest + Playwright | 3 + 1.36 |
+| **Styling** | CSS Modules + CSS Variables | - |
+| **Documentation** | Storybook | 8.4 |
+| **Package Manager** | pnpm | - |
+| **Language** | TypeScript | 5.9 |
+| **Code Quality** | Biome | 2.4 |
+| **Node Version** | Volta | 22.20.0 |
+
+---
+
+## 📁 Project Structure
 
 ```
-inventory-system/
-├── api/                    # NestJS backend API
+fullstack-starter/
+├── api/                        # NestJS Backend
 │   ├── src/
-│   │   ├── app/           # Main application module
-│   │   ├── prisma/        # Prisma service & module
-│   │   └── generated/     # Generated Prisma Client
+│   │   ├── app/                # Root module
+│   │   ├── prisma/             # Database service
+│   │   └── generated/          # Generated Prisma Client
 │   ├── prisma/
-│   │   └── schema.prisma  # Database schema definition
-│   └── .env.example       # Environment variables template
-├── web/                    # Next.js frontend
+│   │   └── schema.prisma       # Database schema
+│   └── .env.example            # Environment template
+│
+├── web/                        # Next.js Frontend
 │   ├── src/
-│   │   └── app/          # Next.js app directory
-│   └── public/           # Static assets
-├── libs/                   # Shared libraries
+│   │   ├── app/                # Next.js App Router
+│   │   ├── components/         # UI components
+│   │   ├── hooks/              # Custom React hooks
+│   │   ├── adapters/           # API adapters
+│   │   ├── lib/                # Utilities
+│   │   ├── providers/          # React contexts
+│   │   └── styles/             # Global styles
+│   ├── .storybook/             # Storybook config
+│   └── scripts/                # CLI tools
+│
+├── libs/                       # Shared Libraries
 │   └── shared/
-│       └── types/         # Shared TypeScript types/interfaces
-├── api-e2e/               # API end-to-end tests
-├── web-e2e/               # Web end-to-end tests
-├── packages/              # Additional packages
-├── docker-compose.yml     # PostgreSQL database configuration
-├── nx.json               # Nx workspace configuration
-├── tsconfig.base.json    # Base TypeScript configuration
-└── biome.json            # Biome linter/formatter config
+│       └── types/              # Shared TypeScript types
+│
+├── api-e2e/                    # API E2E tests
+├── web-e2e/                    # Web E2E tests
+├── docs/                       # Documentation
+│   ├── API.md                  # Backend documentation
+│   ├── WEB.md                  # Frontend documentation
+│   ├── SETUP.md                # Setup guide
+│   ├── CUSTOMIZATION.md        # Customization guide
+│   └── TEMPLATE_GUIDE.md       # Architecture guide
+│
+├── docker-compose.yml          # PostgreSQL configuration
+├── nx.json                     # Nx workspace config
+├── tsconfig.base.json          # Base TypeScript config
+├── biome.json                  # Linter/formatter config
+├── init-template.ps1           # Windows setup script
+└── init-template.sh            # Linux/Mac setup script
 ```
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** 18 or higher (24.14.0 recommended)
-- **pnpm** (`npm install -g pnpm`)
+- **Node.js** 18+ (22.20.0 recommended via Volta)
+- **pnpm** - `npm install -g pnpm`
 - **Docker** and Docker Compose
 
-### 1. Use This Template
-
-Click the "Use this template" button on GitHub, or clone this repository:
+### 1. Clone or Download
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/inventory-system.git my-project
+# Clone this repository
+git clone <repository-url> my-project
 cd my-project
+
+# Or download as ZIP and extract
 ```
 
-### 2. Install Dependencies
+### 2. Run Initialization Script
+
+**Windows (PowerShell):**
+```powershell
+.\init-template.ps1
+```
+
+**Linux/Mac:**
+```bash
+chmod +x init-template.sh
+./init-template.sh
+```
+
+The script will:
+- ✅ Prompt for project name
+- ✅ Configure database credentials
+- ✅ Set API and web ports
+- ✅ Update all configuration files
+- ✅ Create environment files
+
+### 3. Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-### 3. Start the Database
+### 4. Start Database
 
 ```bash
 docker compose up -d
 ```
 
-This starts a PostgreSQL container with:
-- **Database**: `inventory-system_dev`
-- **User**: `inventory-system_user`
-- **Password**: `inventory-system_dev_password`
-- **Port**: `5432`
-
-Verify the database is running:
-```bash
-docker compose ps
-```
-
-### 4. Configure Environment Variables
+### 5. Initialize Database
 
 ```bash
 cd api
-cp .env.example .env
+npx prisma migrate dev --name init
+cd ..
 ```
 
-The `.env` file is pre-configured to work with the Docker database. Modify as needed for your project.
+### 6. Start Development Servers
 
-### 5. Define Your Database Schema
-
-Edit `api/prisma/schema.prisma` and add your data models. For example:
-
-```prisma
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-```
-
-### 6. Create and Run Database Migrations
-
+**Option A: Start Both (Parallel)**
 ```bash
-cd api
-pnpm prisma migrate dev --name init
-```
-
-This will:
-1. Create migration files in `api/prisma/migrations/`
-2. Apply migrations to the PostgreSQL database
-3. Generate the Prisma Client in `api/src/generated/prisma/`
-
-### 7. Setup Test Database (Optional but Recommended)
-
-For running integration tests, create a separate test database:
-
-```bash
-# Create test database
-docker exec inventory-system-postgres psql -U inventory-system_user -d postgres -c "CREATE DATABASE \"inventory-system_test\";"
-
-# Apply migrations to test database
-cd api
-node -e "process.env.DATABASE_URL='postgresql://inventory-system_user:inventory-system_password@localhost:5433/inventory-system_test?schema=public'; require('child_process').execSync('pnpm exec prisma migrate deploy', {stdio: 'inherit', env: {...process.env, DATABASE_URL: 'postgresql://inventory-system_user:inventory-system_password@localhost:5433/inventory-system_test?schema=public'}})"
-```
-
-The `.env.test` file is already configured and integration tests will automatically use the test database.
-
-### 8. Seed Development Database (Optional)
-
-Populate your development database with sample data:
-
-```bash
-cd api
-pnpm prisma db seed
-```
-
-This creates sample users, lists, and items for testing and development.
-
-### 9. Run the Applications
-
-**Terminal 1 - Start the API:**
-```bash
+# Terminal 1 - API
 pnpm nx serve api
-```
-API available at `http://localhost:3000`
 
-**Terminal 2 - Start the Web App:**
-```bash
+# Terminal 2 - Web
 pnpm nx serve web
 ```
-Web app available at `http://localhost:4200`
 
-## Development Workflow
-
-### Database Management
-
+**Option B: Use Nx Run-Many**
 ```bash
-# Open Prisma Studio (visual database browser)
-cd api && pnpm prisma studio
-
-# Seed database with sample data (development only)
-cd api && pnpm prisma db seed
-
-# Create a new migration after schema changes
-cd api && pnpm prisma migrate dev --name <migration-name>
-
-# Regenerate Prisma Client after schema changes
-cd api && pnpm prisma generate
-
-# Push schema changes without creating migration (dev only)
-cd api && pnpm prisma db push
-
-# Reset database (WARNING: deletes all data)
-cd api && pnpm prisma migrate reset
+pnpm nx run-many -t serve -p api web
 ```
 
-### Building Applications
+### 7. Verify Setup
+
+- **API**: http://localhost:3000/api
+- **Web**: http://localhost:4200
+- **Storybook**: `pnpm nx run web:storybook` → http://localhost:6006
+
+---
+
+## 📚 Documentation
+
+Comprehensive documentation is organized by topic:
+
+### Core Documentation
+
+- **[Setup Guide](./SETUP.md)** - Detailed setup instructions
+- **[API Documentation](./docs/API.md)** - Backend (NestJS) guide
+  - Database & Prisma
+  - Creating modules
+  - Testing
+  - Deployment
+- **[Web Documentation](./docs/WEB.md)** - Frontend (Next.js) guide
+  - Component library
+  - Custom hooks
+  - Adapter pattern
+  - Styling system
+  - Testing
+- **[Customization Guide](./CUSTOMIZATION.md)** - How to customize the template
+- **[Architecture Guide](./TEMPLATE_GUIDE.md)** - Overall architecture and design patterns
+
+### Quick References
+
+- **[Web CLAUDE.md](./web/CLAUDE.md)** - Frontend development patterns
+- **[Web README](./web/README.md)** - Next.js template specifics
+- **[GitHub Actions Guide](./web/GITHUB_ACTIONS.md)** - CI/CD recommendations
+
+---
+
+## 🧰 Common Commands
+
+### Development
 
 ```bash
-# Build specific project
+# Start API
+pnpm nx serve api
+
+# Start Web
+pnpm nx serve web
+
+# Start Storybook
+pnpm nx run web:storybook
+
+# Run both API and Web
+pnpm nx run-many -t serve -p api web
+```
+
+### Building
+
+```bash
+# Build API
 pnpm nx build api
+
+# Build Web
 pnpm nx build web
 
-# Build all projects
-pnpm nx run-many -t build
-
-# Build only affected projects (based on git changes)
-pnpm nx affected -t build
+# Build everything
+pnpm nx run-many -t build --all
 ```
 
-### Running Tests
+### Testing
 
 ```bash
-# Unit tests
+# Test API
 pnpm nx test api
+
+# Test Web
 pnpm nx test web
 
-# Integration tests (uses test database)
-pnpm nx test api --configuration=integration
+# Test Web with UI
+pnpm nx test web --ui
 
 # E2E tests
 pnpm nx e2e api-e2e
 pnpm nx e2e web-e2e
 
-# Test all projects
+# All tests
 pnpm nx run-many -t test
-
-# Test only affected projects
-pnpm nx affected -t test
 ```
 
 ### Code Quality
 
 ```bash
-# Lint specific project
-pnpm nx lint api
-pnpm nx lint web
-
-# Lint all projects
-pnpm nx run-many -t lint
-
-# Format code with Biome
+# Format all files
 pnpm format:write
 
-# Check formatting
+# Check code quality
 pnpm check
 
-# Check only staged files (runs automatically via Husky)
-pnpm check:staged
+# Fix issues automatically
+pnpm check:write
+
+# Check only changed files
+pnpm check:changed
 ```
 
-### Useful Nx Commands
+### Database
 
 ```bash
-# View project dependency graph (interactive)
-pnpm nx graph
+cd api
 
-# See available tasks for a project
-pnpm nx show project api
+# Create migration
+npx prisma migrate dev --name <migration_name>
 
-# Run multiple targets in parallel
-pnpm nx run-many -t build,test,lint
+# Open Prisma Studio
+npx prisma studio
 
-# Clear Nx cache
-pnpm nx reset
-
-# See what's affected by your changes
-pnpm nx affected:graph
+# Reset database (WARNING: deletes data)
+npx prisma migrate reset
 ```
 
-## Customization Guide
-
-### Adding a New Prisma Model
-
-1. Edit `api/prisma/schema.prisma`
-2. Run `cd api && pnpm prisma migrate dev --name add_model_name`
-3. Create a NestJS module: `pnpm nx g @nx/nest:module modules/model-name --project=api`
-4. Create a service: `pnpm nx g @nx/nest:service modules/model-name --project=api`
-5. Create a controller: `pnpm nx g @nx/nest:controller modules/model-name --project=api`
-
-### Adding a New Shared Library
+### Component Generation (Web)
 
 ```bash
-# Create a new library
-pnpm nx g @nx/js:lib my-lib --directory=libs/shared
+cd web
 
-# Use the library in your projects
-import { something } from '@org/shared-my-lib';
+# Interactive mode
+pnpm generate
+
+# With arguments
+pnpm generate MyComponent --client --styles --props "title: string"
 ```
-
-### Adding Authentication
-
-The template includes JWT configuration in `.env.example`. To implement:
-
-1. Install dependencies: `cd api && pnpm add @nestjs/passport @nestjs/jwt passport passport-jwt`
-2. Create auth module: `pnpm nx g @nx/nest:module auth --project=api`
-3. Implement JWT strategy and guards
-4. Use Prisma to manage user sessions
-
-### Environment Variables
-
-Add new environment variables to:
-- `api/.env.example` (template)
-- `api/.env` (local development - not committed)
-- Your deployment platform (production)
-
-## Deployment
-
-### Building for Production
-
-```bash
-# Build all projects for production
-pnpm nx run-many -t build
-
-# Output locations:
-# - API: dist/api
-# - Web: dist/web/.next
-```
-
-### Docker Deployment (Optional)
-
-Create `Dockerfile` for each application:
-
-```dockerfile
-# Example API Dockerfile
-FROM node:24-alpine
-WORKDIR /app
-COPY dist/api ./
-COPY api/prisma ./prisma
-RUN npm install --production
-RUN npx prisma generate
-CMD ["node", "main.js"]
-```
-
-### Environment-Specific Configuration
-
-- **Development**: Uses `docker-compose.yml` and `.env`
-- **Staging/Production**: Use managed PostgreSQL (AWS RDS, Railway, Supabase)
-- Update `DATABASE_URL` in your deployment platform
-
-## Database Management in Production
-
-```bash
-# Apply migrations to production database
-DATABASE_URL="postgresql://user:pass@prod-host:5432/dbname" pnpm prisma migrate deploy
-
-# Generate Prisma Client for production
-pnpm prisma generate
-```
-
-## Troubleshooting
-
-### Database Connection Issues
-
-```bash
-# Check if PostgreSQL container is running
-docker compose ps
-
-# View database logs
-docker compose logs -f postgres
-
-# Restart the database
-docker compose restart postgres
-```
-
-### Prisma Client Not Found
-
-```bash
-# Regenerate Prisma Client
-cd api && pnpm prisma generate
-```
-
-### Port Already in Use
-
-- API (3000): Change `PORT` in `api/.env`
-- Web (4200): Change port in `pnpm nx serve web --port=<new-port>`
-- PostgreSQL (5432): Change in `docker-compose.yml` and `DATABASE_URL`
-
-### Nx Cache Issues
-
-```bash
-# Clear Nx cache
-pnpm nx reset
-
-# Clear node_modules and reinstall
-rm -rf node_modules api/node_modules web/node_modules
-pnpm install
-```
-
-## Contributing
-
-This is a template repository. Feel free to customize it for your needs or contribute improvements back to the template.
-
-### Commit Convention
-
-This project uses [Conventional Commits](https://www.conventionalcommits.org/):
-
-```bash
-# Use the built-in commit helper
-pnpm commit
-
-# Or manually follow the pattern:
-# feat: add new feature
-# fix: bug fix
-# docs: documentation changes
-# chore: maintenance tasks
-```
-
-## Project Documentation
-
-- [Nx Documentation](https://nx.dev)
-- [NestJS Documentation](https://docs.nestjs.com)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-
-## License
-
-MIT License - feel free to use this template for any project.
 
 ---
 
-Built with Nx, NestJS, Next.js, Prisma, and PostgreSQL.
+## 🏗️ Adding Features
+
+### Backend: Create a New Module
+
+```bash
+# Generate NestJS resource
+pnpm nx g @nx/nest:resource users --project=api
+```
+
+This creates:
+- `api/src/users/users.module.ts`
+- `api/src/users/users.controller.ts`
+- `api/src/users/users.service.ts`
+- DTOs and entities
+
+See **[API Documentation](./docs/API.md)** for details.
+
+### Frontend: Create a Component
+
+```bash
+cd web
+pnpm generate MyComponent --client --styles
+```
+
+This creates:
+- `src/components/MyComponent/index.ts`
+- `src/components/MyComponent/my-component.tsx`
+- `src/components/MyComponent/my-component.module.css`
+
+See **[Web Documentation](./docs/WEB.md)** for details.
+
+### Add a Database Model
+
+1. Edit `api/prisma/schema.prisma`:
+   ```prisma
+   model User {
+     id        String   @id @default(cuid())
+     email     String   @unique
+     name      String
+     createdAt DateTime @default(now())
+   }
+   ```
+
+2. Create migration:
+   ```bash
+   cd api
+   npx prisma migrate dev --name add_user_model
+   ```
+
+3. Use in your code:
+   ```typescript
+   const users = await this.prisma.user.findMany();
+   ```
+
+---
+
+## 🎨 What's Included
+
+### UI Components (Web)
+
+- **Input** - Text input with validation states
+- **Select** - Dropdown with custom styling
+- **Checkbox** - Accessible checkbox
+- **Radio** - Radio buttons with groups
+- **Toast** - Notification system
+- **Loader** - Loading spinner
+- **SmartErrorBoundary** - Error handling with retry
+- **Accessibility** - Screen reader announcers
+
+**See them in action:** `pnpm nx run web:storybook`
+
+### Custom Hooks (Web)
+
+- `useInfiniteData` - API-agnostic infinite scroll
+- `useInfiniteScroll` - Auto-load on scroll
+- `useDebounce` - Debounce values
+- `useThrottle` - Throttle events
+- `useKeyboardNavigation` - Keyboard interactions
+- `useGridNavigation` - Grid keyboard nav
+- `useLocalStorage` - Persistent state
+- And 8+ more...
+
+### Testing Infrastructure
+
+- **Vitest** - Fast unit testing
+- **React Testing Library** - Component testing
+- **Playwright** - E2E testing
+- **Storybook** - Visual testing
+- Example tests included
+
+---
+
+## 🚢 Deployment
+
+### Vercel (Web)
+
+```bash
+cd web
+vercel
+```
+
+### Docker (API)
+
+See **[API Documentation](./docs/API.md)** for Dockerfile examples.
+
+### Environment Variables
+
+**Production checklist:**
+- Set `DATABASE_URL` to production database
+- Set `NEXT_PUBLIC_API_BASE_URL` to production API
+- Set `NODE_ENV=production`
+- Set `CORS_ORIGIN` to production domain
+- Generate secure secrets
+
+---
+
+## 🤝 Contributing
+
+This is a template repository. Fork it and customize for your needs!
+
+**If you improve the template:**
+1. Create a feature branch
+2. Make your changes
+3. Follow conventional commits
+4. Test thoroughly
+5. Submit a PR
+
+---
+
+## 📝 License
+
+MIT License - see [LICENSE](./LICENSE) for details.
+
+---
+
+## 🙏 Acknowledgments
+
+Built with:
+- **NestJS** - https://nestjs.com
+- **Next.js** - https://nextjs.org
+- **Prisma** - https://prisma.io
+- **Nx** - https://nx.dev
+- **TanStack Query** - https://tanstack.com/query
+- **Biome** - https://biomejs.dev
+
+---
+
+## 📞 Support
+
+- **Issues**: Open an issue on GitHub
+- **Documentation**: Check [docs/](./docs/) folder
+- **Community**: Join discussions
+
+---
+
+## 🗺️ Roadmap
+
+**Potential additions:**
+- [ ] Authentication scaffolding (Passport.js / NextAuth)
+- [ ] Additional UI components (Button, Card, Modal, etc.)
+- [ ] GraphQL support
+- [ ] Rate limiting
+- [ ] Caching layer
+- [ ] Monitoring & logging
+- [ ] Docker Compose for full-stack
+- [ ] CI/CD examples
+
+**Current status:** Fully functional production-ready starter template
+
+---
+
+**Happy coding!** 🎉
+
+For detailed guides, see:
+- [Setup Guide](./SETUP.md)
+- [API Documentation](./docs/API.md)
+- [Web Documentation](./docs/WEB.md)
