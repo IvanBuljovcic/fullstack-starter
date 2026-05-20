@@ -17,12 +17,19 @@ This guide will help you get started with the Nx Full-Stack Template.
 ```
 
 This script will:
-- Prompt you for your project name
-- Update configuration files automatically
-- Create environment variables
+- Prompt you for your project name and organization scope
+- Ask for database configuration (name, user, password)
+- Ask for port configuration (API port, Web port, Database port)
+- Update all configuration files automatically:
+  - `package.json` files with your org name
+  - `web/package.json` dev script with chosen web port
+  - `docker-compose.yml` with database credentials and port
+  - `api/.env.example` with database URL and API port
+  - `README.md` with your project details
+- Create `api/.env` from the example file
 - Prepare the project for development
 
-After running the script, proceed to step 2 below.
+After running the script, proceed to step 3 below (Install Dependencies).
 
 ## Manual Setup
 
@@ -126,12 +133,14 @@ pnpm nx serve api
 
 **Terminal 2 - Frontend (Web):**
 ```bash
-pnpm nx serve web
+pnpm nx dev web
 ```
 
 Your applications will be available at:
-- API: http://localhost:3000
-- Web: http://localhost:4200
+- API: http://localhost:3000/api (or your configured API port)
+- Web: http://localhost:4200 (or your configured Web port)
+
+**Note:** The `web` project uses the `dev` target, not `serve`. If you used the initialization script, the port will be automatically configured in `web/package.json`.
 
 ### 9. Verify Setup
 
@@ -318,9 +327,15 @@ pnpm prisma generate
 - Or stop the process using port 3000
 
 **Web (4200):**
-```bash
-pnpm nx serve web --port=4300
+Update the dev script in `web/package.json`:
+```json
+{
+  "scripts": {
+    "dev": "next dev --turbopack --port 4300"
+  }
+}
 ```
+Then run: `pnpm nx dev web`
 
 **PostgreSQL (5432):**
 - Update `docker-compose.yml` ports section

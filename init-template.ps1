@@ -105,6 +105,9 @@ if (Test-Path "api\package.json") {
 if (Test-Path "web\package.json") {
     $content = Get-Content "web\package.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
+    # Update dev script to use the chosen port
+    $content = $content -replace '"dev": "next dev --turbopack"', "`"dev`": `"next dev --turbopack --port $WEB_PORT`""
+    $content = $content -replace '"dev": "next dev"', "`"dev`": `"next dev --port $WEB_PORT`""
     $content | Set-Content "web\package.json" -NoNewline
     Write-Host "  [OK] Updated web/package.json" -ForegroundColor Green
 }
