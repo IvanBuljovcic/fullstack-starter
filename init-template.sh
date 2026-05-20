@@ -127,6 +127,15 @@ if [ -f "api/.env.example" ]; then
     echo "  [OK] Updated api/.env.example"
 fi
 
+# Update api/.env.test
+if [ -f "api/.env.test" ]; then
+    TEST_DB_NAME="${DB_NAME//_dev/_test}"
+    TEST_DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${TEST_DB_NAME}?schema=public"
+    sed -i "s|DATABASE_URL=.*|DATABASE_URL=$TEST_DATABASE_URL|" api/.env.test
+    sed -i "s|CORS_ORIGIN=.*|CORS_ORIGIN=http://localhost:$WEB_PORT|" api/.env.test
+    echo "  [OK] Updated api/.env.test"
+fi
+
 # Create api/.env from api/.env.example
 if [ -f "api/.env.example" ] && [ ! -f "api/.env" ]; then
     cp api/.env.example api/.env
@@ -145,6 +154,22 @@ if [ -f "README.md" ]; then
     sed -i "s/:4200/:$WEB_PORT/g" README.md
     sed -i "s/:5433/:$DB_PORT/g" README.md
     echo "  [OK] Updated README.md"
+fi
+
+# Handle git remote
+if [ -d ".git" ]; then
+    echo ""
+    echo "Git repository detected."
+    read -p "Do you want to remove the template's git remote? (Y/n): " REMOVE_REMOTE
+    REMOVE_REMOTE=${REMOVE_REMOTE:-"y"}
+
+    if [ "$REMOVE_REMOTE" = "y" ] || [ "$REMOVE_REMOTE" = "Y" ]; then
+        git remote remove origin 2>/dev/null
+        echo "  [OK] Removed template's git remote"
+        echo ""
+        echo "  To add your own repository:"
+        echo "  git remote add origin <your-repository-url>"
+    fi
 fi
 
 echo ""
@@ -166,7 +191,7 @@ echo ""
 echo "  4. pnpm nx serve api"
 echo "     Start backend API (http://localhost:$API_PORT)"
 echo ""
-echo "  5. pnpm nx serve web"
+echo "  5. pnpm nx dev web"
 echo "     Start frontend (http://localhost:$WEB_PORT)"
 echo ""
 echo "Documentation:"

@@ -155,6 +155,17 @@ if (Test-Path "api\.env.example") {
     Write-Host "  [OK] Updated api/.env.example" -ForegroundColor Green
 }
 
+# Update api/.env.test
+if (Test-Path "api\.env.test") {
+    $TEST_DB_NAME = $DB_NAME -replace '_dev$', '_test'
+    $TEST_DATABASE_URL = "postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${TEST_DB_NAME}?schema=public"
+    $content = Get-Content "api\.env.test" -Raw
+    $content = $content -replace 'DATABASE_URL=.*', "DATABASE_URL=$TEST_DATABASE_URL"
+    $content = $content -replace 'CORS_ORIGIN=.*', "CORS_ORIGIN=http://localhost:$WEB_PORT"
+    $content | Set-Content "api\.env.test" -NoNewline
+    Write-Host "  [OK] Updated api/.env.test" -ForegroundColor Green
+}
+
 # Create api/.env from api/.env.example
 if ((Test-Path "api\.env.example") -and (-not (Test-Path "api\.env"))) {
     Copy-Item "api\.env.example" "api\.env"
@@ -177,6 +188,28 @@ if (Test-Path "README.md") {
     Write-Host "  [OK] Updated README.md" -ForegroundColor Green
 }
 
+# Handle git remote
+if (Test-Path ".git" -PathType Container) {
+    Write-Host ""
+    Write-Host "Git repository detected." -ForegroundColor Yellow
+    $REMOVE_REMOTE = Read-Host "Do you want to remove the template's git remote? (Y/n)"
+    if ([string]::IsNullOrWhiteSpace($REMOVE_REMOTE)) {
+        $REMOVE_REMOTE = "y"
+    }
+
+    if ($REMOVE_REMOTE -eq "y" -or $REMOVE_REMOTE -eq "Y") {
+        try {
+            git remote remove origin 2>$null
+            Write-Host "  [OK] Removed template's git remote" -ForegroundColor Green
+            Write-Host ""
+            Write-Host "  To add your own repository:" -ForegroundColor Yellow
+            Write-Host "  git remote add origin <your-repository-url>" -ForegroundColor White
+        } catch {
+            # Silently ignore if remote doesn't exist
+        }
+    }
+}
+
 Write-Host ""
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host " Setup Complete!" -ForegroundColor Green
@@ -196,7 +229,7 @@ Write-Host ""
 Write-Host "  4. pnpm nx serve api" -ForegroundColor White
 Write-Host "     Start backend API (http://localhost:$API_PORT)" -ForegroundColor Gray
 Write-Host ""
-Write-Host "  5. pnpm nx serve web" -ForegroundColor White
+Write-Host "  5. pnpm nx dev web" -ForegroundColor White
 Write-Host "     Start frontend (http://localhost:$WEB_PORT)" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Documentation:" -ForegroundColor Yellow

@@ -134,6 +134,12 @@ cd my-project
 # Or download as ZIP and extract
 ```
 
+**Note:** The initialization script will prompt you to remove the template's git remote. If you want to use your own repository, you can add it after initialization:
+
+```bash
+git remote add origin <your-repository-url>
+```
+
 ### 2. Run Initialization Script
 
 **Windows (PowerShell):**
