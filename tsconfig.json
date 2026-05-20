@@ -1,22 +1,22 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compileOnSave": false,
-  "files": [],
-  "references": [
-    {
-      "path": "./web-e2e"
-    },
-    {
-      "path": "./api-e2e"
-    },
-    {
-      "path": "./api"
-    },
-    {
-      "path": "./libs/shared/types"
-    },
-    {
-      "path": "./web.backup"
-    }
-  ]
+	"extends": "./tsconfig.base.json",
+	"compileOnSave": false,
+	"files": [],
+	"references": [
+		{
+			"path": "./web-e2e"
+		},
+		{
+			"path": "./api-e2e"
+		},
+		{
+			"path": "./api"
+		},
+		{
+			"path": "./libs/shared/types"
+		},
+		{
+			"path": "./web.backup"
+		}
+	]
 }
