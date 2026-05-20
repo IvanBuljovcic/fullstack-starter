@@ -182,12 +182,12 @@ cd ..
 pnpm nx serve api
 
 # Terminal 2 - Web
-pnpm nx serve web
+pnpm nx dev web
 ```
 
 **Option B: Use Nx Run-Many**
 ```bash
-pnpm nx run-many -t serve -p api web
+pnpm nx run-many -t serve dev -p api web
 ```
 
 ### 7. Verify Setup
@@ -236,7 +236,7 @@ Comprehensive documentation is organized by topic:
 pnpm nx serve api
 
 # Start Web
-pnpm nx serve web
+pnpm nx dev web
 
 # Start Storybook
 pnpm nx run web:storybook
