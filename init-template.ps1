@@ -75,8 +75,11 @@ Write-Host "Database Port:    $DB_PORT" -ForegroundColor Yellow
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 
-$CONFIRM = Read-Host "Is this correct? (y/n)"
-if ($CONFIRM -ne "y") {
+$CONFIRM = Read-Host "Is this correct? (Y/n)"
+if ([string]::IsNullOrWhiteSpace($CONFIRM)) {
+    $CONFIRM = "y"
+}
+if ($CONFIRM -ne "y" -and $CONFIRM -ne "Y") {
     Write-Host "Setup cancelled." -ForegroundColor Red
     exit 0
 }
