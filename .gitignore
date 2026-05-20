@@ -73,3 +73,5 @@ postgres_data/
 # Claude
 .claude
 .mcp.json
+.nx/polygraph
+.nx/self-healing
