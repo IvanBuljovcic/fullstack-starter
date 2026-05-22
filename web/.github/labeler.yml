@@ -3,85 +3,85 @@
 
 # Components
 'component':
-    - changed-files:
-          - any-glob-to-any-file: 'src/components/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'src/components/**/*'
 
 # Hooks
 'hooks':
-    - changed-files:
-          - any-glob-to-any-file: 'src/hooks/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'src/hooks/**/*'
 
 # Adapters
 'adapters':
-    - changed-files:
-          - any-glob-to-any-file: 'src/adapters/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'src/adapters/**/*'
 
 # Queries
 'queries':
-    - changed-files:
-          - any-glob-to-any-file: 'src/queries/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'src/queries/**/*'
 
 # Providers
 'providers':
-    - changed-files:
-          - any-glob-to-any-file: 'src/providers/**/*'
+  - changed-files:
+      - any-glob-to-any-file: 'src/providers/**/*'
 
 # Styles
 'styling':
-    - changed-files:
-          - any-glob-to-any-file:
-                - 'src/styles/**/*'
-                - '**/*.css'
-                - '**/*.scss'
-                - '**/*.module.css'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/styles/**/*'
+          - '**/*.css'
+          - '**/*.scss'
+          - '**/*.module.css'
 
 # Configuration
 'config':
-    - changed-files:
-          - any-glob-to-any-file:
-                - '*.json'
-                - '*.yml'
-                - '*.yaml'
-                - '.github/**/*'
-                - 'tsconfig.json'
-                - 'next.config.*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '*.json'
+          - '*.yml'
+          - '*.yaml'
+          - '.github/**/*'
+          - 'tsconfig.json'
+          - 'next.config.*'
 
 # Documentation
 'documentation':
-    - changed-files:
-          - any-glob-to-any-file:
-                - '**/*.md'
-                - 'docs/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'docs/**/*'
 
 # Tests
 'tests':
-    - changed-files:
-          - any-glob-to-any-file:
-                - '**/*.test.ts'
-                - '**/*.test.tsx'
-                - '**/*.spec.ts'
-                - '**/*.spec.tsx'
-                - 'tests/**/*'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.test.ts'
+          - '**/*.test.tsx'
+          - '**/*.spec.ts'
+          - '**/*.spec.tsx'
+          - 'tests/**/*'
 
 # CI/CD
 'ci':
-    - changed-files:
-          - any-glob-to-any-file: '.github/workflows/**/*'
+  - changed-files:
+      - any-glob-to-any-file: '.github/workflows/**/*'
 
 # Dependencies
 'dependencies':
-    - changed-files:
-          - any-glob-to-any-file:
-                - 'package.json'
-                - 'pnpm-lock.yaml'
-                - 'package-lock.json'
-                - 'yarn.lock'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'pnpm-lock.yaml'
+          - 'package-lock.json'
+          - 'yarn.lock'
 
 'feature':
-      - head-branch: ['^feature', 'feat']
+  - head-branch: ['^feature', 'feat']
 
 'bugfix':
-      - head-branch: ['^fix', 'bugfix', 'hotfix']
+  - head-branch: ['^fix', 'bugfix', 'hotfix']
 
 'release':
-      - head-branch: ['^release']
+  - head-branch: ['^release']

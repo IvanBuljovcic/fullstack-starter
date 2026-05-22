@@ -4,6 +4,8 @@ packages:
   - 'api'
   - 'api-e2e'
   - 'libs/shared/*'
+  - 'qr-service'
+  - 'inventory-service'
 allowBuilds:
   '@nestjs/core': true
   '@parcel/watcher': true

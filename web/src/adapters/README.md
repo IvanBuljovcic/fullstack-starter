@@ -70,6 +70,7 @@ const { data } = useInfiniteData({
 ```
 
 **Benefits:**
+
 - 🔄 **Swap APIs** without touching application code
 - 🧪 **Test easily** with mock adapters
 - 📦 **Reusable** across different data sources
@@ -82,10 +83,10 @@ const { data } = useInfiniteData({
 
 ```typescript
 interface DataAdapter<
-  TItem,                    // Item type (Product, User, Post, etc.)
-  TFilters = Record<string, unknown>,  // Filter type
-  TResponse = unknown,      // Raw API response type
-  TPageParam = number       // Pagination param type (number, string, object)
+  TItem, // Item type (Product, User, Post, etc.)
+  TFilters = Record<string, unknown>, // Filter type
+  TResponse = unknown, // Raw API response type
+  TPageParam = number // Pagination param type (number, string, object)
 > {
   /**
    * The initial pagination parameter
@@ -119,8 +120,8 @@ interface DataAdapter<
    * @returns Next page parameter, or undefined if no more pages
    */
   getNextPageParam(
-    lastPage: ReturnType<this["parseResponse"]>,
-    allPages: ReturnType<this["parseResponse"]>[]
+    lastPage: ReturnType<this['parseResponse']>,
+    allPages: ReturnType<this['parseResponse']>[]
   ): TPageParam | undefined;
 }
 ```
@@ -160,7 +161,7 @@ type APIResponse = {
 ### Step 2: Implement the Adapter
 
 ```typescript
-import type { DataAdapter } from "./data-adapter";
+import type { DataAdapter } from './data-adapter';
 
 export class MyAPIAdapter
   implements DataAdapter<Product, InternalFilters, APIResponse, number>
@@ -171,14 +172,14 @@ export class MyAPIAdapter
   // Step 2: Build URL from filters and pagination
   buildURL(filters: InternalFilters, page: number): string {
     const params = new URLSearchParams();
-    params.set("page", page.toString());
+    params.set('page', page.toString());
 
     if (filters.search) {
-      params.set("q", filters.search); // Translate: search → q
+      params.set('q', filters.search); // Translate: search → q
     }
 
     if (filters.category) {
-      params.set("category", filters.category);
+      params.set('category', filters.category);
     }
 
     return `/api/products?${params.toString()}`;
@@ -195,8 +196,8 @@ export class MyAPIAdapter
 
   // Step 4: Calculate next page parameter
   getNextPageParam(
-    lastPage: ReturnType<this["parseResponse"]>,
-    allPages: ReturnType<this["parseResponse"]>[]
+    lastPage: ReturnType<this['parseResponse']>,
+    allPages: ReturnType<this['parseResponse']>[]
   ) {
     return lastPage.hasNextPage ? allPages.length + 1 : undefined;
   }
@@ -206,18 +207,18 @@ export class MyAPIAdapter
 ### Step 3: Use the Adapter
 
 ```typescript
-import { useInfiniteData } from "@/hooks/use-infinite-data";
-import { fetcher } from "@/lib/api-client";
-import { MyAPIAdapter } from "@/adapters/my-api-adapter";
+import { useInfiniteData } from '@/hooks/use-infinite-data';
+import { fetcher } from '@/lib/api-client';
+import { MyAPIAdapter } from '@/adapters/my-api-adapter';
 
 const adapter = new MyAPIAdapter();
 
 function MyComponent() {
   const { data, fetchNextPage, hasNextPage } = useInfiniteData({
-    queryKey: ["products"],
+    queryKey: ['products'],
     adapter,
     fetcher,
-    filters: { search: "laptop" },
+    filters: { search: 'laptop' },
   });
 
   return (
@@ -225,7 +226,9 @@ function MyComponent() {
       {data?.items.map((product) => (
         <div key={product.id}>{product.title}</div>
       ))}
-      {hasNextPage && <button onClick={() => fetchNextPage()}>Load More</button>}
+      {hasNextPage && (
+        <button onClick={() => fetchNextPage()}>Load More</button>
+      )}
     </div>
   );
 }
@@ -238,12 +241,13 @@ function MyComponent() {
 ### Example 1: Skip-Based Pagination (DummyJSON)
 
 **API Characteristics:**
+
 - Uses `limit` and `skip` parameters
 - First page: `skip=0`, second page: `skip=20`, etc.
 - Different endpoints for search vs category
 
 ```typescript
-import type { DataAdapter } from "./data-adapter";
+import type { DataAdapter } from './data-adapter';
 
 type DummyJSONFilters = {
   search?: string;
@@ -266,7 +270,8 @@ type DummyJSONResponse = {
 };
 
 export class DummyJSONProductAdapter
-  implements DataAdapter<DummyJSONProduct, DummyJSONFilters, DummyJSONResponse, number>
+  implements
+    DataAdapter<DummyJSONProduct, DummyJSONFilters, DummyJSONResponse, number>
 {
   private readonly limit: number;
 
@@ -278,12 +283,12 @@ export class DummyJSONProductAdapter
 
   buildURL(filters: DummyJSONFilters, skip: number): string {
     const params = new URLSearchParams();
-    params.set("limit", this.limit.toString());
-    params.set("skip", skip.toString());
+    params.set('limit', this.limit.toString());
+    params.set('skip', skip.toString());
 
     // Different endpoints based on filters
     if (filters.search) {
-      params.set("q", filters.search);
+      params.set('q', filters.search);
       return `/products/search?${params.toString()}`;
     }
 
@@ -302,7 +307,10 @@ export class DummyJSONProductAdapter
     };
   }
 
-  getNextPageParam(_lastPage: ReturnType<this["parseResponse"]>, allPages: ReturnType<this["parseResponse"]>[]) {
+  getNextPageParam(
+    _lastPage: ReturnType<this['parseResponse']>,
+    allPages: ReturnType<this['parseResponse']>[]
+  ) {
     const nextSkip = allPages.length * this.limit;
     return nextSkip < _lastPage.total ? nextSkip : undefined;
   }
@@ -317,6 +325,7 @@ const adapter = new DummyJSONProductAdapter(30); // 30 items per page
 ### Example 2: Page-Based Pagination
 
 **API Characteristics:**
+
 - Uses `page` parameter (1, 2, 3, etc.)
 - Returns `hasNextPage` or total pages
 - Nested response structure
@@ -344,7 +353,8 @@ type PageBasedResponse = {
 };
 
 export class PageBasedAdapter
-  implements DataAdapter<PageBasedItem, PageBasedFilters, PageBasedResponse, number>
+  implements
+    DataAdapter<PageBasedItem, PageBasedFilters, PageBasedResponse, number>
 {
   private readonly perPage: number;
 
@@ -356,15 +366,15 @@ export class PageBasedAdapter
 
   buildURL(filters: PageBasedFilters, page: number): string {
     const params = new URLSearchParams();
-    params.set("page", page.toString());
-    params.set("per_page", this.perPage.toString());
+    params.set('page', page.toString());
+    params.set('per_page', this.perPage.toString());
 
     if (filters.search) {
-      params.set("search", filters.search);
+      params.set('search', filters.search);
     }
 
     if (filters.status) {
-      params.set("status", filters.status);
+      params.set('status', filters.status);
     }
 
     return `/api/items?${params.toString()}`;
@@ -379,7 +389,10 @@ export class PageBasedAdapter
     };
   }
 
-  getNextPageParam(lastPage: ReturnType<this["parseResponse"]>, allPages: ReturnType<this["parseResponse"]>[]) {
+  getNextPageParam(
+    lastPage: ReturnType<this['parseResponse']>,
+    allPages: ReturnType<this['parseResponse']>[]
+  ) {
     return lastPage.hasNextPage ? allPages.length + 1 : undefined;
   }
 }
@@ -390,6 +403,7 @@ export class PageBasedAdapter
 ### Example 3: Cursor-Based Pagination
 
 **API Characteristics:**
+
 - Uses cursor tokens instead of page numbers
 - Each page returns a `nextCursor` for the next request
 - Common in real-time feeds (Twitter, Instagram, etc.)
@@ -429,18 +443,18 @@ export class CursorBasedAdapter
 
   buildURL(filters: CursorFilters, cursor: CursorPageParam): string {
     const params = new URLSearchParams();
-    params.set("limit", this.limit.toString());
+    params.set('limit', this.limit.toString());
 
     if (cursor) {
-      params.set("cursor", cursor); // Only add cursor if not first page
+      params.set('cursor', cursor); // Only add cursor if not first page
     }
 
     if (filters.userId) {
-      params.set("user_id", filters.userId);
+      params.set('user_id', filters.userId);
     }
 
     if (filters.search) {
-      params.set("q", filters.search);
+      params.set('q', filters.search);
     }
 
     return `/api/posts?${params.toString()}`;
@@ -454,7 +468,10 @@ export class CursorBasedAdapter
     };
   }
 
-  getNextPageParam(lastPage: ReturnType<this["parseResponse"]>, _allPages: ReturnType<this["parseResponse"]>[]) {
+  getNextPageParam(
+    lastPage: ReturnType<this['parseResponse']>,
+    _allPages: ReturnType<this['parseResponse']>[]
+  ) {
     // Return the cursor for the next page, or undefined if no more pages
     const lastItem = lastPage.items[lastPage.items.length - 1];
     return lastPage.hasNextPage && lastItem ? lastItem.id : undefined;
@@ -467,6 +484,7 @@ export class CursorBasedAdapter
 ### Example 4: GraphQL API
 
 **API Characteristics:**
+
 - Uses GraphQL queries instead of REST
 - Cursor-based pagination with edges/nodes structure
 - Different URL building approach
@@ -502,7 +520,8 @@ type GraphQLResponse = {
 type GraphQLCursor = string | null;
 
 export class GraphQLProductAdapter
-  implements DataAdapter<GraphQLProduct, GraphQLFilters, GraphQLResponse, GraphQLCursor>
+  implements
+    DataAdapter<GraphQLProduct, GraphQLFilters, GraphQLResponse, GraphQLCursor>
 {
   private readonly first: number;
 
@@ -520,9 +539,13 @@ export class GraphQLProductAdapter
 
   // Note: For GraphQL, you'd typically override the fetcher to send POST with query
   buildQuery(filters: GraphQLFilters, cursor: GraphQLCursor): string {
-    const cursorArg = cursor ? `, after: "${cursor}"` : "";
-    const categoryFilter = filters.category ? `, category: "${filters.category}"` : "";
-    const priceFilter = filters.minPrice ? `, minPrice: ${filters.minPrice}` : "";
+    const cursorArg = cursor ? `, after: "${cursor}"` : '';
+    const categoryFilter = filters.category
+      ? `, category: "${filters.category}"`
+      : '';
+    const priceFilter = filters.minPrice
+      ? `, minPrice: ${filters.minPrice}`
+      : '';
 
     return `
       query {
@@ -554,7 +577,10 @@ export class GraphQLProductAdapter
     };
   }
 
-  getNextPageParam(lastPage: ReturnType<this["parseResponse"]>, _allPages: ReturnType<this["parseResponse"]>[]) {
+  getNextPageParam(
+    lastPage: ReturnType<this['parseResponse']>,
+    _allPages: ReturnType<this['parseResponse']>[]
+  ) {
     // Extract cursor from the last edge
     if (!lastPage.hasNextPage) return undefined;
 
@@ -573,32 +599,32 @@ export class GraphQLProductAdapter
 ### Unit Testing with Jest
 
 ```typescript
-import { DummyJSONProductAdapter } from "./dummyjson-product-adapter";
+import { DummyJSONProductAdapter } from './dummyjson-product-adapter';
 
-describe("DummyJSONProductAdapter", () => {
+describe('DummyJSONProductAdapter', () => {
   const adapter = new DummyJSONProductAdapter(20);
 
-  describe("buildURL", () => {
-    it("builds search URL correctly", () => {
-      const url = adapter.buildURL({ search: "phone" }, 0);
-      expect(url).toBe("/products/search?limit=20&skip=0&q=phone");
+  describe('buildURL', () => {
+    it('builds search URL correctly', () => {
+      const url = adapter.buildURL({ search: 'phone' }, 0);
+      expect(url).toBe('/products/search?limit=20&skip=0&q=phone');
     });
 
-    it("builds category URL correctly", () => {
-      const url = adapter.buildURL({ category: "smartphones" }, 20);
-      expect(url).toBe("/products/category/smartphones?limit=20&skip=20");
+    it('builds category URL correctly', () => {
+      const url = adapter.buildURL({ category: 'smartphones' }, 20);
+      expect(url).toBe('/products/category/smartphones?limit=20&skip=20');
     });
 
-    it("builds default URL for no filters", () => {
+    it('builds default URL for no filters', () => {
       const url = adapter.buildURL({}, 0);
-      expect(url).toBe("/products?limit=20&skip=0");
+      expect(url).toBe('/products?limit=20&skip=0');
     });
   });
 
-  describe("parseResponse", () => {
-    it("parses response correctly", () => {
+  describe('parseResponse', () => {
+    it('parses response correctly', () => {
       const apiResponse = {
-        products: [{ id: 1, title: "iPhone" }],
+        products: [{ id: 1, title: 'iPhone' }],
         total: 194,
         skip: 0,
         limit: 20,
@@ -607,15 +633,15 @@ describe("DummyJSONProductAdapter", () => {
       const parsed = adapter.parseResponse(apiResponse);
 
       expect(parsed).toEqual({
-        items: [{ id: 1, title: "iPhone" }],
+        items: [{ id: 1, title: 'iPhone' }],
         total: 194,
         hasNextPage: true, // 0 + 20 < 194
       });
     });
 
-    it("detects last page", () => {
+    it('detects last page', () => {
       const apiResponse = {
-        products: [{ id: 190, title: "Last Product" }],
+        products: [{ id: 190, title: 'Last Product' }],
         total: 194,
         skip: 180,
         limit: 20,
@@ -627,8 +653,8 @@ describe("DummyJSONProductAdapter", () => {
     });
   });
 
-  describe("getNextPageParam", () => {
-    it("calculates next skip correctly", () => {
+  describe('getNextPageParam', () => {
+    it('calculates next skip correctly', () => {
       const mockPages = [
         { items: [], total: 100, hasNextPage: true },
         { items: [], total: 100, hasNextPage: true },
@@ -639,10 +665,8 @@ describe("DummyJSONProductAdapter", () => {
       expect(nextSkip).toBe(40); // 2 pages * 20 items per page
     });
 
-    it("returns undefined when no more pages", () => {
-      const mockPages = [
-        { items: [], total: 20, hasNextPage: false },
-      ];
+    it('returns undefined when no more pages', () => {
+      const mockPages = [{ items: [], total: 20, hasNextPage: false }];
 
       const nextSkip = adapter.getNextPageParam(mockPages[0], mockPages);
 
@@ -655,15 +679,12 @@ describe("DummyJSONProductAdapter", () => {
 ### Mock Adapter for Testing Components
 
 ```typescript
-import type { DataAdapter } from "./data-adapter";
+import type { DataAdapter } from './data-adapter';
 
 export class MockAdapter<TItem>
   implements DataAdapter<TItem, any, any, number>
 {
-  constructor(
-    private mockData: TItem[],
-    private itemsPerPage = 10
-  ) {}
+  constructor(private mockData: TItem[], private itemsPerPage = 10) {}
 
   initialPageParam = 1;
 
@@ -683,23 +704,26 @@ export class MockAdapter<TItem>
     };
   }
 
-  getNextPageParam(lastPage: ReturnType<this["parseResponse"]>, allPages: ReturnType<this["parseResponse"]>[]) {
+  getNextPageParam(
+    lastPage: ReturnType<this['parseResponse']>,
+    allPages: ReturnType<this['parseResponse']>[]
+  ) {
     return lastPage.hasNextPage ? allPages.length + 1 : undefined;
   }
 }
 
 // Usage in tests
 const mockProducts = [
-  { id: 1, title: "Product 1" },
-  { id: 2, title: "Product 2" },
-  { id: 3, title: "Product 3" },
+  { id: 1, title: 'Product 1' },
+  { id: 2, title: 'Product 2' },
+  { id: 3, title: 'Product 3' },
 ];
 
 const mockAdapter = new MockAdapter(mockProducts, 2);
 
 const { result } = renderHook(() =>
   useInfiniteData({
-    queryKey: ["test"],
+    queryKey: ['test'],
     adapter: mockAdapter,
     fetcher: jest.fn(),
     filters: {},
@@ -714,6 +738,7 @@ const { result } = renderHook(() =>
 ### 1. Keep Filters Generic
 
 ✅ **Good - Generic filter model:**
+
 ```typescript
 type InternalFilters = {
   search?: string;
@@ -723,6 +748,7 @@ type InternalFilters = {
 ```
 
 ❌ **Bad - API-specific filters:**
+
 ```typescript
 type DummyJSONFilters = {
   q?: string; // API-specific param name
@@ -745,7 +771,9 @@ parseResponse(response: APIResponse) {
 ### 3. Make Adapters Configurable
 
 ```typescript
-export class FlexibleAdapter implements DataAdapter<Item, Filters, Response, number> {
+export class FlexibleAdapter
+  implements DataAdapter<Item, Filters, Response, number>
+{
   constructor(
     private config: {
       limit?: number;
@@ -756,7 +784,7 @@ export class FlexibleAdapter implements DataAdapter<Item, Filters, Response, num
 
   buildURL(filters: Filters, page: number): string {
     const limit = this.config.limit ?? 20;
-    const endpoint = this.config.endpoint ?? "/api/items";
+    const endpoint = this.config.endpoint ?? '/api/items';
 
     // Use param mapping to translate filter keys
     const params = new URLSearchParams();
@@ -772,8 +800,8 @@ export class FlexibleAdapter implements DataAdapter<Item, Filters, Response, num
 // Usage
 const adapter = new FlexibleAdapter({
   limit: 30,
-  endpoint: "/v2/products",
-  paramMapping: { search: "q", category: "cat" }, // search → q, category → cat
+  endpoint: '/v2/products',
+  paramMapping: { search: 'q', category: 'cat' }, // search → q, category → cat
 });
 ```
 
@@ -839,6 +867,7 @@ parseResponse(response: any) {
 ## Summary
 
 **Data Adapters provide:**
+
 - 🔌 **Plug-and-play** API integration
 - 🔄 **Easy switching** between data sources
 - 🧪 **Simple testing** with mock adapters
@@ -846,6 +875,7 @@ parseResponse(response: any) {
 - 🧹 **Clean architecture** with separation of concerns
 
 **To add a new API:**
+
 1. Create a new adapter class
 2. Implement the 4 methods: `buildURL`, `parseResponse`, `getNextPageParam`, and set `initialPageParam`
 3. Pass it to `useInfiniteData`

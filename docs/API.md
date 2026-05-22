@@ -5,6 +5,7 @@
 The API is built with **NestJS 11**, a progressive Node.js framework that uses TypeScript and follows enterprise-grade architectural patterns. It provides a clean, modular structure ready for building scalable backend services.
 
 **Tech Stack:**
+
 - **NestJS 11** - Backend framework
 - **Prisma 7.4** - Type-safe ORM
 - **PostgreSQL 16** - Database (via Docker)
@@ -80,6 +81,7 @@ docker ps | grep postgres
 ```
 
 **Database details:**
+
 - Host: `localhost`
 - Port: `5433` (mapped from container's 5432)
 - Database: `starter_dev`
@@ -96,6 +98,7 @@ npx prisma migrate dev --name init
 ```
 
 This will:
+
 1. Create the `prisma/migrations/` directory
 2. Generate a migration file
 3. Apply the migration to your database
@@ -119,6 +122,7 @@ pnpm serve
 The API will be available at **http://localhost:3000**
 
 **Test it:**
+
 ```bash
 curl http://localhost:3000/api
 # Response: {"message": "Hello API"}
@@ -198,8 +202,8 @@ The `PrismaService` is already set up and available globally:
 
 ```typescript
 // src/prisma/prisma.service.ts
-import { Injectable, OnModuleInit } from "@nestjs/common";
-import { PrismaClient } from "../generated/prisma";
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '../generated/prisma';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -212,8 +216,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 **Usage in your modules:**
 
 ```typescript
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
@@ -247,6 +251,7 @@ npx nest g resource users
 ```
 
 This generates:
+
 ```
 api/src/users/
 ├── users.module.ts
@@ -264,7 +269,7 @@ api/src/users/
 Add to `app.module.ts`:
 
 ```typescript
-import { UsersModule } from "../users/users.module";
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -283,7 +288,7 @@ Use `class-validator` for automatic validation:
 
 ```typescript
 // dto/create-user.dto.ts
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsEmail()
@@ -302,9 +307,9 @@ DTOs are automatically validated by the global `ValidationPipe` in `main.ts`.
 
 ```typescript
 // users.service.ts
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
-import { CreateUserDto } from "./dto/create-user.dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -332,11 +337,11 @@ export class UsersService {
 
 ```typescript
 // users.controller.ts
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { UsersService } from "./users.service";
-import { CreateUserDto } from "./dto/create-user.dto";
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
 
-@Controller("users")
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -350,8 +355,8 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
+  @Get(':id')
+  findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 }
@@ -366,7 +371,7 @@ export class UsersController {
 All routes are prefixed with `/api` (configured in `main.ts`):
 
 ```typescript
-app.setGlobalPrefix("api");
+app.setGlobalPrefix('api');
 ```
 
 Example: `@Controller('users')` → `http://localhost:3000/api/users`
@@ -378,8 +383,8 @@ Automatic DTO validation is enabled globally:
 ```typescript
 app.useGlobalPipes(
   new ValidationPipe({
-    whitelist: true,        // Strip unknown properties
-    transform: true,        // Auto-transform to DTO types
+    whitelist: true, // Strip unknown properties
+    transform: true, // Auto-transform to DTO types
     forbidNonWhitelisted: true,
   })
 );
@@ -391,7 +396,7 @@ CORS is configured from environment variables:
 
 ```typescript
 app.enableCors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:4200",
+  origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
   credentials: true,
 });
 ```
@@ -419,11 +424,11 @@ pnpm nx test api --testFile=users.service.spec.ts
 
 ```typescript
 // users.service.spec.ts
-import { Test, TestingModule } from "@nestjs/testing";
-import { UsersService } from "./users.service";
-import { PrismaService } from "../prisma/prisma.service";
+import { Test, TestingModule } from '@nestjs/testing';
+import { UsersService } from './users.service';
+import { PrismaService } from '../prisma/prisma.service';
 
-describe("UsersService", () => {
+describe('UsersService', () => {
   let service: UsersService;
   let prisma: PrismaService;
 
@@ -447,7 +452,7 @@ describe("UsersService", () => {
     prisma = module.get<PrismaService>(PrismaService);
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(service).toBeDefined();
   });
 });
@@ -466,6 +471,7 @@ pnpm nx e2e api-e2e --configuration=ci
 ```
 
 **Test setup:**
+
 - `api-e2e/src/support/global-setup.ts` - Initialize test database
 - `api-e2e/src/support/test-setup.ts` - Per-test configuration
 - `api-e2e/src/support/global-teardown.ts` - Cleanup
@@ -492,6 +498,7 @@ pnpm nx run api:prune
 ```
 
 This creates:
+
 - `api/dist/package.json` - Production dependencies only
 - `api/dist/pnpm-lock.yaml` - Pruned lockfile
 - `api/dist/workspace_modules/` - Local workspace packages
@@ -514,10 +521,10 @@ Modules organize related functionality:
 
 ```typescript
 @Module({
-  imports: [OtherModule],      // Import other modules
+  imports: [OtherModule], // Import other modules
   controllers: [UsersController], // HTTP route handlers
-  providers: [UsersService],   // Services, repositories, etc.
-  exports: [UsersService],     // Make available to other modules
+  providers: [UsersService], // Services, repositories, etc.
+  exports: [UsersService], // Make available to other modules
 })
 export class UsersModule {}
 ```
@@ -527,22 +534,32 @@ export class UsersModule {}
 Handle HTTP requests:
 
 ```typescript
-@Controller("users")
+@Controller('users')
 export class UsersController {
   @Get()
-  findAll() { /* ... */ }
+  findAll() {
+    /* ... */
+  }
 
   @Post()
-  create(@Body() dto: CreateUserDto) { /* ... */ }
+  create(@Body() dto: CreateUserDto) {
+    /* ... */
+  }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) { /* ... */ }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    /* ... */
+  }
 
-  @Patch(":id")
-  update(@Param("id") id: string, @Body() dto: UpdateUserDto) { /* ... */ }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    /* ... */
+  }
 
-  @Delete(":id")
-  remove(@Param("id") id: string) { /* ... */ }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    /* ... */
+  }
 }
 ```
 
@@ -568,10 +585,7 @@ NestJS uses constructor-based injection:
 ```typescript
 @Injectable()
 export class UsersService {
-  constructor(
-    private prisma: PrismaService,
-    private config: ConfigService,
-  ) {}
+  constructor(private prisma: PrismaService, private config: ConfigService) {}
 }
 ```
 
@@ -582,14 +596,14 @@ export class UsersService {
 Managed by `@nestjs/config` (already configured globally in `app.module.ts`):
 
 ```typescript
-import { ConfigService } from "@nestjs/config";
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SomeService {
   constructor(private config: ConfigService) {}
 
   getApiKey() {
-    return this.config.get<string>("API_KEY");
+    return this.config.get<string>('API_KEY');
   }
 }
 ```
@@ -599,7 +613,7 @@ export class SomeService {
 ```typescript
 // src/config/configuration.ts
 export default () => ({
-  port: parseInt(process.env.PORT || "3000", 10),
+  port: parseInt(process.env.PORT || '3000', 10),
   database: {
     url: process.env.DATABASE_URL,
   },
@@ -677,15 +691,18 @@ protected() {
 ### Interceptors (Transform Responses)
 
 ```typescript
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from "@nestjs/common";
-import { map } from "rxjs/operators";
+import {
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+} from '@nestjs/common';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler) {
-    return next.handle().pipe(
-      map(data => ({ success: true, data }))
-    );
+    return next.handle().pipe(map((data) => ({ success: true, data })));
   }
 }
 ```
@@ -704,6 +721,7 @@ pnpm add -D @types/passport-jwt @types/bcryptjs
 ```
 
 **Resources:**
+
 - [NestJS Authentication](https://docs.nestjs.com/security/authentication)
 - [JWT Strategy](https://docs.nestjs.com/recipes/passport#jwt-strategy)
 
@@ -712,6 +730,7 @@ pnpm add -D @types/passport-jwt @types/bcryptjs
 Already included: `class-validator`, `class-transformer`
 
 **Additional decorators:**
+
 - `@IsOptional()`, `@IsEnum()`, `@IsDate()`, `@IsArray()`
 - [class-validator docs](https://github.com/typestack/class-validator#validation-decorators)
 
@@ -811,6 +830,7 @@ npx prisma generate
 ### Port Already in Use
 
 Change port in `api/.env`:
+
 ```bash
 PORT=3001
 ```
@@ -818,6 +838,7 @@ PORT=3001
 ### Module Not Found Errors
 
 Rebuild the project:
+
 ```bash
 pnpm nx build api
 # or

@@ -19,22 +19,26 @@ Please be respectful and constructive in all interactions. We're all here to lea
 
 1. Fork the repository
 2. Clone your fork:
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/nx-fullstack-template.git
    cd nx-fullstack-template
    ```
 
 3. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 4. Start the database:
+
    ```bash
    docker compose up -d
    ```
 
 5. Setup the database:
+
    ```bash
    cd api
    cp .env.example .env
@@ -42,6 +46,7 @@ Please be respectful and constructive in all interactions. We're all here to lea
    ```
 
 6. Run the development servers:
+
    ```bash
    # Terminal 1
    pnpm nx serve api
@@ -84,16 +89,19 @@ Or follow this format manually:
 Before submitting a PR, ensure:
 
 1. **Code is formatted**:
+
    ```bash
    pnpm format:write
    ```
 
 2. **Linting passes**:
+
    ```bash
    pnpm check
    ```
 
 3. **Tests pass**:
+
    ```bash
    pnpm nx run-many -t test
    ```
@@ -106,6 +114,7 @@ Before submitting a PR, ensure:
 ### Pull Request Process
 
 1. **Create a feature branch** from `main`:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -113,6 +122,7 @@ Before submitting a PR, ensure:
 2. **Make your changes** following the code style and conventions
 
 3. **Test thoroughly**:
+
    ```bash
    pnpm nx affected -t test,lint,build
    ```
@@ -120,11 +130,13 @@ Before submitting a PR, ensure:
 4. **Commit your changes** using conventional commits
 
 5. **Push to your fork**:
+
    ```bash
    git push origin feature/your-feature-name
    ```
 
 6. **Create a Pull Request** on GitHub:
+
    - Use a clear, descriptive title
    - Fill out the PR template completely
    - Reference any related issues

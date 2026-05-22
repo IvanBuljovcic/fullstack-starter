@@ -7,16 +7,19 @@ This guide will help you get started with the Nx Full-Stack Template.
 ### Option 1: Using the Initialization Script
 
 **Linux/macOS:**
+
 ```bash
 ./init-template.sh
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 .\init-template.ps1
 ```
 
 This script will:
+
 - Prompt you for your project name and organization scope
 - Ask for database configuration (name, user, password)
 - Ask for port configuration (API port, Web port, Database port)
@@ -36,11 +39,13 @@ After running the script, proceed to step 3 below (Install Dependencies).
 ### 1. Clone or Use Template
 
 **Option A: Use as GitHub Template**
+
 1. Click "Use this template" button on GitHub
 2. Create your new repository
 3. Clone your new repository
 
 **Option B: Clone Directly**
+
 ```bash
 git clone https://github.com/YOUR_USERNAME/nx-fullstack-template.git my-project
 cd my-project
@@ -53,6 +58,7 @@ git init     # Start fresh git repository
 Update the following files with your project details:
 
 **package.json:**
+
 ```json
 {
   "name": "your-project-name",
@@ -61,6 +67,7 @@ Update the following files with your project details:
 ```
 
 **docker-compose.yml:**
+
 ```yaml
 container_name: your-project-postgres
 POSTGRES_DB: your_db_name
@@ -69,6 +76,7 @@ POSTGRES_PASSWORD: your_db_password
 ```
 
 **api/.env.example:**
+
 ```env
 DATABASE_URL=postgresql://your_db_user:your_db_password@localhost:5432/your_db_name?schema=public
 ```
@@ -80,6 +88,7 @@ pnpm install
 ```
 
 If you don't have pnpm installed:
+
 ```bash
 npm install -g pnpm
 ```
@@ -91,6 +100,7 @@ docker compose up -d
 ```
 
 Verify it's running:
+
 ```bash
 docker compose ps
 ```
@@ -109,6 +119,7 @@ Review and update `api/.env` with your configuration.
 Edit `api/prisma/schema.prisma` to define your data models.
 
 Example models are included - feel free to modify or remove them:
+
 - `User` model
 - `Post` model
 
@@ -120,6 +131,7 @@ pnpm prisma migrate dev --name init
 ```
 
 This will:
+
 - Create migration files
 - Apply migrations to PostgreSQL
 - Generate Prisma Client
@@ -127,16 +139,19 @@ This will:
 ### 8. Start Development Servers
 
 **Terminal 1 - Backend (API):**
+
 ```bash
 pnpm nx serve api
 ```
 
 **Terminal 2 - Frontend (Web):**
+
 ```bash
 pnpm nx dev web
 ```
 
 Your applications will be available at:
+
 - API: http://localhost:3000/api (or your configured API port)
 - Web: http://localhost:4200 (or your configured Web port)
 
@@ -145,6 +160,7 @@ Your applications will be available at:
 ### 9. Verify Setup
 
 Test the example API endpoint:
+
 ```bash
 curl http://localhost:3000/api
 ```
@@ -152,6 +168,7 @@ curl http://localhost:3000/api
 You should see: `{"message":"Hello API"}`
 
 Test the Users endpoint (after running migrations):
+
 ```bash
 curl http://localhost:3000/users
 ```
@@ -163,15 +180,18 @@ curl http://localhost:3000/users
 If you don't need the example User/Post models:
 
 1. **Remove example models** from `api/prisma/schema.prisma`:
+
    - Delete `User` model
    - Delete `Post` model
 
 2. **Remove example API module**:
+
    ```bash
    rm -rf api/src/users
    ```
 
 3. **Update app.module.ts**:
+
    ```typescript
    // Remove UsersModule import and from imports array
    ```
@@ -188,6 +208,7 @@ If you don't need the example User/Post models:
 1. **Define your data models** in `api/prisma/schema.prisma`
 2. **Create migrations**: `cd api && pnpm prisma migrate dev --name description`
 3. **Generate NestJS modules**:
+
    ```bash
    pnpm nx g @nx/nest:module modules/your-module --project=api
    pnpm nx g @nx/nest:service modules/your-module --project=api
@@ -323,11 +344,13 @@ pnpm prisma generate
 ### Port Already in Use
 
 **API (3000):**
+
 - Change `PORT` in `api/.env`
 - Or stop the process using port 3000
 
 **Web (4200):**
 Update the dev script in `web/package.json`:
+
 ```json
 {
   "scripts": {
@@ -335,9 +358,11 @@ Update the dev script in `web/package.json`:
   }
 }
 ```
+
 Then run: `pnpm nx dev web`
 
 **PostgreSQL (5432):**
+
 - Update `docker-compose.yml` ports section
 - Update `DATABASE_URL` in `api/.env`
 

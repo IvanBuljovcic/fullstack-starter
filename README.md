@@ -7,6 +7,7 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 ## ✨ Features
 
 ### Backend (NestJS 11)
+
 - 🏗️ **Modular Architecture** - Scalable NestJS with dependency injection
 - 🗄️ **Prisma ORM** - Type-safe database access with PostgreSQL 16
 - 🔒 **Validation** - Automatic DTO validation with class-validator
@@ -14,6 +15,7 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 - ✅ **Testing** - Jest for unit tests, Playwright for E2E
 
 ### Frontend (Next.js 16 + React 19)
+
 - ⚡ **Turbopack** - Lightning-fast development builds
 - 🎨 **Component Library** - 8+ production-ready UI components
 - 🪝 **Custom Hooks** - 15+ utility hooks (infinite scroll, keyboard nav, etc.)
@@ -26,6 +28,7 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 - 🎭 **Error Boundaries** - Multi-level error handling with retry
 
 ### Monorepo (Nx 22.5)
+
 - 🚀 **Intelligent Caching** - Fast incremental builds
 - 📦 **Shared Libraries** - Type-safe code sharing
 - 🔧 **Code Quality** - Biome for linting and formatting
@@ -48,23 +51,23 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Version |
-|-------|-----------|---------|
-| **Monorepo** | Nx | 22.5 |
-| **Backend** | NestJS | 11 |
-| **Frontend** | Next.js | 16 |
-| **UI** | React | 19 |
-| **Database** | PostgreSQL | 16 |
-| **ORM** | Prisma | 7.4 |
-| **State Management** | TanStack Query | 5 |
-| **Forms** | React Hook Form + Zod | 7 + 4 |
-| **Testing** | Vitest + Playwright | 3 + 1.36 |
-| **Styling** | CSS Modules + CSS Variables | - |
-| **Documentation** | Storybook | 8.4 |
-| **Package Manager** | pnpm | - |
-| **Language** | TypeScript | 5.9 |
-| **Code Quality** | Biome | 2.4 |
-| **Node Version** | Volta | 22.20.0 |
+| Layer                | Technology                  | Version  |
+| -------------------- | --------------------------- | -------- |
+| **Monorepo**         | Nx                          | 22.5     |
+| **Backend**          | NestJS                      | 11       |
+| **Frontend**         | Next.js                     | 16       |
+| **UI**               | React                       | 19       |
+| **Database**         | PostgreSQL                  | 16       |
+| **ORM**              | Prisma                      | 7.4      |
+| **State Management** | TanStack Query              | 5        |
+| **Forms**            | React Hook Form + Zod       | 7 + 4    |
+| **Testing**          | Vitest + Playwright         | 3 + 1.36 |
+| **Styling**          | CSS Modules + CSS Variables | -        |
+| **Documentation**    | Storybook                   | 8.4      |
+| **Package Manager**  | pnpm                        | -        |
+| **Language**         | TypeScript                  | 5.9      |
+| **Code Quality**     | Biome                       | 2.4      |
+| **Node Version**     | Volta                       | 22.20.0  |
 
 ---
 
@@ -143,17 +146,20 @@ git remote add origin <your-repository-url>
 ### 2. Run Initialization Script
 
 **Windows (PowerShell):**
+
 ```powershell
 .\init-template.ps1
 ```
 
 **Linux/Mac:**
+
 ```bash
 chmod +x init-template.sh
 ./init-template.sh
 ```
 
 The script will:
+
 - ✅ Prompt for project name
 - ✅ Configure database credentials
 - ✅ Set API and web ports
@@ -183,6 +189,7 @@ cd ..
 ### 6. Start Development Servers
 
 **Option A: Start Both (Parallel)**
+
 ```bash
 # Terminal 1 - API
 pnpm nx serve api
@@ -192,6 +199,7 @@ pnpm nx dev web
 ```
 
 **Option B: Use Nx Run-Many**
+
 ```bash
 pnpm nx run-many -t serve dev -p api web
 ```
@@ -339,6 +347,7 @@ pnpm nx g @nx/nest:resource users --project=api
 ```
 
 This creates:
+
 - `api/src/users/users.module.ts`
 - `api/src/users/users.controller.ts`
 - `api/src/users/users.service.ts`
@@ -354,6 +363,7 @@ pnpm generate MyComponent --client --styles
 ```
 
 This creates:
+
 - `src/components/MyComponent/index.ts`
 - `src/components/MyComponent/my-component.tsx`
 - `src/components/MyComponent/my-component.module.css`
@@ -363,6 +373,7 @@ See **[Web Documentation](./docs/WEB.md)** for details.
 ### Add a Database Model
 
 1. Edit `api/prisma/schema.prisma`:
+
    ```prisma
    model User {
      id        String   @id @default(cuid())
@@ -373,6 +384,7 @@ See **[Web Documentation](./docs/WEB.md)** for details.
    ```
 
 2. Create migration:
+
    ```bash
    cd api
    npx prisma migrate dev --name add_user_model
@@ -437,6 +449,7 @@ See **[API Documentation](./docs/API.md)** for Dockerfile examples.
 ### Environment Variables
 
 **Production checklist:**
+
 - Set `DATABASE_URL` to production database
 - Set `NEXT_PUBLIC_API_BASE_URL` to production API
 - Set `NODE_ENV=production`
@@ -450,6 +463,7 @@ See **[API Documentation](./docs/API.md)** for Dockerfile examples.
 This is a template repository. Fork it and customize for your needs!
 
 **If you improve the template:**
+
 1. Create a feature branch
 2. Make your changes
 3. Follow conventional commits
@@ -467,6 +481,7 @@ MIT License - see [LICENSE](./LICENSE) for details.
 ## 🙏 Acknowledgments
 
 Built with:
+
 - **NestJS** - https://nestjs.com
 - **Next.js** - https://nextjs.org
 - **Prisma** - https://prisma.io
@@ -486,6 +501,7 @@ Built with:
 ## 🗺️ Roadmap
 
 **Potential additions:**
+
 - [ ] Authentication scaffolding (Passport.js / NextAuth)
 - [ ] Additional UI components (Button, Card, Modal, etc.)
 - [ ] GraphQL support
@@ -502,6 +518,7 @@ Built with:
 **Happy coding!** 🎉
 
 For detailed guides, see:
+
 - [Setup Guide](./SETUP.md)
 - [API Documentation](./docs/API.md)
 - [Web Documentation](./docs/WEB.md)

@@ -1,0 +1,1746 @@
+{
+  "graph": {
+    "nodes": {
+      "@starter/shared-types": {
+        "name": "@starter/shared-types",
+        "type": "lib",
+        "data": {
+          "root": "libs/shared/types",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "build",
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "libs/shared/types",
+                "command": "tsc --build tsconfig.json --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                },
+                "^{projectRoot}/../../../../../../../libs/shared/types/tsconfig.lib.json"
+              ],
+              "outputs": [
+                "{projectRoot}/tsconfig.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "dependsOn": [
+                "^build"
+              ],
+              "options": {
+                "cwd": "libs/shared/types",
+                "command": "tsc --build tsconfig.lib.json"
+              },
+              "cache": true,
+              "inputs": [
+                "{projectRoot}/package.json",
+                "{workspaceRoot}/tsconfig.base.json",
+                "{projectRoot}/tsconfig.lib.json",
+                "{projectRoot}/src/**/*.ts",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/dist/**/*.{js,cjs,mjs,jsx,d.ts,d.cts,d.mts}{,.map}",
+                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Builds the project with `tsc`.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @starter/shared-types --includeDependentProjects -- pnpm exec nx build-deps @starter/shared-types"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "@starter/shared-types",
+          "tags": [
+            "npm:public"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@starter/shared-types",
+              "packageVersion": "0.0.1",
+              "packageExports": {
+                "./package.json": "./package.json",
+                ".": {
+                  "@starter/source": "./src/index.ts",
+                  "types": "./dist/index.d.ts",
+                  "import": "./dist/index.js",
+                  "default": "./dist/index.js"
+                }
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "inventory-service": {
+        "name": "inventory-service",
+        "type": "app",
+        "data": {
+          "root": "inventory-service",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "inventory-service",
+                "command": "tsc --build tsconfig.json --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                },
+                "^{projectRoot}/../../../../../inventory-service/tsconfig.app.json"
+              ],
+              "outputs": [
+                "{projectRoot}/tsconfig.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production",
+                {
+                  "externalDependencies": [
+                    "webpack-cli"
+                  ]
+                },
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": [
+                    "extends",
+                    "files",
+                    "include"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{workspaceRoot}/inventory-service\\dist"
+              ],
+              "metadata": {
+                "technologies": [
+                  "webpack"
+                ],
+                "description": "Runs Webpack build",
+                "help": {
+                  "command": "pnpm exec webpack-cli build --help",
+                  "example": {
+                    "options": {
+                      "json": "stats.json"
+                    },
+                    "args": [
+                      "--profile"
+                    ]
+                  }
+                }
+              },
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "inventory-service",
+                "args": [
+                  "--node-env=production"
+                ],
+                "command": "webpack-cli build"
+              },
+              "configurations": {
+                "development": {
+                  "args": [
+                    "--node-env=development"
+                  ]
+                }
+              },
+              "parallelism": true
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@nx/js:node",
+              "defaultConfiguration": "development",
+              "dependsOn": [
+                "build"
+              ],
+              "options": {
+                "buildTarget": "inventory-service:build",
+                "runBuildTargetDependencies": false
+              },
+              "configurations": {
+                "development": {
+                  "buildTarget": "inventory-service:build:development"
+                },
+                "production": {
+                  "buildTarget": "inventory-service:build:production"
+                }
+              },
+              "parallelism": true
+            },
+            "preview": {
+              "continuous": true,
+              "options": {
+                "cwd": "inventory-service",
+                "args": [
+                  "--node-env=production"
+                ],
+                "command": "webpack-cli serve"
+              },
+              "metadata": {
+                "technologies": [
+                  "webpack"
+                ],
+                "description": "Starts Webpack dev server in production mode",
+                "help": {
+                  "command": "pnpm exec webpack-cli serve --help",
+                  "example": {
+                    "options": {
+                      "args": [
+                        "--client-progress",
+                        "--history-api-fallback "
+                      ]
+                    }
+                  }
+                }
+              },
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "serve-static": {
+              "continuous": true,
+              "dependsOn": [
+                "build"
+              ],
+              "executor": "@nx/web:file-server",
+              "options": {
+                "buildTarget": "build",
+                "spa": true
+              },
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects inventory-service --includeDependentProjects -- pnpm exec nx build-deps inventory-service"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "prune-lockfile": {
+              "dependsOn": [
+                "build"
+              ],
+              "cache": true,
+              "executor": "@nx/js:prune-lockfile",
+              "outputs": [
+                "{workspaceRoot}/inventory-service/dist/package.json",
+                "{workspaceRoot}/inventory-service/dist/pnpm-lock.yaml"
+              ],
+              "options": {
+                "buildTarget": "build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "copy-workspace-modules": {
+              "dependsOn": [
+                "build"
+              ],
+              "cache": true,
+              "outputs": [
+                "{workspaceRoot}/inventory-service/dist/workspace_modules"
+              ],
+              "executor": "@nx/js:copy-workspace-modules",
+              "options": {
+                "buildTarget": "build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "prune": {
+              "dependsOn": [
+                "prune-lockfile",
+                "copy-workspace-modules"
+              ],
+              "executor": "nx:noop",
+              "configurations": {},
+              "options": {},
+              "parallelism": true
+            }
+          },
+          "projectType": "application",
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "inventory-service",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "name": "inventory-service",
+          "tags": [
+            "npm:private",
+            "type:service",
+            "scope:inventory"
+          ],
+          "implicitDependencies": []
+        }
+      },
+      "account-service": {
+        "name": "account-service",
+        "type": "app",
+        "data": {
+          "root": "account-service",
+          "name": "account-service",
+          "$schema": "../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "account-service",
+          "projectType": "application",
+          "tags": [
+            "type:service",
+            "scope:account"
+          ],
+          "targets": {
+            "build": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "dotnet build",
+                "cwd": "account-service"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "serve": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "dotnet run",
+                "cwd": "account-service"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "dotnet test",
+                "cwd": "account-service"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "qr-service": {
+        "name": "qr-service",
+        "type": "app",
+        "data": {
+          "root": "qr-service",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "qr-service",
+                "command": "tsc --build tsconfig.json --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                },
+                "^{projectRoot}/../../../../../qr-service/tsconfig.app.json"
+              ],
+              "outputs": [
+                "{projectRoot}/tsconfig.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production",
+                {
+                  "externalDependencies": [
+                    "webpack-cli"
+                  ]
+                },
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": [
+                    "extends",
+                    "files",
+                    "include"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{workspaceRoot}/qr-service\\dist"
+              ],
+              "metadata": {
+                "technologies": [
+                  "webpack"
+                ],
+                "description": "Runs Webpack build",
+                "help": {
+                  "command": "pnpm exec webpack-cli build --help",
+                  "example": {
+                    "options": {
+                      "json": "stats.json"
+                    },
+                    "args": [
+                      "--profile"
+                    ]
+                  }
+                }
+              },
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "qr-service",
+                "args": [
+                  "--node-env=production"
+                ],
+                "command": "webpack-cli build"
+              },
+              "configurations": {
+                "development": {
+                  "args": [
+                    "--node-env=development"
+                  ]
+                }
+              },
+              "parallelism": true
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@nx/js:node",
+              "defaultConfiguration": "development",
+              "dependsOn": [
+                "build"
+              ],
+              "options": {
+                "buildTarget": "qr-service:build",
+                "runBuildTargetDependencies": false
+              },
+              "configurations": {
+                "development": {
+                  "buildTarget": "qr-service:build:development"
+                },
+                "production": {
+                  "buildTarget": "qr-service:build:production"
+                }
+              },
+              "parallelism": true
+            },
+            "preview": {
+              "continuous": true,
+              "options": {
+                "cwd": "qr-service",
+                "args": [
+                  "--node-env=production"
+                ],
+                "command": "webpack-cli serve"
+              },
+              "metadata": {
+                "technologies": [
+                  "webpack"
+                ],
+                "description": "Starts Webpack dev server in production mode",
+                "help": {
+                  "command": "pnpm exec webpack-cli serve --help",
+                  "example": {
+                    "options": {
+                      "args": [
+                        "--client-progress",
+                        "--history-api-fallback "
+                      ]
+                    }
+                  }
+                }
+              },
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "serve-static": {
+              "continuous": true,
+              "dependsOn": [
+                "build"
+              ],
+              "executor": "@nx/web:file-server",
+              "options": {
+                "buildTarget": "build",
+                "spa": true
+              },
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects qr-service --includeDependentProjects -- pnpm exec nx build-deps qr-service"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "prune-lockfile": {
+              "dependsOn": [
+                "build"
+              ],
+              "cache": true,
+              "executor": "@nx/js:prune-lockfile",
+              "outputs": [
+                "{workspaceRoot}/qr-service/dist/package.json",
+                "{workspaceRoot}/qr-service/dist/pnpm-lock.yaml"
+              ],
+              "options": {
+                "buildTarget": "build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "copy-workspace-modules": {
+              "dependsOn": [
+                "build"
+              ],
+              "cache": true,
+              "outputs": [
+                "{workspaceRoot}/qr-service/dist/workspace_modules"
+              ],
+              "executor": "@nx/js:copy-workspace-modules",
+              "options": {
+                "buildTarget": "build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "prune": {
+              "dependsOn": [
+                "prune-lockfile",
+                "copy-workspace-modules"
+              ],
+              "executor": "nx:noop",
+              "configurations": {},
+              "options": {},
+              "parallelism": true
+            }
+          },
+          "projectType": "application",
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "qr-service",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "name": "qr-service",
+          "tags": [
+            "npm:private",
+            "type:service",
+            "scope:qr"
+          ],
+          "implicitDependencies": []
+        }
+      },
+      "@starter/api-e2e": {
+        "name": "@starter/api-e2e",
+        "type": "app",
+        "data": {
+          "root": "api-e2e",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "api-e2e",
+                "command": "tsc --build tsconfig.json --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "{projectRoot}/package.json",
+                "{workspaceRoot}/tsconfig.base.json",
+                "{projectRoot}/tsconfig.json",
+                "{projectRoot}/jest.config.ts",
+                "{projectRoot}/src/**/*.ts",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/out-tsc/@org/api-e2e/**/*.{d.ts,d.cts,d.mts}",
+                "{projectRoot}/out-tsc/@org/api-e2e/**/*.{d.ts,d.cts,d.mts}.map",
+                "{projectRoot}/out-tsc/@org/api-e2e/tsconfig.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "e2e": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{projectRoot}/test-output/jest/coverage"
+              ],
+              "options": {
+                "jestConfig": "api-e2e/jest.config.cts",
+                "passWithNoTests": true
+              },
+              "dependsOn": [
+                "@starter/api:build",
+                "@starter/api:serve"
+              ],
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "@starter/api-e2e",
+          "tags": [
+            "npm:private"
+          ],
+          "implicitDependencies": [
+            "@starter/api"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@starter/api-e2e",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": true
+            }
+          }
+        }
+      },
+      "@starter/web-e2e": {
+        "name": "@starter/web-e2e",
+        "type": "app",
+        "data": {
+          "root": "web-e2e",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "web-e2e",
+                "command": "tsc --build tsconfig.json --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "{projectRoot}/package.json",
+                "{workspaceRoot}/tsconfig.base.json",
+                "{projectRoot}/tsconfig.json",
+                "{projectRoot}/**/*.ts",
+                "{projectRoot}/**/*.js",
+                "{projectRoot}/playwright.config.ts",
+                "{projectRoot}/src/**/*.spec.ts",
+                "{projectRoot}/src/**/*.spec.js",
+                "{projectRoot}/src/**/*.test.ts",
+                "{projectRoot}/src/**/*.test.js",
+                "{projectRoot}/src/**/*.d.ts",
+                "!{projectRoot}/out-tsc",
+                "!{projectRoot}/test-output",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/out-tsc/playwright/**/*.{d.ts,d.cts,d.mts}",
+                "{projectRoot}/out-tsc/playwright/**/*.{d.ts,d.cts,d.mts}.map",
+                "{projectRoot}/out-tsc/playwright/tsconfig.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "e2e": {
+              "options": {
+                "cwd": "web-e2e",
+                "command": "playwright test"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests",
+                "help": {
+                  "command": "pnpm exec playwright test --help",
+                  "example": {
+                    "options": {
+                      "workers": 1
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                {
+                  "projects": [
+                    "@org/web"
+                  ],
+                  "target": "dev"
+                }
+              ],
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "^{projectRoot}/tsconfig*.json",
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": [
+                    "compilerOptions",
+                    "extends",
+                    "files",
+                    "include"
+                  ]
+                },
+                {
+                  "externalDependencies": [
+                    "@playwright/test"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/test-output/playwright/output",
+                "{projectRoot}/test-output/playwright/report"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "e2e-ci--src/example.spec.ts": {
+              "options": {
+                "cwd": "web-e2e",
+                "env": {
+                  "PLAYWRIGHT_HTML_OUTPUT_DIR": "test-output/playwright/report/src-example-spec-ts",
+                  "PLAYWRIGHT_HTML_REPORT": "test-output/playwright/report/src-example-spec-ts"
+                },
+                "command": "playwright test src/example.spec.ts --output=test-output/playwright/output/src-example-spec-ts"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in src/example.spec.ts in CI",
+                "help": {
+                  "command": "pnpm exec playwright test --help",
+                  "example": {
+                    "options": {
+                      "workers": 1
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                {
+                  "projects": [
+                    "@org/web"
+                  ],
+                  "target": "dev"
+                }
+              ],
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "^{projectRoot}/tsconfig*.json",
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": [
+                    "compilerOptions",
+                    "extends",
+                    "files",
+                    "include"
+                  ]
+                },
+                {
+                  "externalDependencies": [
+                    "@playwright/test"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/test-output/playwright/output/src-example-spec-ts",
+                "{projectRoot}/test-output/playwright/report/src-example-spec-ts"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "^{projectRoot}/tsconfig*.json",
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": [
+                    "compilerOptions",
+                    "extends",
+                    "files",
+                    "include"
+                  ]
+                },
+                {
+                  "externalDependencies": [
+                    "@playwright/test"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/test-output/playwright/output",
+                "{projectRoot}/test-output/playwright/report"
+              ],
+              "dependsOn": [
+                {
+                  "target": "e2e-ci--src/example.spec.ts",
+                  "projects": "self",
+                  "params": "forward",
+                  "options": "forward"
+                }
+              ],
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in CI",
+                "nonAtomizedTarget": "e2e",
+                "help": {
+                  "command": "pnpm exec playwright test --help",
+                  "example": {
+                    "options": {
+                      "workers": 1
+                    }
+                  }
+                }
+              },
+              "configurations": {},
+              "options": {},
+              "parallelism": true
+            },
+            "e2e-ci--merge-reports": {
+              "executor": "@nx/playwright:merge-reports",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "^{projectRoot}/tsconfig*.json",
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": [
+                    "compilerOptions",
+                    "extends",
+                    "files",
+                    "include"
+                  ]
+                },
+                {
+                  "externalDependencies": [
+                    "@playwright/test"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{projectRoot}/test-output/playwright/report"
+              ],
+              "options": {
+                "config": "playwright.config.ts",
+                "expectedSuites": 1
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Merges Playwright blob reports from atomized tasks to produce unified reports for the configured reporters."
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": [
+                "e2e-ci--src/example.spec.ts",
+                "e2e-ci",
+                "e2e-ci--merge-reports"
+              ]
+            }
+          },
+          "name": "@starter/web-e2e",
+          "implicitDependencies": [],
+          "tags": []
+        }
+      },
+      "@starter/api": {
+        "name": "@starter/api",
+        "type": "app",
+        "data": {
+          "root": "api",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "api",
+                "command": "tsc --build tsconfig.json --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                {
+                  "dependentTasksOutputFiles": "**/*.{d.ts,d.cts,d.mts,tsbuildinfo}",
+                  "transitive": true
+                },
+                {
+                  "fileset": "{projectRoot}/**/*.{d.ts,d.cts,d.mts}",
+                  "dependencies": true
+                },
+                "^{projectRoot}/../../../../../api/tsconfig.app.json",
+                "^{projectRoot}/../../../../../api/tsconfig.spec.json"
+              ],
+              "outputs": [
+                "{projectRoot}/tsconfig.tsbuildinfo"
+              ],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "postinstall": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "postinstall"
+              },
+              "metadata": {
+                "scriptContent": "prisma generate",
+                "runCommand": "pnpm run postinstall"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/esbuild:esbuild",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "defaultConfiguration": "production",
+              "options": {
+                "platform": "node",
+                "outputPath": "dist/api",
+                "format": [
+                  "cjs"
+                ],
+                "bundle": true,
+                "main": "api/src/main.ts",
+                "tsConfig": "api/tsconfig.app.json",
+                "assets": [
+                  "api/src/assets"
+                ],
+                "esbuildConfig": "api/esbuild.config.js"
+              },
+              "configurations": {
+                "development": {},
+                "production": {}
+              },
+              "parallelism": true
+            },
+            "prune-lockfile": {
+              "dependsOn": [
+                "build"
+              ],
+              "cache": true,
+              "executor": "@nx/js:prune-lockfile",
+              "outputs": [
+                "{workspaceRoot}/api/dist/package.json",
+                "{workspaceRoot}/api/dist/pnpm-lock.yaml"
+              ],
+              "options": {
+                "buildTarget": "build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "copy-workspace-modules": {
+              "dependsOn": [
+                "build"
+              ],
+              "cache": true,
+              "outputs": [
+                "{workspaceRoot}/api/dist/workspace_modules"
+              ],
+              "executor": "@nx/js:copy-workspace-modules",
+              "options": {
+                "buildTarget": "build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "prune": {
+              "dependsOn": [
+                "prune-lockfile",
+                "copy-workspace-modules"
+              ],
+              "executor": "nx:noop",
+              "configurations": {},
+              "options": {},
+              "parallelism": true
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@nx/js:node",
+              "defaultConfiguration": "development",
+              "dependsOn": [
+                "build"
+              ],
+              "options": {
+                "buildTarget": "@starter/api:build",
+                "runBuildTargetDependencies": false,
+                "watch": false,
+                "buildTargetOptions": {
+                  "watch": true
+                }
+              },
+              "configurations": {
+                "development": {
+                  "buildTarget": "@starter/api:build:development",
+                  "buildTargetOptions": {
+                    "args": [
+                      "--node-env=development",
+                      "--watch"
+                    ]
+                  }
+                },
+                "production": {
+                  "buildTarget": "@starter/api:build:production"
+                }
+              },
+              "parallelism": true
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "outputs": [
+                "{workspaceRoot}/test-output/jest/api"
+              ],
+              "options": {
+                "jestConfig": "api/jest.config.js",
+                "passWithNoTests": true
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                },
+                "unit": {
+                  "testPathIgnorePatterns": [
+                    ".integration.spec.ts"
+                  ]
+                },
+                "integration": {
+                  "testPathPattern": ".integration.spec.ts"
+                }
+              },
+              "parallelism": true
+            }
+          },
+          "name": "@starter/api",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "postinstall"
+              ]
+            },
+            "js": {
+              "packageName": "@starter/api",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "api/src",
+          "projectType": "application",
+          "implicitDependencies": []
+        }
+      },
+      "@starter/web": {
+        "name": "@starter/web",
+        "type": "app",
+        "data": {
+          "root": "web",
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "next build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "next dev --turbopack --port 4200",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "start": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "start"
+              },
+              "metadata": {
+                "scriptContent": "next start",
+                "runCommand": "pnpm run start"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "serve-static": {
+              "continuous": true,
+              "options": {
+                "cwd": "web",
+                "command": "next start"
+              },
+              "dependsOn": [
+                "build"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @starter/web --includeDependentProjects -- pnpm exec nx build-deps @starter/web"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test"
+              },
+              "metadata": {
+                "scriptContent": "vitest",
+                "runCommand": "pnpm run test"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:ui": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:ui"
+              },
+              "metadata": {
+                "scriptContent": "vitest --ui",
+                "runCommand": "pnpm run test:ui"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:coverage": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:coverage"
+              },
+              "metadata": {
+                "scriptContent": "vitest run --coverage",
+                "runCommand": "pnpm run test:coverage"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "storybook": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "storybook"
+              },
+              "metadata": {
+                "scriptContent": "storybook dev -p 6006",
+                "runCommand": "pnpm run storybook"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-storybook": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build-storybook"
+              },
+              "metadata": {
+                "scriptContent": "storybook build",
+                "runCommand": "pnpm run build-storybook"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "generate": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "generate"
+              },
+              "metadata": {
+                "scriptContent": "tsx scripts/generate-component/index.ts",
+                "runCommand": "pnpm run generate"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "format": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format"
+              },
+              "metadata": {
+                "scriptContent": "biome format",
+                "runCommand": "pnpm run format"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/biome.json"
+              ]
+            },
+            "format:write": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format:write"
+              },
+              "metadata": {
+                "scriptContent": "biome format --write",
+                "runCommand": "pnpm run format:write"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check"
+              },
+              "metadata": {
+                "scriptContent": "biome check",
+                "runCommand": "pnpm run check"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:write": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:write"
+              },
+              "metadata": {
+                "scriptContent": "biome check --write",
+                "runCommand": "pnpm run check:write"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:staged": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:staged"
+              },
+              "metadata": {
+                "scriptContent": "biome check --staged --no-errors-on-unmatched",
+                "runCommand": "pnpm run check:staged"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:changed": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:changed"
+              },
+              "metadata": {
+                "scriptContent": "biome check --changed --since=master",
+                "runCommand": "pnpm run check:changed"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "@starter/web",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build",
+                "start",
+                "test",
+                "test:ui",
+                "test:coverage",
+                "storybook",
+                "build-storybook",
+                "generate",
+                "format",
+                "format:write",
+                "check",
+                "check:write",
+                "check:staged",
+                "check:changed"
+              ]
+            },
+            "js": {
+              "packageName": "@starter/web",
+              "packageVersion": "0.1.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "fullstack-starter": {
+        "name": "fullstack-starter",
+        "type": "app",
+        "data": {
+          "root": ".",
+          "name": "fullstack-starter",
+          "includedScripts": [
+            "format",
+            "format:write",
+            "check",
+            "check:write",
+            "check:staged",
+            "check:staged:write",
+            "check:changed"
+          ],
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "format",
+                "format:write",
+                "check",
+                "check:write",
+                "check:staged",
+                "check:staged:write",
+                "check:changed"
+              ]
+            },
+            "description": "Production-ready full-stack starter template with NestJS, Next.js, Prisma, and PostgreSQL",
+            "js": {
+              "packageName": "fullstack-starter",
+              "packageVersion": "0.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "format": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "biome format ."
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/biome.json"
+              ]
+            },
+            "format:write": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format:write"
+              },
+              "metadata": {
+                "scriptContent": "biome format --write",
+                "runCommand": "pnpm run format:write"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check"
+              },
+              "metadata": {
+                "scriptContent": "biome check",
+                "runCommand": "pnpm run check"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:write": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:write"
+              },
+              "metadata": {
+                "scriptContent": "biome check --write",
+                "runCommand": "pnpm run check:write"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:staged": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:staged"
+              },
+              "metadata": {
+                "scriptContent": "biome check --staged --no-errors-on-unmatched",
+                "runCommand": "pnpm run check:staged"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:staged:write": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:staged:write"
+              },
+              "metadata": {
+                "scriptContent": "biome check --staged --write --no-errors-on-unmatched",
+                "runCommand": "pnpm run check:staged:write"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check:changed": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "check:changed"
+              },
+              "metadata": {
+                "scriptContent": "biome check --changed --since=master",
+                "runCommand": "pnpm run check:changed"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "local-registry": {
+              "executor": "@nx/js:verdaccio",
+              "options": {
+                "port": 4873,
+                "config": ".verdaccio/config.yml",
+                "storage": "tmp/local-registry/storage"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "continuous": true
+            },
+            "lint": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "biome check ."
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/biome.json"
+              ]
+            }
+          },
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "@starter/shared-types": [],
+      "inventory-service": [],
+      "account-service": [],
+      "qr-service": [],
+      "@starter/api-e2e": [
+        {
+          "source": "@starter/api-e2e",
+          "target": "@starter/api",
+          "type": "implicit"
+        }
+      ],
+      "@starter/web-e2e": [],
+      "@starter/api": [],
+      "@starter/web": [],
+      "fullstack-starter": []
+    }
+  }
+}

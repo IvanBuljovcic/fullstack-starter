@@ -22,12 +22,12 @@ This guide covers all testing approaches used in this Next.js application, inclu
 
 ### Testing Stack
 
-| Type | Tool | Purpose |
-|------|------|---------|
-| **Unit Tests** | Vitest | Fast, isolated tests for functions and hooks |
-| **Component Tests** | React Testing Library | User-centric component behavior tests |
-| **Visual Tests** | Storybook | Component documentation and visual regression |
-| **E2E Tests** | Playwright | Full user journey testing |
+| Type                | Tool                  | Purpose                                       |
+| ------------------- | --------------------- | --------------------------------------------- |
+| **Unit Tests**      | Vitest                | Fast, isolated tests for functions and hooks  |
+| **Component Tests** | React Testing Library | User-centric component behavior tests         |
+| **Visual Tests**    | Storybook             | Component documentation and visual regression |
+| **E2E Tests**       | Playwright            | Full user journey testing                     |
 
 ### Running Tests
 
@@ -81,6 +81,7 @@ export default defineConfig({
 ```
 
 **Key features:**
+
 - `globals: true` - No need to import `describe`, `it`, `expect`
 - `environment: 'jsdom'` - Browser-like environment
 - `setupFiles` - Loads `@testing-library/jest-dom` matchers
@@ -93,6 +94,7 @@ import '@testing-library/jest-dom';
 ```
 
 This provides helpful matchers like:
+
 - `toBeInTheDocument()`
 - `toHaveTextContent()`
 - `toBeDisabled()`
@@ -120,23 +122,39 @@ Group related tests using nested `describe` blocks:
 ```tsx
 describe('Input', () => {
   describe('Basic Rendering', () => {
-    it('should render input element', () => { /* ... */ });
-    it('should render with label', () => { /* ... */ });
+    it('should render input element', () => {
+      /* ... */
+    });
+    it('should render with label', () => {
+      /* ... */
+    });
   });
 
   describe('Size Variants', () => {
-    it('should render with small size', () => { /* ... */ });
-    it('should render with large size', () => { /* ... */ });
+    it('should render with small size', () => {
+      /* ... */
+    });
+    it('should render with large size', () => {
+      /* ... */
+    });
   });
 
   describe('User Interactions', () => {
-    it('should handle onChange event', () => { /* ... */ });
-    it('should handle onBlur event', () => { /* ... */ });
+    it('should handle onChange event', () => {
+      /* ... */
+    });
+    it('should handle onBlur event', () => {
+      /* ... */
+    });
   });
 
   describe('Accessibility', () => {
-    it('should associate label with input', () => { /* ... */ });
-    it('should have aria-invalid when error exists', () => { /* ... */ });
+    it('should associate label with input', () => {
+      /* ... */
+    });
+    it('should have aria-invalid when error exists', () => {
+      /* ... */
+    });
   });
 });
 ```
@@ -246,7 +264,10 @@ describe('Input States', () => {
 
   it('should have aria-invalid when error exists', () => {
     render(<Input error="Invalid email" label="Email" />);
-    expect(screen.getByLabelText('Email')).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByLabelText('Email')).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    );
   });
 });
 ```
@@ -259,12 +280,7 @@ it('should work as controlled component', async () => {
 
   const TestComponent = () => {
     const [value, setValue] = React.useState('');
-    return (
-      <Input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    );
+    return <Input value={value} onChange={(e) => setValue(e.target.value)} />;
   };
 
   render(<TestComponent />);
@@ -342,9 +358,12 @@ it('should debounce search input', async () => {
   await user.type(screen.getByRole('searchbox'), 'query');
 
   // Wait for debounce
-  await waitFor(() => {
-    expect(handleSearch).toHaveBeenCalledWith('query');
-  }, { timeout: 400 });
+  await waitFor(
+    () => {
+      expect(handleSearch).toHaveBeenCalledWith('query');
+    },
+    { timeout: 400 }
+  );
 });
 ```
 
@@ -377,9 +396,12 @@ describe('useDebounce', () => {
     expect(result.current).toBe('initial');
 
     // Wait for debounce
-    await waitFor(() => {
-      expect(result.current).toBe('updated');
-    }, { timeout: 400 });
+    await waitFor(
+      () => {
+        expect(result.current).toBe('updated');
+      },
+      { timeout: 400 }
+    );
   });
 });
 ```
@@ -395,18 +417,17 @@ describe('useInfiniteData', () => {
   it('should fetch data using adapter', async () => {
     const queryClient = new QueryClient();
     const wrapper = ({ children }) => (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 
     const { result } = renderHook(
-      () => useInfiniteData({
-        queryKey: ['products'],
-        adapter: mockAdapter,
-        fetcher: mockFetcher,
-        filters: {},
-      }),
+      () =>
+        useInfiniteData({
+          queryKey: ['products'],
+          adapter: mockAdapter,
+          fetcher: mockFetcher,
+          filters: {},
+        }),
       { wrapper }
     );
 
@@ -447,7 +468,9 @@ The adapter pattern makes testing API integrations straightforward by swapping r
 // test-utils/mock-adapter.ts
 import type { DataAdapter, ParsedPage } from '@/adapters/data-adapter';
 
-export class MockProductAdapter implements DataAdapter<Product, ProductFilters, any, number> {
+export class MockProductAdapter
+  implements DataAdapter<Product, ProductFilters, any, number>
+{
   limit = 20;
 
   buildURL(filters: ProductFilters, pageParam: number): string {
@@ -465,7 +488,10 @@ export class MockProductAdapter implements DataAdapter<Product, ProductFilters, 
     };
   }
 
-  getNextPageParam(lastPage: ParsedPage<Product>, allPages: ParsedPage<Product>[]): number | undefined {
+  getNextPageParam(
+    lastPage: ParsedPage<Product>,
+    allPages: ParsedPage<Product>[]
+  ): number | undefined {
     return lastPage.hasNextPage ? allPages.length + 1 : undefined;
   }
 }
@@ -529,6 +555,7 @@ it('should call fetcher with correct URL', async () => {
 ### What is Storybook?
 
 Storybook provides:
+
 - **Component documentation** - Interactive examples
 - **Visual testing** - See components in isolation
 - **Accessibility testing** - Built-in a11y addon
@@ -802,12 +829,12 @@ it('test 1', () => {
 
 ```tsx
 // ❌ Bad
-it('works', () => { });
-it('test button', () => { });
+it('works', () => {});
+it('test button', () => {});
 
 // ✅ Good
-it('should disable submit button when form is invalid', () => { });
-it('should show error message when email format is incorrect', () => { });
+it('should disable submit button when form is invalid', () => {});
+it('should show error message when email format is incorrect', () => {});
 ```
 
 ### 7. Test Edge Cases
@@ -815,13 +842,13 @@ it('should show error message when email format is incorrect', () => { });
 ```tsx
 describe('Input', () => {
   // Happy path
-  it('should accept valid email', () => { });
+  it('should accept valid email', () => {});
 
   // Edge cases
-  it('should handle empty value', () => { });
-  it('should handle very long input', () => { });
-  it('should handle special characters', () => { });
-  it('should handle rapid typing', () => { });
+  it('should handle empty value', () => {});
+  it('should handle very long input', () => {});
+  it('should handle special characters', () => {});
+  it('should handle rapid typing', () => {});
 });
 ```
 
@@ -837,9 +864,7 @@ export function renderWithProviders(ui: React.ReactElement) {
   });
 
   return render(
-    <QueryClientProvider client={queryClient}>
-      {ui}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
   );
 }
 
@@ -931,14 +956,18 @@ screen.debug(screen.getByRole('button')); // Prints specific element
 **Cause**: Timing issues or environment differences
 
 **Fix**:
+
 - Use `waitFor` for async operations
 - Increase timeout for slow operations
 - Check for timezone/locale issues
 
 ```tsx
-await waitFor(() => {
-  expect(screen.getByText('Loaded')).toBeInTheDocument();
-}, { timeout: 5000 });
+await waitFor(
+  () => {
+    expect(screen.getByText('Loaded')).toBeInTheDocument();
+  },
+  { timeout: 5000 }
+);
 ```
 
 #### "querySelector is not a function"

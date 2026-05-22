@@ -70,16 +70,17 @@ function MyForm() {
 
 ```typescript
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
-  label: string;              // Accessible label (required)
-  error?: string;             // Error message to display
-  size?: 'sm' | 'md' | 'lg';  // Size variant (default: 'md')
-  className?: string;         // Additional CSS classes
+  label: string; // Accessible label (required)
+  error?: string; // Error message to display
+  size?: 'sm' | 'md' | 'lg'; // Size variant (default: 'md')
+  className?: string; // Additional CSS classes
 }
 ```
 
 #### Examples
 
 **With Error State:**
+
 ```tsx
 <Input
   label="Username"
@@ -90,6 +91,7 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
 ```
 
 **Different Sizes:**
+
 ```tsx
 <Input label="Small" size="sm" />
 <Input label="Medium" size="md" />
@@ -97,22 +99,15 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
 ```
 
 **Password Input:**
+
 ```tsx
-<Input
-  label="Password"
-  type="password"
-  minLength={8}
-  required
-/>
+<Input label="Password" type="password" minLength={8} required />
 ```
 
 **Disabled State:**
+
 ```tsx
-<Input
-  label="Readonly Field"
-  value="Cannot edit"
-  disabled
-/>
+<Input label="Readonly Field" value="Cannot edit" disabled />
 ```
 
 #### Styling
@@ -120,6 +115,7 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
 CSS Module: `input.module.css`
 
 Key classes:
+
 - `.input` - Base input styles
 - `.input--sm`, `.input--md`, `.input--lg` - Size variants
 - `.input--error` - Error state styling
@@ -177,6 +173,7 @@ interface SelectProps extends ComponentPropsWithoutRef<'select'> {
 #### Examples
 
 **With Groups:**
+
 ```tsx
 <Select
   label="Country"
@@ -189,6 +186,7 @@ interface SelectProps extends ComponentPropsWithoutRef<'select'> {
 ```
 
 **With Error:**
+
 ```tsx
 <Select
   label="Payment Method"
@@ -198,6 +196,7 @@ interface SelectProps extends ComponentPropsWithoutRef<'select'> {
 ```
 
 **Controlled Component:**
+
 ```tsx
 const [value, setValue] = useState('');
 
@@ -206,7 +205,7 @@ const [value, setValue] = useState('');
   value={value}
   onChange={(e) => setValue(e.target.value)}
   options={sortOptions}
-/>
+/>;
 ```
 
 ---
@@ -248,6 +247,7 @@ interface CheckboxProps extends ComponentPropsWithoutRef<'input'> {
 #### Examples
 
 **Multiple Checkboxes:**
+
 ```tsx
 function FilterOptions() {
   const [filters, setFilters] = useState({
@@ -271,7 +271,9 @@ function FilterOptions() {
       <Checkbox
         label="Free Shipping"
         checked={filters.freeShipping}
-        onChange={(e) => setFilters({ ...filters, freeShipping: e.target.checked })}
+        onChange={(e) =>
+          setFilters({ ...filters, freeShipping: e.target.checked })
+        }
       />
     </div>
   );
@@ -279,12 +281,9 @@ function FilterOptions() {
 ```
 
 **Disabled State:**
+
 ```tsx
-<Checkbox
-  label="This option is disabled"
-  disabled
-  checked={false}
-/>
+<Checkbox label="This option is disabled" disabled checked={false} />
 ```
 
 ---
@@ -413,7 +412,7 @@ type ToastType = 'success' | 'error' | 'warning' | 'info';
 interface ToastOptions {
   message: string;
   type: ToastType;
-  duration?: number;        // Auto-dismiss time (default: 3000ms)
+  duration?: number; // Auto-dismiss time (default: 3000ms)
   action?: {
     label: string;
     onClick: () => void;
@@ -424,6 +423,7 @@ interface ToastOptions {
 #### Examples
 
 **Success Toast:**
+
 ```tsx
 showToast({
   message: 'Product added to cart',
@@ -432,6 +432,7 @@ showToast({
 ```
 
 **Error Toast:**
+
 ```tsx
 showToast({
   message: 'Failed to process payment',
@@ -441,6 +442,7 @@ showToast({
 ```
 
 **Warning Toast:**
+
 ```tsx
 showToast({
   message: 'Your session will expire soon',
@@ -449,6 +451,7 @@ showToast({
 ```
 
 **Info Toast:**
+
 ```tsx
 showToast({
   message: 'New features available!',
@@ -457,6 +460,7 @@ showToast({
 ```
 
 **With Action Button:**
+
 ```tsx
 showToast({
   message: 'Item deleted',
@@ -503,7 +507,7 @@ function LoadingState() {
 
 ```typescript
 interface LoaderProps {
-  size?: 'sm' | 'md' | 'lg';  // Size variant (default: 'md')
+  size?: 'sm' | 'md' | 'lg'; // Size variant (default: 'md')
   className?: string;
 }
 ```
@@ -511,6 +515,7 @@ interface LoaderProps {
 #### Examples
 
 **Different Sizes:**
+
 ```tsx
 <Loader size="sm" />
 <Loader size="md" />
@@ -518,6 +523,7 @@ interface LoaderProps {
 ```
 
 **Centered:**
+
 ```tsx
 <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
   <Loader />
@@ -525,6 +531,7 @@ interface LoaderProps {
 ```
 
 **With Message:**
+
 ```tsx
 <div className={styles.loadingContainer}>
   <Loader size="lg" />
@@ -561,16 +568,17 @@ function App() {
 ```typescript
 interface SmartErrorBoundaryProps {
   children: ReactNode;
-  context: string;                          // Error context name
-  level: 'component' | 'page' | 'app';     // Error boundary level
-  maxRetries?: number;                      // Max retry attempts (default: 3)
-  onError?: (error: Error) => void;        // Error callback
+  context: string; // Error context name
+  level: 'component' | 'page' | 'app'; // Error boundary level
+  maxRetries?: number; // Max retry attempts (default: 3)
+  onError?: (error: Error) => void; // Error callback
 }
 ```
 
 #### Levels
 
 **Component Level** - Local errors with basic retry:
+
 ```tsx
 <SmartErrorBoundary context="ProductList" level="component" maxRetries={3}>
   <ProductList />
@@ -578,6 +586,7 @@ interface SmartErrorBoundaryProps {
 ```
 
 **Page Level** - Page errors with navigation:
+
 ```tsx
 <SmartErrorBoundary context="CheckoutPage" level="page">
   <CheckoutPage />
@@ -585,6 +594,7 @@ interface SmartErrorBoundaryProps {
 ```
 
 **App Level** - Critical errors with full reload:
+
 ```tsx
 <SmartErrorBoundary context="Application" level="app">
   <App />
@@ -593,11 +603,11 @@ interface SmartErrorBoundaryProps {
 
 #### Features by Level
 
-| Level | Features |
-|-------|----------|
-| `component` | Retry button, error details |
-| `page` | Everything in component + back/home navigation |
-| `app` | Everything in page + full app reload option |
+| Level       | Features                                       |
+| ----------- | ---------------------------------------------- |
+| `component` | Retry button, error details                    |
+| `page`      | Everything in component + back/home navigation |
+| `app`       | Everything in page + full app reload option    |
 
 #### Example: Form with Error Boundary
 
@@ -654,7 +664,7 @@ function ProductList() {
 ```typescript
 interface LoadingAnnouncerProps {
   isLoading: boolean;
-  message?: string;  // Default: "Loading"
+  message?: string; // Default: "Loading"
 }
 ```
 
@@ -674,11 +684,8 @@ import { SearchAnnouncer } from '@/components/Accessibility/Announcer/Search';
 function SearchResults({ results }) {
   return (
     <div>
-      <SearchAnnouncer
-        count={results.length}
-        query={searchQuery}
-      />
-      {results.map(result => (
+      <SearchAnnouncer count={results.length} query={searchQuery} />
+      {results.map((result) => (
         <SearchResult key={result.id} result={result} />
       ))}
     </div>
@@ -724,6 +731,7 @@ pnpm generate MyComponent --client --styles --props "title: string; count: numbe
 ```
 
 This creates:
+
 ```
 src/components/MyComponent/
 ├── index.ts
@@ -737,7 +745,7 @@ src/components/MyComponent/
 
 ```tsx
 // my-component.tsx
-"use client";  // If using client-side features
+'use client'; // If using client-side features
 
 import type { ComponentPropsWithoutRef } from 'react';
 import styles from './my-component.module.css';
@@ -886,7 +894,7 @@ import styles from './component.module.css';
 const css = createStrictClassSelector(styles);
 
 // TypeScript will error if class doesn't exist
-<div className={css('container', 'active')} />
+<div className={css('container', 'active')} />;
 ```
 
 ---
@@ -922,11 +930,7 @@ describe('Checkbox', () => {
     const user = userEvent.setup();
 
     render(
-      <Checkbox
-        label="Accept terms"
-        checked={false}
-        onChange={handleChange}
-      />
+      <Checkbox label="Accept terms" checked={false} onChange={handleChange} />
     );
 
     await user.click(screen.getByRole('checkbox'));
@@ -988,6 +992,7 @@ pnpm storybook
 ```
 
 **Features:**
+
 - Interactive prop controls
 - Accessibility testing (a11y addon)
 - Responsive viewport testing

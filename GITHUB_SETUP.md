@@ -28,6 +28,7 @@ gh repo edit --enable-template
 ### Option B: GitHub Web Interface
 
 1. **Create a new repository on GitHub**
+
    - Go to https://github.com/new
    - Repository name: `nx-fullstack-template`
    - Description: `Production-ready Nx monorepo with NestJS, Next.js, Prisma, and PostgreSQL`
@@ -35,6 +36,7 @@ gh repo edit --enable-template
    - Do NOT initialize with README (we already have one)
 
 2. **Push your local repository**
+
    ```bash
    cd C:\Projects\Private\nx-fullstack-template
    git init
@@ -87,12 +89,14 @@ gh repo edit --enable-template
 Update these files with your GitHub username:
 
 ### README.md
+
 ```bash
 # Replace YOUR_USERNAME with your actual username
 sed -i 's/YOUR_USERNAME/actual-username/g' README.md
 ```
 
 ### .github/ISSUE_TEMPLATE/config.yml
+
 ```yaml
 contact_links:
   - name: Question or Discussion
@@ -100,6 +104,7 @@ contact_links:
 ```
 
 ### TEMPLATE_INFO.md
+
 Update all instances of `YOUR_USERNAME` with your actual GitHub username.
 
 ## Step 4: Test the Template
@@ -114,6 +119,7 @@ Update all instances of `YOUR_USERNAME` with your actual GitHub username.
    ./init-template.sh
    ```
 5. Verify everything works:
+
    ```bash
    pnpm install
    docker compose up -d
@@ -138,12 +144,14 @@ git push origin v1.0.0
 2. Choose tag: `v1.0.0`
 3. Release title: `v1.0.0 - Initial Template Release`
 4. Description:
+
    ```markdown
    # Nx Full-Stack Template v1.0.0
 
    Production-ready monorepo template for building full-stack TypeScript applications.
 
    ## Features
+
    - ✅ Nx 22.5 monorepo with intelligent caching
    - ✅ NestJS 11 backend with TypeScript
    - ✅ Next.js 16 + React 19 frontend
@@ -155,6 +163,7 @@ git push origin v1.0.0
    - ✅ Initialization scripts for easy setup
 
    ## Quick Start
+
    1. Click "Use this template" button
    2. Clone your new repository
    3. Run `./init-template.sh` (or `.ps1` on Windows)
@@ -164,6 +173,7 @@ git push origin v1.0.0
    See [SETUP.md](https://github.com/YOUR_USERNAME/nx-fullstack-template/blob/main/SETUP.md) for detailed instructions.
 
    ## What's Included
+
    - Complete NestJS API with Prisma integration
    - Next.js web application with App Router
    - Example User/Post models with CRUD operations
@@ -174,6 +184,7 @@ git push origin v1.0.0
 
    **Full documentation**: [README.md](https://github.com/YOUR_USERNAME/nx-fullstack-template)
    ```
+
 5. Click **Publish release**
 
 ## Step 6: Add Template Badge to README
@@ -189,6 +200,7 @@ Add this badge to the top of your README.md:
 ### Add Topics
 
 On your repository page, click **⚙️** next to "About" and add these topics:
+
 - `nx-monorepo`
 - `nestjs-template`
 - `nextjs-template`
@@ -212,11 +224,13 @@ On your repository page, click **⚙️** next to "About" and add these topics:
 Schedule regular maintenance:
 
 1. **Weekly**: Check for security updates
+
    ```bash
    pnpm audit
    ```
 
 2. **Monthly**: Update dependencies
+
    ```bash
    pnpm update --latest
    pnpm check
@@ -278,6 +292,7 @@ Users can now click "Use this template" to create their own projects based on yo
 ---
 
 **Next Steps:**
+
 - Monitor issues and discussions
 - Respond to questions and feedback
 - Continuously improve based on user feedback

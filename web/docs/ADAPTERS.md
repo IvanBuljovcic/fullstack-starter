@@ -23,6 +23,7 @@ The Adapter Pattern is a core architectural feature of this template that decoup
 The Adapter Pattern is a structural design pattern that allows objects with incompatible interfaces to collaborate. In this template, it standardizes how we fetch and parse data from different APIs.
 
 **Without Adapter Pattern:**
+
 ```tsx
 // Tightly coupled to specific API
 function ProductList() {
@@ -43,6 +44,7 @@ function ProductList() {
 ```
 
 **With Adapter Pattern:**
+
 ```tsx
 // Decoupled from specific API
 function ProductList() {
@@ -62,6 +64,7 @@ function ProductList() {
 ## Why Use Adapters?
 
 ### 1. **API Portability**
+
 Switch between different APIs without refactoring components:
 
 ```tsx
@@ -75,6 +78,7 @@ const adapter = new CustomBackendProductAdapter(20);
 ```
 
 ### 2. **Consistent Data Format**
+
 Different APIs return data in different formats. Adapters normalize them:
 
 ```typescript
@@ -84,29 +88,36 @@ Different APIs return data in different formats. Adapters normalize them:
 ```
 
 ### 3. **Testability**
+
 Create mock adapters for testing without hitting real APIs:
 
 ```typescript
 class MockProductAdapter implements DataAdapter<Product, any, any, number> {
-  buildURL() { return '/mock'; }
-  parseResponse() { return { items: mockData, total: 10, hasNextPage: false }; }
+  buildURL() {
+    return '/mock';
+  }
+  parseResponse() {
+    return { items: mockData, total: 10, hasNextPage: false };
+  }
   // ...
 }
 ```
 
 ### 4. **Type Safety**
+
 Adapters are fully typed, providing autocomplete and error checking:
 
 ```typescript
 DataAdapter<
-  Product,           // Item type
-  ProductFilters,    // Filter type
-  APIResponse,       // API response type
-  number            // Page parameter type
->
+  Product, // Item type
+  ProductFilters, // Filter type
+  APIResponse, // API response type
+  number // Page parameter type
+>;
 ```
 
 ### 5. **Separation of Concerns**
+
 - **Components**: Focus on UI and user interactions
 - **Adapters**: Handle API-specific logic
 - **Hooks**: Manage data fetching and state
@@ -189,7 +200,7 @@ interface ProductFilters {
 interface MyAPIResponse {
   data: Array<{
     id: number;
-    name: string;  // Note: different field name
+    name: string; // Note: different field name
     cost: number;
   }>;
   pagination: {
@@ -205,12 +216,15 @@ interface MyAPIResponse {
 ```typescript
 import type { DataAdapter, ParsedPage } from './data-adapter';
 
-export class MyAPIProductAdapter implements DataAdapter<
-  Product,
-  ProductFilters,
-  MyAPIResponse,
-  number  // Using page numbers
-> {
+export class MyAPIProductAdapter
+  implements
+    DataAdapter<
+      Product,
+      ProductFilters,
+      MyAPIResponse,
+      number // Using page numbers
+    >
+{
   constructor(private limit: number = 20) {}
 
   buildURL(filters: ProductFilters, pageParam: number): string {
@@ -240,10 +254,10 @@ export class MyAPIProductAdapter implements DataAdapter<
 
   parseResponse(response: MyAPIResponse): ParsedPage<Product> {
     return {
-      items: response.data.map(item => ({
+      items: response.data.map((item) => ({
         id: item.id,
-        title: item.name,  // Map name -> title
-        price: item.cost,   // Map cost -> price
+        title: item.name, // Map name -> title
+        price: item.cost, // Map cost -> price
       })),
       total: response.pagination.total,
       hasNextPage: response.pagination.hasMore,
@@ -272,29 +286,22 @@ function ProductList() {
   const [filters, setFilters] = useState<ProductFilters>({});
   const adapter = new MyAPIProductAdapter(20);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-  } = useInfiniteData({
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteData({
     queryKey: ['products', filters],
     adapter,
     fetcher,
     filters,
   });
 
-  const products = data?.pages.flatMap(page => page.items) ?? [];
+  const products = data?.pages.flatMap((page) => page.items) ?? [];
 
   return (
     <div>
-      {products.map(product => (
+      {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
       {hasNextPage && (
-        <button onClick={() => fetchNextPage()}>
-          Load More
-        </button>
+        <button onClick={() => fetchNextPage()}>Load More</button>
       )}
     </div>
   );
@@ -314,18 +321,14 @@ import { useInfiniteData } from '@/hooks/use-infinite-data';
 
 const adapter = new MyAPIProductAdapter(20);
 
-const {
-  data,
-  fetchNextPage,
-  hasNextPage,
-  isFetching,
-  error,
-} = useInfiniteData({
-  queryKey: ['products', filters],
-  adapter,
-  fetcher,
-  filters,
-});
+const { data, fetchNextPage, hasNextPage, isFetching, error } = useInfiniteData(
+  {
+    queryKey: ['products', filters],
+    adapter,
+    fetcher,
+    filters,
+  }
+);
 ```
 
 ### With useInfiniteScroll
@@ -335,11 +338,7 @@ Automatic infinite scroll with IntersectionObserver:
 ```tsx
 import { useInfiniteScroll } from '@/hooks/infinite-scroll/use-infinite-scroll';
 
-const {
-  data,
-  targetRef,
-  isFetching,
-} = useInfiniteScroll({
+const { data, targetRef, isFetching } = useInfiniteScroll({
   queryKey: ['products', filters],
   adapter,
   fetcher,
@@ -371,6 +370,7 @@ const adapter = new DummyJSONProductAdapter(20);
 **API**: `https://dummyjson.com/products`
 
 **Features:**
+
 - Offset-based pagination
 - Search support
 - Category filtering
@@ -387,6 +387,7 @@ const adapter = new CustomBackendProductAdapter(20);
 ```
 
 **Features:**
+
 - Page-based pagination
 - Configurable base URL via environment variable
 - Filter support
@@ -401,12 +402,15 @@ const adapter = new CustomBackendProductAdapter(20);
 
 ```typescript
 // adapters/shopify-product-adapter.ts
-export class ShopifyProductAdapter implements DataAdapter<
-  Product,
-  { query: string; collection?: string },
-  ShopifyResponse,
-  string  // Shopify uses cursor-based pagination
-> {
+export class ShopifyProductAdapter
+  implements
+    DataAdapter<
+      Product,
+      { query: string; collection?: string },
+      ShopifyResponse,
+      string // Shopify uses cursor-based pagination
+    >
+{
   buildURL(filters, cursor) {
     const params = new URLSearchParams();
     if (filters.query) params.append('query', filters.query);
@@ -417,7 +421,7 @@ export class ShopifyProductAdapter implements DataAdapter<
 
   parseResponse(response) {
     return {
-      items: response.products.edges.map(edge => edge.node),
+      items: response.products.edges.map((edge) => edge.node),
       total: response.products.totalCount,
       hasNextPage: response.products.pageInfo.hasNextPage,
     };
@@ -435,12 +439,15 @@ export class ShopifyProductAdapter implements DataAdapter<
 
 ```typescript
 // adapters/github-repo-adapter.ts
-export class GitHubRepoAdapter implements DataAdapter<
-  Repository,
-  { query: string; language?: string },
-  GitHubSearchResponse,
-  number
-> {
+export class GitHubRepoAdapter
+  implements
+    DataAdapter<
+      Repository,
+      { query: string; language?: string },
+      GitHubSearchResponse,
+      number
+    >
+{
   constructor(private perPage: number = 30) {}
 
   buildURL(filters, page) {
@@ -478,12 +485,15 @@ export class GitHubRepoAdapter implements DataAdapter<
 
 ```typescript
 // adapters/wordpress-post-adapter.ts
-export class WordPressPostAdapter implements DataAdapter<
-  Post,
-  { category?: number; tag?: number },
-  WordPressResponse,
-  number
-> {
+export class WordPressPostAdapter
+  implements
+    DataAdapter<
+      Post,
+      { category?: number; tag?: number },
+      WordPressResponse,
+      number
+    >
+{
   constructor(private perPage: number = 10) {}
 
   buildURL(filters, page) {
@@ -527,12 +537,9 @@ export class WordPressPostAdapter implements DataAdapter<
 
 ```typescript
 // __tests__/mocks/mock-product-adapter.ts
-export class MockProductAdapter implements DataAdapter<
-  Product,
-  any,
-  any,
-  number
-> {
+export class MockProductAdapter
+  implements DataAdapter<Product, any, any, number>
+{
   constructor(
     private mockData: Product[] = [],
     private shouldFail: boolean = false
@@ -665,12 +672,15 @@ interface MyAPIResponse {
 }
 
 // Use them in adapter
-class MyAdapter implements DataAdapter<
-  Product,
-  ProductFilters,
-  MyAPIResponse,  // Typed!
-  number
-> {
+class MyAdapter
+  implements
+    DataAdapter<
+      Product,
+      ProductFilters,
+      MyAPIResponse, // Typed!
+      number
+    >
+{
   parseResponse(response: MyAPIResponse) {
     // TypeScript knows response structure
     return {
@@ -684,7 +694,7 @@ class MyAdapter implements DataAdapter<
 
 ### 5. **Document Your Adapters**
 
-```typescript
+````typescript
 /**
  * Adapter for Shopify Storefront API
  *
@@ -703,7 +713,7 @@ class MyAdapter implements DataAdapter<
 export class ShopifyAdapter implements DataAdapter<...> {
   // ...
 }
-```
+````
 
 ### 6. **Environment-Based Adapters**
 

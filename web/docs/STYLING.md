@@ -28,6 +28,7 @@ The styling system is built on three pillars:
 3. **Utility Classes** - Common patterns in `utilities.module.css`
 
 This architecture provides:
+
 - Type safety with TypeScript autocomplete
 - Automatic dark mode support
 - No runtime CSS-in-JS overhead
@@ -46,7 +47,7 @@ CSS Modules automatically scope CSS to components, preventing style conflicts. C
 // input.tsx
 import styles from './input.module.css';
 
-<input className={styles.input} />
+<input className={styles.input} />;
 ```
 
 ```css
@@ -64,29 +65,42 @@ Use **BEM-like modifiers** for variants:
 
 ```css
 /* Base class */
-.componentName { }
+.componentName {
+}
 
 /* Modifiers (use double dash) */
-.componentName--variant { }
-.componentName--state { }
+.componentName--variant {
+}
+.componentName--state {
+}
 
 /* Child elements (use camelCase) */
-.componentNameHeader { }
-.componentNameBody { }
+.componentNameHeader {
+}
+.componentNameBody {
+}
 ```
 
 **Examples:**
 
 ```css
 /* input.module.css */
-.input { }
-.input--sm { }
-.input--md { }
-.input--lg { }
-.input--error { }
-.input--disabled { }
-.inputWrapper { }
-.errorText { }
+.input {
+}
+.input--sm {
+}
+.input--md {
+}
+.input--lg {
+}
+.input--error {
+}
+.input--disabled {
+}
+.inputWrapper {
+}
+.errorText {
+}
 ```
 
 ### Dynamic Class Names
@@ -98,15 +112,16 @@ import clsx from 'clsx';
 import styles from './input.module.css';
 
 const className = clsx(
-  styles.input,                              // Base class
-  styles[`input--${size}`],                  // Dynamic variant
-  error && styles['input--error'],            // Conditional state
-  disabled && styles['input--disabled'],      // Another condition
-  className,                                  // Pass-through prop
+  styles.input, // Base class
+  styles[`input--${size}`], // Dynamic variant
+  error && styles['input--error'], // Conditional state
+  disabled && styles['input--disabled'], // Another condition
+  className // Pass-through prop
 );
 ```
 
 **Why bracket notation?**
+
 - Modifiers use dashes (`input--error`)
 - Dashes can't be used in dot notation
 - Use `styles['input--error']` or `styles[`input--${variant}`]`
@@ -114,6 +129,7 @@ const className = clsx(
 ### TypeScript Integration
 
 The `typescript-plugin-css-modules` plugin provides:
+
 - Autocomplete for CSS class names
 - Type errors for invalid classes
 - camelCase transformation for class names
@@ -122,13 +138,13 @@ The `typescript-plugin-css-modules` plugin provides:
 import styles from './component.module.css';
 
 // ✅ Autocomplete works
-styles.componentName
+styles.componentName;
 
 // ✅ Dashes converted to camelCase
-styles.componentNameWrapper  // matches .componentName-wrapper
+styles.componentNameWrapper; // matches .componentName-wrapper
 
 // ❌ TypeScript error for non-existent class
-styles.nonExistentClass
+styles.nonExistentClass;
 ```
 
 **Configuration** (in `tsconfig.json`):
@@ -193,13 +209,13 @@ All design tokens are defined in `src/styles/globals.css` as CSS custom properti
 
 ```css
 :root {
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 1rem;      /* 16px */
-  --spacing-lg: 1.5rem;    /* 24px */
-  --spacing-xl: 2rem;      /* 32px */
-  --spacing-2xl: 3rem;     /* 48px */
-  --spacing-3xl: 4rem;     /* 64px */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
 }
 ```
 
@@ -208,14 +224,14 @@ All design tokens are defined in `src/styles/globals.css` as CSS custom properti
 ```css
 :root {
   /* Font Sizes */
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 1.875rem;  /* 30px */
-  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
 
   /* Font Weights */
   --font-weight-normal: 400;
@@ -234,11 +250,11 @@ All design tokens are defined in `src/styles/globals.css` as CSS custom properti
 
 ```css
 :root {
-  --radius-sm: 0.25rem;   /* 4px */
-  --radius-md: 0.5rem;    /* 8px */
-  --radius-lg: 0.75rem;   /* 12px */
-  --radius-xl: 1rem;      /* 16px */
-  --radius-full: 9999px;  /* Fully rounded */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-full: 9999px; /* Fully rounded */
 }
 ```
 
@@ -438,18 +454,20 @@ import styles from './component.module.css';
 const getClass = createStrictClassSelector(styles, 'ComponentName');
 
 // ✅ Valid class
-getClass('input')
+getClass('input');
 
 // ❌ Runtime warning in development for invalid class
-getClass('invalidClass')
+getClass('invalidClass');
 ```
 
 **When to use:**
+
 - Building reusable component libraries
 - When you want extra safety during development
 - Complex components with many variants
 
 **When to skip:**
+
 - Simple components
 - You prefer compile-time checking only
 - Performance-critical code (adds small overhead)
@@ -463,7 +481,7 @@ The `typescript-plugin-css-modules` automatically generates type definitions for
 type Styles = {
   input: string;
   inputWrapper: string;
-  'input--sm': string;      // Dashes preserved in types
+  'input--sm': string; // Dashes preserved in types
   'input--error': string;
   errorText: string;
 };
@@ -472,15 +490,15 @@ type Styles = {
 Access with bracket notation for dashed names:
 
 ```tsx
-styles['input--sm']
-styles['input--error']
+styles['input--sm'];
+styles['input--error'];
 ```
 
 Or camelCase (if enabled):
 
 ```tsx
-styles.inputSm
-styles.inputError
+styles.inputSm;
+styles.inputError;
 ```
 
 ---
@@ -532,6 +550,7 @@ For component-specific adjustments:
 ### Testing Dark Mode
 
 **In Browser:**
+
 1. Open DevTools → Rendering tab
 2. Find "Emulate CSS media feature prefers-color-scheme"
 3. Select "dark"
@@ -571,7 +590,7 @@ export function Button({
         styles.button,
         styles[`button--${variant}`],
         styles[`button--${size}`],
-        className,
+        className
       )}
       {...props}
     >
@@ -650,10 +669,10 @@ export function Card({ children, className }: CardProps) {
     <div
       className={clsx(
         styles.card,
-        utils.pmd,           // padding-md
-        utils.roundedLg,     // border-radius
-        utils.shadowCard,    // box-shadow
-        className,
+        utils.pmd, // padding-md
+        utils.roundedLg, // border-radius
+        utils.shadowCard, // box-shadow
+        className
       )}
     >
       {children}
@@ -667,21 +686,17 @@ export function Card({ children, className }: CardProps) {
 ```tsx
 // select.tsx
 <div className={styles.selectWrapper}>
-  <label className={styles.label}>
-    {label}
-  </label>
+  <label className={styles.label}>{label}</label>
   <select
     className={clsx(
       styles.select,
       styles[`select--${size}`],
-      error && styles['select--error'],
+      error && styles['select--error']
     )}
   >
     {children}
   </select>
-  {error && (
-    <span className={styles.errorText}>{error}</span>
-  )}
+  {error && <span className={styles.errorText}>{error}</span>}
 </div>
 ```
 
@@ -736,8 +751,8 @@ The project uses PostCSS with two plugins:
 // postcss.config.mjs
 const config = {
   plugins: {
-    'postcss-custom-media': {},  // Custom media queries
-    autoprefixer: {},             // Browser prefixes
+    'postcss-custom-media': {}, // Custom media queries
+    autoprefixer: {}, // Browser prefixes
   },
 };
 ```
@@ -825,43 +840,62 @@ Automatically adds vendor prefixes based on your browserslist configuration:
 
 ```css
 /* ✅ Good - Flat structure */
-.card { }
-.cardHeader { }
-.cardBody { }
-.cardFooter { }
+.card {
+}
+.cardHeader {
+}
+.cardBody {
+}
+.cardFooter {
+}
 
 /* ❌ Bad - Deep nesting */
-.card { }
-.card .header { }
-.card .body { }
-.card .body .content { }
+.card {
+}
+.card .header {
+}
+.card .body {
+}
+.card .body .content {
+}
 ```
 
 ### 4. Use BEM-Like Modifiers
 
 ```css
 /* ✅ Good */
-.button { }
-.button--primary { }
-.button--large { }
-.button--disabled { }
+.button {
+}
+.button--primary {
+}
+.button--large {
+}
+.button--disabled {
+}
 
 /* ❌ Bad */
-.button { }
-.primary { }
-.large { }
-.disabled { }
+.button {
+}
+.primary {
+}
+.large {
+}
+.disabled {
+}
 ```
 
 ### 5. Keep Specificity Low
 
 ```css
 /* ✅ Good - Low specificity */
-.button { }
-.button--primary { }
+.button {
+}
+.button--primary {
+}
 
 /* ❌ Bad - High specificity */
-div.container .sidebar .button.primary { }
+div.container .sidebar .button.primary {
+}
 ```
 
 ### 6. Co-locate Styles with Components
@@ -930,12 +964,12 @@ MyComponent/
 
 ### From Tailwind CSS
 
-| Tailwind | This System |
-|----------|-------------|
-| `className="flex items-center"` | `className={clsx(utils.flex, utils.itemsCenter)}` |
-| `className="p-4"` | `className={utils.pmd}` |
-| `className="text-sm font-bold"` | `className={clsx(utils.textSm, utils.fontBold)}` |
-| `className="bg-blue-500"` | `className={styles.customClass}` with `background: var(--color-primary)` |
+| Tailwind                        | This System                                                              |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| `className="flex items-center"` | `className={clsx(utils.flex, utils.itemsCenter)}`                        |
+| `className="p-4"`               | `className={utils.pmd}`                                                  |
+| `className="text-sm font-bold"` | `className={clsx(utils.textSm, utils.fontBold)}`                         |
+| `className="bg-blue-500"`       | `className={styles.customClass}` with `background: var(--color-primary)` |
 
 ### From Styled Components
 

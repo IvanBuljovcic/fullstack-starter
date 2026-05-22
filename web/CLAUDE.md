@@ -63,14 +63,14 @@ pnpm build             # Production build
 This codebase uses CSS modules with the `clsx` library for conditional class composition:
 
 ```tsx
-import clsx from "clsx";
-import styles from "./component.module.css";
+import clsx from 'clsx';
+import styles from './component.module.css';
 
 const className = clsx(
-    styles.input,
-    styles[`input--${size}`], // Dynamic class names
-    hasError && styles["input--error"], // Conditional classes
-    className, // Pass-through classes
+  styles.input,
+  styles[`input--${size}`], // Dynamic class names
+  hasError && styles['input--error'], // Conditional classes
+  className // Pass-through classes
 );
 ```
 
@@ -93,16 +93,16 @@ The codebase implements an adapter pattern to make API integration swappable. Th
 **When to use**: Any time you need infinite scroll or paginated data fetching, use `useInfiniteData` with an adapter:
 
 ```tsx
-import { useInfiniteData } from "@/hooks/use-infinite-data";
-import { DummyJSONProductAdapter } from "@/adapters/dummyjson-product-adapter";
-import { fetcher } from "@/lib/api-client";
+import { useInfiniteData } from '@/hooks/use-infinite-data';
+import { DummyJSONProductAdapter } from '@/adapters/dummyjson-product-adapter';
+import { fetcher } from '@/lib/api-client';
 
 const adapter = new DummyJSONProductAdapter(20);
 const { data, fetchNextPage } = useInfiniteData({
-    queryKey: ["products", filters],
-    adapter,
-    fetcher,
-    filters,
+  queryKey: ['products', filters],
+  adapter,
+  fetcher,
+  filters,
 });
 ```
 
@@ -120,7 +120,7 @@ Example:
 
 ```tsx
 <SmartErrorBoundary context="ProductList" level="component" maxRetries={3}>
-    <ProductList />
+  <ProductList />
 </SmartErrorBoundary>
 ```
 
@@ -129,8 +129,8 @@ Example:
 All imports use the `@/` alias which maps to `src/`:
 
 ```tsx
-import { Input } from "@/components/shared/Input";
-import { fetcher } from "@/lib/api-client";
+import { Input } from '@/components/shared/Input';
+import { fetcher } from '@/lib/api-client';
 ```
 
 ### Component Structure
@@ -223,14 +223,14 @@ Grid keyboard navigation with arrow keys. Automatically calculates focus based o
 Tests use Vitest + React Testing Library. Key patterns:
 
 ```tsx
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
-describe("Component", () => {
-    it("renders correctly", () => {
-        render(<Component />);
-        expect(screen.getByRole("button")).toBeInTheDocument();
-    });
+describe('Component', () => {
+  it('renders correctly', () => {
+    render(<Component />);
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
 });
 ```
 

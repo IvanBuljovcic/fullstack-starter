@@ -5,6 +5,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 ## Currently Implemented
 
 ### ✅ CI Pipeline (`.github/workflows/test.yml`)
+
 - Runs on push to master
 - Installs pnpm and dependencies
 - Runs Biome linting checks
@@ -18,6 +19,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Run comprehensive checks on every push and pull request
 
 **What it would do:**
+
 - Install dependencies with pnpm (with caching)
 - Run TypeScript type checking (`tsc --noEmit`)
 - Run Biome linting and formatting checks (`pnpm check`)
@@ -27,10 +29,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Upload test coverage reports as artifacts
 
 **Triggers:**
+
 - Every push to master
 - Every pull request
 
 **Benefits:**
+
 - Catches errors before merging
 - Ensures code quality standards
 - Prevents broken builds from entering main branch
@@ -42,6 +46,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Additional validation specific to pull requests
 
 **What it would do:**
+
 - Ensure all CI checks pass before allowing merge
 - Validate commit messages follow Conventional Commits format
 - Check that no sensitive files (`.env`, `credentials.json`) are committed
@@ -50,10 +55,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Add labels based on files changed (e.g., "documentation", "components", "hooks")
 
 **Triggers:**
+
 - Pull request opened
 - Pull request synchronized (new commits)
 
 **Benefits:**
+
 - Enforces commit conventions
 - Prevents accidental secrets commits
 - Tracks performance impact of changes
@@ -66,6 +73,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Deploy Storybook documentation automatically
 
 **What it would do:**
+
 - Build Storybook static site (`pnpm build-storybook`)
 - Deploy to GitHub Pages on every merge to master
 - Create preview deployments for pull requests
@@ -73,10 +81,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Update deployment URL in PR comments
 
 **Triggers:**
+
 - Push to master (for production deployment)
 - Pull requests (for preview deployments)
 
 **Benefits:**
+
 - Always up-to-date component documentation
 - Reviewers can see component changes visually
 - Easy sharing with designers/stakeholders
@@ -89,6 +99,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Automatically create PRs for dependency updates
 
 **What it would do:**
+
 - Scan package.json for outdated dependencies
 - Create PRs for patch/minor/major updates (configurable grouping)
 - Group related dependencies (e.g., all `@tanstack` packages together)
@@ -97,10 +108,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Include changelog links in PR description
 
 **Triggers:**
+
 - Scheduled (e.g., Monday mornings)
 - Manual trigger
 
 **Benefits:**
+
 - Stay current with security patches
 - Reduce maintenance burden
 - Test updates automatically
@@ -113,6 +126,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Scan for vulnerabilities and security issues
 
 **What it would do:**
+
 - Run `pnpm audit` to check for known vulnerabilities
 - Scan code with CodeQL for security issues
 - Check for accidentally committed secrets
@@ -121,11 +135,13 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Block PRs with high-severity issues
 
 **Triggers:**
+
 - Every push to master
 - Pull requests
 - Scheduled (e.g., nightly)
 
 **Benefits:**
+
 - Proactive security monitoring
 - Prevent vulnerable code from merging
 - Compliance with security best practices
@@ -138,6 +154,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Track and report test coverage
 
 **What it would do:**
+
 - Generate coverage reports from Vitest
 - Upload to Codecov or Coveralls
 - Comment on PRs with coverage changes
@@ -146,10 +163,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Track coverage trends over time
 
 **Triggers:**
+
 - Pull requests
 - Push to master
 
 **Benefits:**
+
 - Visibility into test coverage
 - Encourage writing tests
 - Prevent untested code from merging
@@ -162,6 +181,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Automatically organize pull requests with labels
 
 **What it would do:**
+
 - Add labels based on changed files:
   - `documentation` - for `.md` files
   - `components` - for `src/components/**`
@@ -174,10 +194,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Add `needs-review` label automatically
 
 **Triggers:**
+
 - Pull request opened
 - Pull request synchronized
 
 **Benefits:**
+
 - Better PR organization
 - Easier to filter and find PRs
 - Team awareness of change scope
@@ -190,6 +212,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Keep issue tracker clean and organized
 
 **What it would do:**
+
 - Mark issues/PRs as stale after 60 days of inactivity
 - Close stale items after additional 7 days
 - Add "stale" label with friendly reminder
@@ -197,9 +220,11 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Allow issues to be un-staled with new comments
 
 **Triggers:**
+
 - Scheduled (e.g., daily)
 
 **Benefits:**
+
 - Reduce clutter
 - Focus on active work
 - Gentle nudge to contributors
@@ -212,6 +237,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Automate versioning and releases
 
 **What it would do:**
+
 - Generate changelogs from conventional commits
 - Create GitHub releases automatically
 - Bump version numbers in package.json
@@ -220,10 +246,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Optionally publish to npm registry
 
 **Triggers:**
+
 - Manual workflow dispatch
 - Push of version tags (e.g., `v1.2.3`)
 
 **Benefits:**
+
 - Consistent release process
 - Automatic changelog generation
 - Proper semantic versioning
@@ -236,6 +264,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Monitor web performance and accessibility
 
 **What it would do:**
+
 - Build Next.js app in production mode
 - Run Lighthouse audits on key pages
 - Check performance scores
@@ -245,10 +274,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Fail if performance regresses significantly
 
 **Triggers:**
+
 - Pull requests
 - Push to master
 
 **Benefits:**
+
 - Catch performance regressions early
 - Maintain accessibility standards
 - SEO monitoring
@@ -261,6 +292,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Track and control JavaScript bundle sizes
 
 **What it would do:**
+
 - Analyze JavaScript bundle sizes after build
 - Compare against base branch
 - Warn when bundles grow by >5%
@@ -269,9 +301,11 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Comment on PRs with size comparison
 
 **Triggers:**
+
 - Pull requests
 
 **Benefits:**
+
 - Prevent bundle bloat
 - Informed decisions about dependencies
 - Performance awareness
@@ -284,6 +318,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Catch unintended visual changes in components
 
 **What it would do:**
+
 - Build Storybook
 - Take screenshots of all component stories
 - Compare against baseline images
@@ -292,9 +327,11 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Integrate with Chromatic for visual review UI
 
 **Triggers:**
+
 - Pull requests
 
 **Benefits:**
+
 - Catch UI bugs automatically
 - Prevent unintended visual changes
 - Confidence in refactoring
@@ -307,6 +344,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Keep documentation current and comprehensive
 
 **What it would do:**
+
 - Generate TypeDoc from JSDoc comments
 - Build API documentation from TypeScript types
 - Deploy documentation to GitHub Pages
@@ -314,9 +352,11 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Generate component documentation from Storybook
 
 **Triggers:**
+
 - Push to master
 
 **Benefits:**
+
 - Always up-to-date docs
 - Lower barrier for new contributors
 - Professional documentation
@@ -329,6 +369,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Ensure all documentation links work
 
 **What it would do:**
+
 - Scan README and all `.md` files
 - Check that all URLs are accessible
 - Verify internal links point to existing files
@@ -336,10 +377,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Check for deprecated URLs
 
 **Triggers:**
+
 - Pull requests (for changed docs)
 - Scheduled (weekly for all docs)
 
 **Benefits:**
+
 - Maintain documentation quality
 - Prevent user frustration
 - Keep links current
@@ -352,6 +395,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Test the component generator script
 
 **What it would do:**
+
 - Run `pnpm generate` with test inputs
 - Verify generated components compile
 - Ensure templates are valid
@@ -359,10 +403,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Validate generated files match expected structure
 
 **Triggers:**
+
 - Changes to `scripts/generate-component/**`
 - Weekly scheduled test
 
 **Benefits:**
+
 - Prevent broken generator
 - Confidence in scaffolding tool
 - Catch template errors early
@@ -374,6 +420,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Verify all data adapters work correctly
 
 **What it would do:**
+
 - Run integration tests for each adapter
 - Verify adapter contracts are maintained
 - Test pagination logic across adapters
@@ -381,10 +428,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Test with mock API responses
 
 **Triggers:**
+
 - Changes to `src/adapters/**`
 - Pull requests
 
 **Benefits:**
+
 - Ensure adapter pattern integrity
 - Catch breaking changes
 - Maintain API compatibility
@@ -397,6 +446,7 @@ This document outlines potential GitHub Actions workflows that could be added to
 **Purpose:** Maintain WCAG compliance and accessibility standards
 
 **What it would do:**
+
 - Run axe-core accessibility tests
 - Verify screen reader announcements work
 - Test keyboard navigation functionality
@@ -405,10 +455,12 @@ This document outlines potential GitHub Actions workflows that could be added to
 - Test with assistive technology simulators
 
 **Triggers:**
+
 - Pull requests (for component changes)
 - Push to master
 
 **Benefits:**
+
 - Ensure inclusive design
 - Legal compliance (ADA, Section 508)
 - Better user experience for all
@@ -455,6 +507,7 @@ Based on your current project setup, implement in this order:
 ### Using Act
 
 Install Act CLI:
+
 ```bash
 # macOS
 brew install act
@@ -466,6 +519,7 @@ scoop install act
 ```
 
 Run workflows locally:
+
 ```bash
 # List all workflows
 act -l
@@ -499,23 +553,25 @@ act -n
 ## Configuration Files
 
 ### `.actrc` (for Act configuration)
+
 ```
 --container-architecture linux/amd64
 -P ubuntu-latest=catthehacker/ubuntu:act-latest
 ```
 
 ### `.github/dependabot.yml` (for Dependabot)
+
 ```yaml
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     groups:
       tanstack:
         patterns:
-          - "@tanstack/*"
+          - '@tanstack/*'
 ```
 
 ---

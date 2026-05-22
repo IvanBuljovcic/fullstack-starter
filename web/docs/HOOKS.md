@@ -61,19 +61,16 @@ function ProductList() {
     filters,
   });
 
-  const products = data?.pages.flatMap(page => page.items) ?? [];
+  const products = data?.pages.flatMap((page) => page.items) ?? [];
 
   return (
     <div>
-      {products.map(product => (
+      {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
 
       {hasNextPage && (
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-        >
+        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
           {isFetchingNextPage ? 'Loading...' : 'Load More'}
         </button>
       )}
@@ -138,12 +135,7 @@ import { useInfiniteScroll } from '@/hooks/infinite-scroll/use-infinite-scroll';
 function ProductGrid() {
   const adapter = new MyAPIAdapter(20);
 
-  const {
-    data,
-    targetRef,
-    isFetching,
-    error,
-  } = useInfiniteScroll({
+  const { data, targetRef, isFetching, error } = useInfiniteScroll({
     queryKey: ['products'],
     adapter,
     fetcher,
@@ -151,12 +143,12 @@ function ProductGrid() {
     rootMargin: '200px', // Start loading 200px before bottom
   });
 
-  const products = data?.pages.flatMap(page => page.items) ?? [];
+  const products = data?.pages.flatMap((page) => page.items) ?? [];
 
   return (
     <div>
       <div className={styles.grid}>
-        {products.map(product => (
+        {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
@@ -191,7 +183,7 @@ function ProductGrid() {
 ```typescript
 {
   data: InfiniteData<ParsedPage<T>> | undefined;
-  targetRef: RefObject<HTMLDivElement>;  // Attach to trigger element
+  targetRef: RefObject<HTMLDivElement>; // Attach to trigger element
   isFetching: boolean;
   error: Error | null;
 }
@@ -250,7 +242,7 @@ function ProductCard({ product }) {
 #### Return Value
 
 ```typescript
-(queryKey: QueryKey, url: string) => Promise<void>
+(queryKey: QueryKey, url: string) => Promise<void>;
 ```
 
 #### When to Use
@@ -302,14 +294,14 @@ function SearchBar() {
 #### Parameters
 
 ```typescript
-value: T           // Value to debounce
-delay: number      // Delay in milliseconds (default: 500)
+value: T; // Value to debounce
+delay: number; // Delay in milliseconds (default: 500)
 ```
 
 #### Return Value
 
 ```typescript
-T  // Debounced value
+T; // Debounced value
 ```
 
 #### When to Use
@@ -336,10 +328,7 @@ function SearchWithFeedback() {
 
   return (
     <div>
-      <Input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <Input value={search} onChange={(e) => setSearch(e.target.value)} />
       {isSearching && <span>Typing...</span>}
       {isFetching && <Loader />}
       {data && <SearchResults results={data} />}
@@ -384,14 +373,14 @@ function ScrollTracker() {
 #### Parameters
 
 ```typescript
-value: T           // Value to throttle
-delay: number      // Minimum interval in milliseconds
+value: T; // Value to throttle
+delay: number; // Minimum interval in milliseconds
 ```
 
 #### Return Value
 
 ```typescript
-T  // Throttled value
+T; // Throttled value
 ```
 
 #### When to Use
@@ -582,8 +571,8 @@ function ThemeSettings() {
 #### Parameters
 
 ```typescript
-key: string        // localStorage key
-initialValue: T    // Default value
+key: string; // localStorage key
+initialValue: T; // Default value
 ```
 
 #### Return Value
@@ -672,7 +661,7 @@ function ProductFilters() {
 #### Parameters
 
 ```typescript
-initialFilters: Record<string, string>  // Default filter values
+initialFilters: Record<string, string>; // Default filter values
 ```
 
 #### Return Value
@@ -710,9 +699,7 @@ initialFilters: Record<string, string>  // Default filter values
 import { useFetch } from '@/hooks/use-fetch';
 
 function UserProfile({ userId }) {
-  const { data, loading, error } = useFetch<User>(
-    `/api/users/${userId}`
-  );
+  const { data, loading, error } = useFetch<User>(`/api/users/${userId}`);
 
   if (loading) return <Loader />;
   if (error) return <div>Error: {error.message}</div>;
@@ -745,7 +732,7 @@ import { useTypewriter } from '@/hooks/use-typewriter';
 function Hero() {
   const text = useTypewriter(
     'Welcome to our platform',
-    50  // Speed in ms per character
+    50 // Speed in ms per character
   );
 
   return <h1>{text}</h1>;
@@ -801,14 +788,17 @@ function SearchableProductList() {
 import { useCallback } from 'react';
 
 function ProductList() {
-  const handleEnter = useCallback((index) => {
-    navigate(`/products/${products[index].id}`);
-  }, [products]);
+  const handleEnter = useCallback(
+    (index) => {
+      navigate(`/products/${products[index].id}`);
+    },
+    [products]
+  );
 
   useGridNavigation({
     containerRef,
     columns: 3,
-    onEnter: handleEnter,  // Stable reference
+    onEnter: handleEnter, // Stable reference
   });
 }
 ```
@@ -844,9 +834,12 @@ test('debounces value', async () => {
   rerender({ value: 'updated' });
   expect(result.current).toBe('initial'); // Still old value
 
-  await waitFor(() => {
-    expect(result.current).toBe('updated');
-  }, { timeout: 500 });
+  await waitFor(
+    () => {
+      expect(result.current).toBe('updated');
+    },
+    { timeout: 500 }
+  );
 });
 ```
 
@@ -862,16 +855,16 @@ test('debounces value', async () => {
 
 ## Hook Summary Table
 
-| Hook | Purpose | Use Case | Performance Impact |
-|------|---------|----------|-------------------|
-| `useInfiniteData` | Infinite scroll with adapters | Product lists, feeds | Medium |
-| `useInfiniteScroll` | Auto-loading infinite scroll | Twitter-like feeds | Medium |
-| `usePrefetch` | Anticipatory loading | Hover states | Low |
-| `useDebounce` | Delay value updates | Search inputs | Low |
-| `useThrottle` | Limit update frequency | Scroll tracking | Low |
-| `useKeyboardNavigation` | Keyboard interactions | Modals, menus | Low |
-| `useGridNavigation` | Grid arrow navigation | Galleries | Low |
-| `useLocalStorage` | Persistent state | Preferences | Low |
-| `useFilterParams` | URL filter sync | Search pages | Low |
-| `useFetch` | Simple data fetching | Basic GET requests | Low |
-| `useTypewriter` | Text animation | Hero text | Low |
+| Hook                    | Purpose                       | Use Case             | Performance Impact |
+| ----------------------- | ----------------------------- | -------------------- | ------------------ |
+| `useInfiniteData`       | Infinite scroll with adapters | Product lists, feeds | Medium             |
+| `useInfiniteScroll`     | Auto-loading infinite scroll  | Twitter-like feeds   | Medium             |
+| `usePrefetch`           | Anticipatory loading          | Hover states         | Low                |
+| `useDebounce`           | Delay value updates           | Search inputs        | Low                |
+| `useThrottle`           | Limit update frequency        | Scroll tracking      | Low                |
+| `useKeyboardNavigation` | Keyboard interactions         | Modals, menus        | Low                |
+| `useGridNavigation`     | Grid arrow navigation         | Galleries            | Low                |
+| `useLocalStorage`       | Persistent state              | Preferences          | Low                |
+| `useFilterParams`       | URL filter sync               | Search pages         | Low                |
+| `useFetch`              | Simple data fetching          | Basic GET requests   | Low                |
+| `useTypewriter`         | Text animation                | Hero text            | Low                |

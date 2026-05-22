@@ -5,6 +5,7 @@
 The web application is built with **Next.js 16** and **React 19**, featuring a production-ready component library, comprehensive testing infrastructure, and modern development tooling. It's designed for building scalable, accessible, and performant web applications.
 
 **Tech Stack:**
+
 - **Next.js 16** - React framework with App Router
 - **React 19** - UI library
 - **TypeScript 5.9** - Type safety
@@ -113,6 +114,7 @@ pnpm dev
 The app will be available at **http://localhost:4200**
 
 **Features enabled:**
+
 - ⚡ Turbopack for faster builds
 - 🔥 Hot module replacement
 - 🔍 React Query DevTools (in development)
@@ -128,7 +130,7 @@ The template includes 8+ production-ready components with full accessibility sup
 Text input with validation states and sizes.
 
 ```tsx
-import { Input } from "@/components/shared/Input";
+import { Input } from '@/components/shared/Input';
 
 function MyForm() {
   return (
@@ -144,6 +146,7 @@ function MyForm() {
 ```
 
 **Props:**
+
 - `label` - Accessible label text
 - `type` - Input type (text, email, password, etc.)
 - `size` - Size variant: `sm | md | lg`
@@ -158,12 +161,12 @@ function MyForm() {
 Dropdown select with custom styling.
 
 ```tsx
-import { Select } from "@/components/shared/Select";
+import { Select } from '@/components/shared/Select';
 
 function MyForm() {
   const options = [
-    { value: "1", label: "Option 1" },
-    { value: "2", label: "Option 2" },
+    { value: '1', label: 'Option 1' },
+    { value: '2', label: 'Option 2' },
   ];
 
   return (
@@ -182,7 +185,7 @@ function MyForm() {
 Accessible checkbox with custom styling.
 
 ```tsx
-import { Checkbox } from "@/components/shared/Checkbox";
+import { Checkbox } from '@/components/shared/Checkbox';
 
 function MyForm() {
   return (
@@ -200,7 +203,7 @@ function MyForm() {
 Radio buttons with group management.
 
 ```tsx
-import { Radio } from "@/components/shared/Radio";
+import { Radio } from '@/components/shared/Radio';
 
 function MyForm() {
   return (
@@ -209,14 +212,14 @@ function MyForm() {
         name="plan"
         value="basic"
         label="Basic Plan"
-        checked={plan === "basic"}
+        checked={plan === 'basic'}
         onChange={(e) => setPlan(e.target.value)}
       />
       <Radio
         name="plan"
         value="pro"
         label="Pro Plan"
-        checked={plan === "pro"}
+        checked={plan === 'pro'}
         onChange={(e) => setPlan(e.target.value)}
       />
     </div>
@@ -229,15 +232,15 @@ function MyForm() {
 Global notification system with queue management.
 
 ```tsx
-import { useToast } from "@/components/shared/Toast";
+import { useToast } from '@/components/shared/Toast';
 
 function MyComponent() {
   const { showToast } = useToast();
 
   const handleClick = () => {
     showToast({
-      message: "Operation successful!",
-      type: "success",
+      message: 'Operation successful!',
+      type: 'success',
       duration: 3000,
     });
   };
@@ -249,9 +252,10 @@ function MyComponent() {
 **Toast types:** `success | error | warning | info`
 
 **Setup required:**
+
 ```tsx
 // app/layout.tsx
-import { ToastProvider } from "@/components/shared/Toast";
+import { ToastProvider } from '@/components/shared/Toast';
 
 export default function RootLayout({ children }) {
   return (
@@ -269,7 +273,7 @@ export default function RootLayout({ children }) {
 Loading spinner with customizable size.
 
 ```tsx
-import { Loader } from "@/components/shared/Loader";
+import { Loader } from '@/components/shared/Loader';
 
 function LoadingState() {
   return (
@@ -305,6 +309,7 @@ import { SmartErrorBoundary } from "@/components/SmartErrorBoundary";
 ```
 
 **Levels:**
+
 - `component` - Local error with retry button
 - `page` - Page error with back/home navigation
 - `app` - Critical error with full app reload
@@ -318,30 +323,25 @@ import { SmartErrorBoundary } from "@/components/SmartErrorBoundary";
 API-agnostic infinite scroll with React Query.
 
 ```tsx
-import { useInfiniteData } from "@/hooks/use-infinite-data";
-import { DummyJSONProductAdapter } from "@/adapters/dummyjson-product-adapter";
-import { fetcher } from "@/lib/api-client";
+import { useInfiniteData } from '@/hooks/use-infinite-data';
+import { DummyJSONProductAdapter } from '@/adapters/dummyjson-product-adapter';
+import { fetcher } from '@/lib/api-client';
 
 function ProductList() {
   const adapter = new DummyJSONProductAdapter(20);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-  } = useInfiniteData({
-    queryKey: ["products", filters],
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteData({
+    queryKey: ['products', filters],
     adapter,
     fetcher,
     filters,
   });
 
-  const products = data?.pages.flatMap(page => page.items) ?? [];
+  const products = data?.pages.flatMap((page) => page.items) ?? [];
 
   return (
     <div>
-      {products.map(product => (
+      {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
       {hasNextPage && (
@@ -357,15 +357,15 @@ function ProductList() {
 Automatic infinite scroll with IntersectionObserver.
 
 ```tsx
-import { useInfiniteScroll } from "@/hooks/infinite-scroll/use-infinite-scroll";
+import { useInfiniteScroll } from '@/hooks/infinite-scroll/use-infinite-scroll';
 
 function ProductList() {
   const { data, targetRef, isFetching } = useInfiniteScroll({
-    queryKey: ["products"],
+    queryKey: ['products'],
     adapter,
     fetcher,
     filters,
-    rootMargin: "200px", // Prefetch when 200px from bottom
+    rootMargin: '200px', // Prefetch when 200px from bottom
   });
 
   return (
@@ -383,16 +383,16 @@ function ProductList() {
 Debounce rapidly changing values (e.g., search inputs).
 
 ```tsx
-import { useDebounce } from "@/hooks/use-debounce";
-import { useState } from "react";
+import { useDebounce } from '@/hooks/use-debounce';
+import { useState } from 'react';
 
 function SearchInput() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 300);
 
   // Use debouncedSearch for API calls
   const { data } = useQuery({
-    queryKey: ["search", debouncedSearch],
+    queryKey: ['search', debouncedSearch],
     queryFn: () => searchAPI(debouncedSearch),
     enabled: debouncedSearch.length > 0,
   });
@@ -412,7 +412,7 @@ function SearchInput() {
 Keyboard interaction with focus management.
 
 ```tsx
-import { useKeyboardNavigation } from "@/hooks/keyboard-navigation/use-keyboard-navigation";
+import { useKeyboardNavigation } from '@/hooks/keyboard-navigation/use-keyboard-navigation';
 
 function Modal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -433,7 +433,7 @@ function Modal() {
 Grid keyboard navigation with arrow keys.
 
 ```tsx
-import { useGridNavigation } from "@/hooks/keyboard-navigation/use-grid-navigation";
+import { useGridNavigation } from '@/hooks/keyboard-navigation/use-grid-navigation';
 
 function ProductGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -441,12 +441,12 @@ function ProductGrid() {
   useGridNavigation({
     containerRef: gridRef,
     columns: 3,
-    onEnter: (index) => console.log("Selected:", index),
+    onEnter: (index) => console.log('Selected:', index),
   });
 
   return (
     <div ref={gridRef} className={styles.grid}>
-      {products.map(product => (
+      {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
@@ -459,18 +459,18 @@ function ProductGrid() {
 Persistent state in localStorage.
 
 ```tsx
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 function Settings() {
-  const [theme, setTheme] = useLocalStorage("theme", "light");
+  const [theme, setTheme] = useLocalStorage('theme', 'light');
 
   return (
     <Select
       value={theme}
       onChange={(e) => setTheme(e.target.value)}
       options={[
-        { value: "light", label: "Light" },
-        { value: "dark", label: "Dark" },
+        { value: 'light', label: 'Light' },
+        { value: 'dark', label: 'Dark' },
       ]}
     />
   );
@@ -482,7 +482,7 @@ function Settings() {
 Throttle rapidly firing events.
 
 ```tsx
-import { useThrottle } from "@/hooks/use-throttle";
+import { useThrottle } from '@/hooks/use-throttle';
 
 function ScrollTracker() {
   const [scrollY, setScrollY] = useState(0);
@@ -490,8 +490,8 @@ function ScrollTracker() {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Use throttledScrollY to reduce re-renders
@@ -514,7 +514,10 @@ interface DataAdapter<TItem, TFilters, TResponse, TPageParam> {
     total: number;
     hasNextPage: boolean;
   };
-  getNextPageParam(lastPage: ParsedPage<TItem>, allPages: ParsedPage<TItem>[]): TPageParam | undefined;
+  getNextPageParam(
+    lastPage: ParsedPage<TItem>,
+    allPages: ParsedPage<TItem>[]
+  ): TPageParam | undefined;
   initialPageParam: TPageParam;
 }
 ```
@@ -523,7 +526,9 @@ interface DataAdapter<TItem, TFilters, TResponse, TPageParam> {
 
 ```typescript
 // adapters/my-api-product-adapter.ts
-export class MyAPIProductAdapter implements DataAdapter<Product, ProductFilters, MyAPIResponse, number> {
+export class MyAPIProductAdapter
+  implements DataAdapter<Product, ProductFilters, MyAPIResponse, number>
+{
   constructor(private limit: number = 20) {}
 
   buildURL(filters: ProductFilters, pageParam: number): string {
@@ -537,7 +542,7 @@ export class MyAPIProductAdapter implements DataAdapter<Product, ProductFilters,
 
   parseResponse(response: MyAPIResponse) {
     return {
-      items: response.data.map(item => ({
+      items: response.data.map((item) => ({
         id: item.id,
         title: item.name,
         price: item.price,
@@ -563,7 +568,7 @@ const adapter = new MyAPIProductAdapter(20);
 // const adapter = new DummyJSONProductAdapter(20);
 
 const { data } = useInfiniteData({
-  queryKey: ["products"],
+  queryKey: ['products'],
   adapter,
   fetcher,
   filters: {},
@@ -571,6 +576,7 @@ const { data } = useInfiniteData({
 ```
 
 **Benefits:**
+
 - Swap APIs without refactoring components
 - Test with mock adapters
 - Normalize different API response formats
@@ -593,23 +599,23 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
 ### Usage
 
 ```typescript
-import { fetcher, postFetcher } from "@/lib/api-client";
+import { fetcher, postFetcher } from '@/lib/api-client';
 
 // GET request
-const data = await fetcher<User[]>("/users");
+const data = await fetcher<User[]>('/users');
 
 // POST request
-const newUser = await postFetcher<User, CreateUserDTO>("/users", {
-  name: "John Doe",
-  email: "john@example.com",
+const newUser = await postFetcher<User, CreateUserDTO>('/users', {
+  name: 'John Doe',
+  email: 'john@example.com',
 });
 
 // PUT request
-import { putFetcher } from "@/lib/api-client";
+import { putFetcher } from '@/lib/api-client';
 const updated = await putFetcher<User, UpdateUserDTO>(`/users/${id}`, data);
 
 // DELETE request
-import { deleteFetcher } from "@/lib/api-client";
+import { deleteFetcher } from '@/lib/api-client';
 await deleteFetcher(`/users/${id}`);
 ```
 
@@ -618,15 +624,15 @@ await deleteFetcher(`/users/${id}`);
 The client throws `APIError` with structured information:
 
 ```typescript
-import { APIError } from "@/lib/api-client";
+import { APIError } from '@/lib/api-client';
 
 try {
-  const data = await fetcher("/users");
+  const data = await fetcher('/users');
 } catch (error) {
   if (error instanceof APIError) {
-    console.error(error.status);      // 404
-    console.error(error.statusText);  // "Not Found"
-    console.error(error.data);        // Server error message
+    console.error(error.status); // 404
+    console.error(error.statusText); // "Not Found"
+    console.error(error.data); // Server error message
   }
 }
 ```
@@ -649,7 +655,7 @@ Components use CSS modules for scoped styling:
 
 ```tsx
 // component.tsx
-import styles from "./component.module.css";
+import styles from './component.module.css';
 
 export function Component() {
   return <div className={styles.container}>Content</div>;
@@ -669,10 +675,10 @@ export function Component() {
 TypeScript plugin provides autocomplete for CSS classes:
 
 ```tsx
-import styles from "./component.module.css";
+import styles from './component.module.css';
 
 // Autocomplete available for styles.container, styles.button, etc.
-<div className={styles.container} />
+<div className={styles.container} />;
 ```
 
 ### CSS Custom Properties
@@ -720,18 +726,18 @@ Global design tokens in `src/styles/globals.css`:
 Reusable utilities in `src/styles/utilities.module.css`:
 
 ```tsx
-import utils from "@/styles/utilities.module.css";
+import utils from '@/styles/utilities.module.css';
 
 <div className={utils.flexCenter}>
   <span className={utils.textBold}>Bold Text</span>
-</div>
+</div>;
 ```
 
 ### Conditional Classes with clsx
 
 ```tsx
-import clsx from "clsx";
-import styles from "./button.module.css";
+import clsx from 'clsx';
+import styles from './button.module.css';
 
 function Button({ variant, disabled }) {
   return (
@@ -739,7 +745,7 @@ function Button({ variant, disabled }) {
       className={clsx(
         styles.button,
         styles[`button--${variant}`],
-        disabled && styles["button--disabled"]
+        disabled && styles['button--disabled']
       )}
     >
       Click me
@@ -757,12 +763,12 @@ function Button({ variant, disabled }) {
 For API data, use React Query:
 
 ```tsx
-import { useQuery } from "@tanstack/react-query";
-import { fetcher } from "@/lib/api-client";
+import { useQuery } from '@tanstack/react-query';
+import { fetcher } from '@/lib/api-client';
 
 function UserProfile({ userId }) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["user", userId],
+    queryKey: ['user', userId],
     queryFn: () => fetcher<User>(`/users/${userId}`),
     staleTime: 60000, // 1 minute
   });
@@ -777,24 +783,26 @@ function UserProfile({ userId }) {
 **Mutations:**
 
 ```tsx
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postFetcher } from "@/lib/api-client";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postFetcher } from '@/lib/api-client';
 
 function CreateUserForm() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (data: CreateUserDTO) => postFetcher("/users", data),
+    mutationFn: (data: CreateUserDTO) => postFetcher('/users', data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ['users'] });
     },
   });
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      mutation.mutate(formData);
-    }}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        mutation.mutate(formData);
+      }}
+    >
       {/* Form fields */}
     </form>
   );
@@ -806,7 +814,7 @@ function CreateUserForm() {
 For local UI state:
 
 ```tsx
-import { useState, useReducer } from "react";
+import { useState, useReducer } from 'react';
 
 // Simple state
 const [count, setCount] = useState(0);
@@ -818,9 +826,9 @@ const [state, dispatch] = useReducer(reducer, initialState);
 ### Form State (React Hook Form)
 
 ```tsx
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 const schema = z.object({
   email: z.string().email(),
@@ -828,7 +836,11 @@ const schema = z.object({
 });
 
 function LoginForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(schema),
   });
 
@@ -839,12 +851,12 @@ function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
-        {...register("email")}
+        {...register('email')}
         label="Email"
         error={errors.email?.message}
       />
       <Input
-        {...register("password")}
+        {...register('password')}
         label="Password"
         type="password"
         error={errors.password?.message}
@@ -879,19 +891,19 @@ pnpm nx test web --coverage
 
 ```tsx
 // component.test.tsx
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import { Input } from "./input";
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { Input } from './input';
 
-describe("Input", () => {
-  it("renders with label", () => {
+describe('Input', () => {
+  it('renders with label', () => {
     render(<Input label="Email" />);
-    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
   });
 
-  it("displays error message", () => {
+  it('displays error message', () => {
     render(<Input label="Email" error="Invalid email" />);
-    expect(screen.getByText("Invalid email")).toBeInTheDocument();
+    expect(screen.getByText('Invalid email')).toBeInTheDocument();
   });
 });
 ```
@@ -900,23 +912,23 @@ describe("Input", () => {
 
 ```tsx
 // use-debounce.test.ts
-import { renderHook, waitFor } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import { useDebounce } from "./use-debounce";
+import { renderHook, waitFor } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { useDebounce } from './use-debounce';
 
-describe("useDebounce", () => {
-  it("debounces value changes", async () => {
+describe('useDebounce', () => {
+  it('debounces value changes', async () => {
     const { result, rerender } = renderHook(
       ({ value }) => useDebounce(value, 300),
-      { initialProps: { value: "initial" } }
+      { initialProps: { value: 'initial' } }
     );
 
-    expect(result.current).toBe("initial");
+    expect(result.current).toBe('initial');
 
-    rerender({ value: "updated" });
-    expect(result.current).toBe("initial");
+    rerender({ value: 'updated' });
+    expect(result.current).toBe('initial');
 
-    await waitFor(() => expect(result.current).toBe("updated"), {
+    await waitFor(() => expect(result.current).toBe('updated'), {
       timeout: 500,
     });
   });
@@ -926,7 +938,7 @@ describe("useDebounce", () => {
 ### Testing with React Query
 
 ```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function createTestQueryClient() {
   return new QueryClient({
@@ -940,9 +952,7 @@ function createTestQueryClient() {
 function renderWithQuery(ui: React.ReactElement) {
   const queryClient = createTestQueryClient();
   return render(
-    <QueryClientProvider client={queryClient}>
-      {ui}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
   );
 }
 ```
@@ -962,6 +972,7 @@ pnpm generate MyComponent --client --styles --props "title: string; count: numbe
 ```
 
 **Generated files:**
+
 ```
 src/components/MyComponent/
 ├── index.ts                  # Barrel export
@@ -970,6 +981,7 @@ src/components/MyComponent/
 ```
 
 **Options:**
+
 - `--client` - Add "use client" directive
 - `--styles` - Generate CSS module
 - `--props` - Define TypeScript props
@@ -991,13 +1003,13 @@ pnpm nx run web:storybook
 
 ```tsx
 // input.stories.tsx
-import type { Meta, StoryObj } from "@storybook/react";
-import { Input } from "./input";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Input } from './input';
 
 const meta: Meta<typeof Input> = {
-  title: "Components/Input",
+  title: 'Components/Input',
   component: Input,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 
 export default meta;
@@ -1005,15 +1017,15 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
   args: {
-    label: "Email",
-    placeholder: "Enter your email",
+    label: 'Email',
+    placeholder: 'Enter your email',
   },
 };
 
 export const WithError: Story = {
   args: {
-    label: "Email",
-    error: "Invalid email address",
+    label: 'Email',
+    error: 'Invalid email address',
   },
 };
 ```
@@ -1032,18 +1044,21 @@ pnpm nx run web:build-storybook
 ### Built-in A11y Features
 
 1. **Screen Reader Announcements**
-   ```tsx
-   import { LoadingAnnouncer } from "@/components/Accessibility/Announcer/Loading";
 
-   <LoadingAnnouncer isLoading={isLoading} message="Loading products..." />
+   ```tsx
+   import { LoadingAnnouncer } from '@/components/Accessibility/Announcer/Loading';
+
+   <LoadingAnnouncer isLoading={isLoading} message="Loading products..." />;
    ```
 
 2. **Keyboard Navigation**
+
    - All components support keyboard interaction
    - Focus management with `useKeyboardNavigation`
    - Grid navigation with arrow keys
 
 3. **ARIA Labels**
+
    - Enforced by Biome linter (`useAltText: error`)
    - Proper roles and labels on all components
 
@@ -1074,6 +1089,7 @@ NEXT_PUBLIC_SITE_NAME=My App
 ```
 
 **Usage:**
+
 ```tsx
 const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 ```
@@ -1088,6 +1104,7 @@ SECRET_KEY=xyz123
 ```
 
 **Usage in Server Components:**
+
 ```tsx
 // app/page.tsx (Server Component)
 const secret = process.env.SECRET_KEY; // Works
@@ -1116,9 +1133,10 @@ pnpm start
 ### Optimize for Production
 
 1. **Enable Output Standalone** (already configured):
+
    ```typescript
    // next.config.ts
-   output: "standalone"
+   output: 'standalone';
    ```
 
 2. **Image Optimization**: Use `next/image` component

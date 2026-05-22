@@ -125,6 +125,7 @@ The template includes initialization scripts:
 - **init-template.ps1**: For Windows PowerShell
 
 These scripts will:
+
 - Prompt for project details
 - Update configuration files automatically
 - Create environment variables
