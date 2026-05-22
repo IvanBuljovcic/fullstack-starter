@@ -31,6 +31,7 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 
 - 🚀 **Intelligent Caching** - Fast incremental builds
 - 📦 **Shared Libraries** - Type-safe code sharing
+- 🏗️ **Microservices Ready** - Scalable apps/libs structure for services
 - 🔧 **Code Quality** - Biome for linting and formatting
 - 🪝 **Git Hooks** - Husky + Commitlint for conventional commits
 - 📏 **Consistent** - Single source of truth for dependencies
@@ -45,6 +46,7 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 - CRM/ERP systems
 - Booking and scheduling applications
 - API-first applications
+- Microservices architectures
 - Any full-stack TypeScript project requiring scalability
 
 ---
@@ -75,36 +77,39 @@ A production-ready monorepo template for building modern full-stack TypeScript a
 
 ```
 fullstack-starter/
-├── api/                        # NestJS Backend
-│   ├── src/
-│   │   ├── app/                # Root module
-│   │   ├── prisma/             # Database service
-│   │   └── generated/          # Generated Prisma Client
-│   ├── prisma/
-│   │   └── schema.prisma       # Database schema
-│   └── .env.example            # Environment template
-│
-├── web/                        # Next.js Frontend
-│   ├── src/
-│   │   ├── app/                # Next.js App Router
-│   │   ├── components/         # UI components
-│   │   ├── hooks/              # Custom React hooks
-│   │   ├── adapters/           # API adapters
-│   │   ├── lib/                # Utilities
-│   │   ├── providers/          # React contexts
-│   │   └── styles/             # Global styles
-│   ├── .storybook/             # Storybook config
-│   └── scripts/                # CLI tools
+├── apps/                       # Deployable Applications
+│   ├── api/                    # NestJS Backend
+│   │   ├── src/
+│   │   │   ├── app/            # Root module
+│   │   │   ├── prisma/         # Database service
+│   │   │   └── generated/      # Generated Prisma Client
+│   │   ├── prisma/
+│   │   │   └── schema.prisma   # Database schema
+│   │   └── .env.example        # Environment template
+│   │
+│   ├── web/                    # Next.js Frontend
+│   │   ├── src/
+│   │   │   ├── app/            # Next.js App Router
+│   │   │   ├── components/     # UI components
+│   │   │   ├── hooks/          # Custom React hooks
+│   │   │   ├── adapters/       # API adapters
+│   │   │   ├── lib/            # Utilities
+│   │   │   ├── providers/      # React contexts
+│   │   │   └── styles/         # Global styles
+│   │   ├── .storybook/         # Storybook config
+│   │   └── scripts/            # CLI tools
+│   │
+│   ├── api-e2e/                # API E2E tests
+│   └── web-e2e/                # Web E2E tests
 │
 ├── libs/                       # Shared Libraries
 │   └── shared/
 │       └── types/              # Shared TypeScript types
 │
-├── api-e2e/                    # API E2E tests
-├── web-e2e/                    # Web E2E tests
 ├── docs/                       # Documentation
 │   ├── API.md                  # Backend documentation
 │   ├── WEB.md                  # Frontend documentation
+│   ├── MICROSERVICES.md        # Microservices guide
 │   ├── SETUP.md                # Setup guide
 │   ├── CUSTOMIZATION.md        # Customization guide
 │   └── TEMPLATE_GUIDE.md       # Architecture guide
@@ -230,6 +235,11 @@ Comprehensive documentation is organized by topic:
   - Adapter pattern
   - Styling system
   - Testing
+- **[Microservices Guide](./docs/MICROSERVICES.md)** - Adding microservices
+  - NestJS services
+  - .NET services
+  - Shared libraries
+  - Best practices
 - **[Customization Guide](./CUSTOMIZATION.md)** - How to customize the template
 - **[Architecture Guide](./TEMPLATE_GUIDE.md)** - Overall architecture and design patterns
 
