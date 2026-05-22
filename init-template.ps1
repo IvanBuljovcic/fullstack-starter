@@ -131,6 +131,30 @@ if (Test-Path "tsconfig.base.json") {
     Write-Host "  [OK] Updated tsconfig.base.json" -ForegroundColor Green
 }
 
+# Update apps/api/project.json
+if (Test-Path "apps\api\project.json") {
+    $content = Get-Content "apps\api\project.json" -Raw
+    $content = $content -replace '@starter', "@$ORG_NAME"
+    $content | Set-Content "apps\api\project.json" -NoNewline
+    Write-Host "  [OK] Updated apps/api/project.json" -ForegroundColor Green
+}
+
+# Update apps/api-e2e/package.json
+if (Test-Path "apps\api-e2e\package.json") {
+    $content = Get-Content "apps\api-e2e\package.json" -Raw
+    $content = $content -replace '@starter', "@$ORG_NAME"
+    $content | Set-Content "apps\api-e2e\package.json" -NoNewline
+    Write-Host "  [OK] Updated apps/api-e2e/package.json" -ForegroundColor Green
+}
+
+# Update apps/web-e2e/package.json
+if (Test-Path "apps\web-e2e\package.json") {
+    $content = Get-Content "apps\web-e2e\package.json" -Raw
+    $content = $content -replace '@starter', "@$ORG_NAME"
+    $content | Set-Content "apps\web-e2e\package.json" -NoNewline
+    Write-Host "  [OK] Updated apps/web-e2e/package.json" -ForegroundColor Green
+}
+
 # Update docker-compose.yml
 if (Test-Path "docker-compose.yml") {
     $content = Get-Content "docker-compose.yml" -Raw

@@ -107,6 +107,24 @@ if [ -f "tsconfig.base.json" ]; then
     echo "  [OK] Updated tsconfig.base.json"
 fi
 
+# Update apps/api/project.json
+if [ -f "apps/api/project.json" ]; then
+    sed -i "s/@starter/@$ORG_NAME/g" apps/api/project.json
+    echo "  [OK] Updated apps/api/project.json"
+fi
+
+# Update apps/api-e2e/package.json
+if [ -f "apps/api-e2e/package.json" ]; then
+    sed -i "s/@starter/@$ORG_NAME/g" apps/api-e2e/package.json
+    echo "  [OK] Updated apps/api-e2e/package.json"
+fi
+
+# Update apps/web-e2e/package.json
+if [ -f "apps/web-e2e/package.json" ]; then
+    sed -i "s/@starter/@$ORG_NAME/g" apps/web-e2e/package.json
+    echo "  [OK] Updated apps/web-e2e/package.json"
+fi
+
 # Update docker-compose.yml
 if [ -f "docker-compose.yml" ]; then
     sed -i "s/container_name: starter-postgres/container_name: ${PROJECT_NAME}-postgres/" docker-compose.yml
