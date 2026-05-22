@@ -1,22 +1,22 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compileOnSave": false,
-  "files": [],
-  "references": [
-    {
-      "path": "./libs/shared/types"
-    },
-    {
-      "path": "./apps/inventory-service"
-    },
-    {
-      "path": "./apps/qr-service"
-    },
-    {
-      "path": "./apps/api-e2e"
-    },
-    {
-      "path": "./apps/api"
-    }
-  ]
+	"extends": "./tsconfig.base.json",
+	"compileOnSave": false,
+	"files": [],
+	"references": [
+		{
+			"path": "./libs/shared/types"
+		},
+		{
+			"path": "./apps/inventory-service"
+		},
+		{
+			"path": "./apps/qr-service"
+		},
+		{
+			"path": "./apps/api-e2e"
+		},
+		{
+			"path": "./apps/api"
+		}
+	]
 }

@@ -5,38 +5,32 @@
  * with @tanstack/react-query hooks.
  */
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  deleteFetcher,
-  fetcher,
-  patchFetcher,
-  postFetcher,
-  putFetcher,
-} from './api-client';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteFetcher, fetcher, patchFetcher, postFetcher, putFetcher } from "./api-client";
 
 // Example: Type definitions for dummyjson.com API
 interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  // Add other fields as needed
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	age: number;
+	// Add other fields as needed
 }
 
 interface UsersResponse {
-  users: User[];
-  total: number;
-  skip: number;
-  limit: number;
+	users: User[];
+	total: number;
+	skip: number;
+	limit: number;
 }
 
 interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  // Add other fields as needed
+	id: number;
+	title: string;
+	description: string;
+	price: number;
+	// Add other fields as needed
 }
 
 // ====================
@@ -48,10 +42,10 @@ interface Product {
  * GET https://dummyjson.com/users
  */
 export function useUsers() {
-  return useQuery({
-    queryKey: ['users'],
-    queryFn: () => fetcher<UsersResponse>('/users'),
-  });
+	return useQuery({
+		queryKey: ["users"],
+		queryFn: () => fetcher<UsersResponse>("/users"),
+	});
 }
 
 /**
@@ -59,11 +53,11 @@ export function useUsers() {
  * GET https://dummyjson.com/users/1
  */
 export function useUser(userId: number) {
-  return useQuery({
-    queryKey: ['users', userId],
-    queryFn: () => fetcher<User>(`/users/${userId}`),
-    enabled: !!userId, // Only run if userId is provided
-  });
+	return useQuery({
+		queryKey: ["users", userId],
+		queryFn: () => fetcher<User>(`/users/${userId}`),
+		enabled: !!userId, // Only run if userId is provided
+	});
 }
 
 /**
@@ -71,11 +65,10 @@ export function useUser(userId: number) {
  * GET https://dummyjson.com/products?limit=10&skip=0
  */
 export function useProducts(limit = 10, skip = 0) {
-  return useQuery({
-    queryKey: ['products', { limit, skip }],
-    queryFn: () =>
-      fetcher<{ products: Product[] }>(`/products?limit=${limit}&skip=${skip}`),
-  });
+	return useQuery({
+		queryKey: ["products", { limit, skip }],
+		queryFn: () => fetcher<{ products: Product[] }>(`/products?limit=${limit}&skip=${skip}`),
+	});
 }
 
 // ====================
@@ -87,16 +80,15 @@ export function useProducts(limit = 10, skip = 0) {
  * POST https://dummyjson.com/users/add
  */
 export function useCreateUser() {
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (newUser: Partial<User>) =>
-      postFetcher<User>('/users/add', newUser),
-    onSuccess: () => {
-      // Invalidate and refetch users list
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    },
-  });
+	return useMutation({
+		mutationFn: (newUser: Partial<User>) => postFetcher<User>("/users/add", newUser),
+		onSuccess: () => {
+			// Invalidate and refetch users list
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
 }
 
 /**
@@ -104,10 +96,10 @@ export function useCreateUser() {
  * POST https://dummyjson.com/auth/login
  */
 export function useLogin() {
-  return useMutation({
-    mutationFn: (credentials: { username: string; password: string }) =>
-      postFetcher<{ token: string; id: number }>('/auth/login', credentials),
-  });
+	return useMutation({
+		mutationFn: (credentials: { username: string; password: string }) =>
+			postFetcher<{ token: string; id: number }>("/auth/login", credentials),
+	});
 }
 
 // ====================
@@ -119,18 +111,17 @@ export function useLogin() {
  * PUT https://dummyjson.com/users/1
  */
 export function useUpdateUser() {
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<User> }) =>
-      putFetcher<User>(`/users/${id}`, data),
-    onSuccess: (data) => {
-      // Update the specific user in cache
-      queryClient.setQueryData(['users', data.id], data);
-      // Invalidate users list
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    },
-  });
+	return useMutation({
+		mutationFn: ({ id, data }: { id: number; data: Partial<User> }) => putFetcher<User>(`/users/${id}`, data),
+		onSuccess: (data) => {
+			// Update the specific user in cache
+			queryClient.setQueryData(["users", data.id], data);
+			// Invalidate users list
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
 }
 
 // ====================
@@ -142,16 +133,15 @@ export function useUpdateUser() {
  * PATCH https://dummyjson.com/users/1
  */
 export function usePatchUser() {
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<User> }) =>
-      patchFetcher<User>(`/users/${id}`, data),
-    onSuccess: (data) => {
-      queryClient.setQueryData(['users', data.id], data);
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    },
-  });
+	return useMutation({
+		mutationFn: ({ id, data }: { id: number; data: Partial<User> }) => patchFetcher<User>(`/users/${id}`, data),
+		onSuccess: (data) => {
+			queryClient.setQueryData(["users", data.id], data);
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
 }
 
 // ====================
@@ -163,14 +153,14 @@ export function usePatchUser() {
  * DELETE https://dummyjson.com/users/1
  */
 export function useDeleteUser() {
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (userId: number) => deleteFetcher<User>(`/users/${userId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    },
-  });
+	return useMutation({
+		mutationFn: (userId: number) => deleteFetcher<User>(`/users/${userId}`),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["users"] });
+		},
+	});
 }
 
 // ====================
