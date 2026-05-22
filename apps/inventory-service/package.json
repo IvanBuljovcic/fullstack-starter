@@ -11,7 +11,7 @@
           "args": [
             "--node-env=production"
           ],
-          "cwd": "inventory-service"
+          "cwd": "apps/inventory-service"
         },
         "configurations": {
           "development": {
@@ -28,8 +28,8 @@
         "cache": true,
         "executor": "@nx/js:prune-lockfile",
         "outputs": [
-          "{workspaceRoot}/inventory-service/dist/package.json",
-          "{workspaceRoot}/inventory-service/dist/pnpm-lock.yaml"
+          "{workspaceRoot}/apps/inventory-service/dist/package.json",
+          "{workspaceRoot}/apps/inventory-service/dist/pnpm-lock.yaml"
         ],
         "options": {
           "buildTarget": "build"
@@ -41,7 +41,7 @@
         ],
         "cache": true,
         "outputs": [
-          "{workspaceRoot}/inventory-service/dist/workspace_modules"
+          "{workspaceRoot}/apps/inventory-service/dist/workspace_modules"
         ],
         "executor": "@nx/js:copy-workspace-modules",
         "options": {

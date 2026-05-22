@@ -1,7 +1,7 @@
 {
   "name": "account-service",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "account-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/account-service",
   "projectType": "application",
   "tags": ["type:service", "scope:account"],
   "targets": {
@@ -9,21 +9,21 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "dotnet build",
-        "cwd": "account-service"
+        "cwd": "apps/account-service"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
         "command": "dotnet run",
-        "cwd": "account-service"
+        "cwd": "apps/account-service"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "dotnet test",
-        "cwd": "account-service"
+        "cwd": "apps/account-service"
       }
     }
   }

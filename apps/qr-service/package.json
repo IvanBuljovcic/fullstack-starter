@@ -11,7 +11,7 @@
           "args": [
             "--node-env=production"
           ],
-          "cwd": "qr-service"
+          "cwd": "apps/qr-service"
         },
         "configurations": {
           "development": {
@@ -28,8 +28,8 @@
         "cache": true,
         "executor": "@nx/js:prune-lockfile",
         "outputs": [
-          "{workspaceRoot}/qr-service/dist/package.json",
-          "{workspaceRoot}/qr-service/dist/pnpm-lock.yaml"
+          "{workspaceRoot}/apps/qr-service/dist/package.json",
+          "{workspaceRoot}/apps/qr-service/dist/pnpm-lock.yaml"
         ],
         "options": {
           "buildTarget": "build"
@@ -41,7 +41,7 @@
         ],
         "cache": true,
         "outputs": [
-          "{workspaceRoot}/qr-service/dist/workspace_modules"
+          "{workspaceRoot}/apps/qr-service/dist/workspace_modules"
         ],
         "executor": "@nx/js:copy-workspace-modules",
         "options": {

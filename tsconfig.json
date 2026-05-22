@@ -4,25 +4,19 @@
   "files": [],
   "references": [
     {
-      "path": "./web-e2e"
-    },
-    {
-      "path": "./api-e2e"
-    },
-    {
-      "path": "./api"
-    },
-    {
       "path": "./libs/shared/types"
     },
     {
-      "path": "./web.backup"
+      "path": "./apps/inventory-service"
     },
     {
-      "path": "./qr-service"
+      "path": "./apps/qr-service"
     },
     {
-      "path": "./inventory-service"
+      "path": "./apps/api-e2e"
+    },
+    {
+      "path": "./apps/api"
     }
   ]
 }

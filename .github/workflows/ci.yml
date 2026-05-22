@@ -51,7 +51,7 @@ jobs:
 
       - name: Setup database
         run: |
-          cd api
+          cd apps/api
           cp .env.example .env
           sed -i 's|postgresql://.*|postgresql://test_user:test_password@localhost:5432/test_db?schema=public|' .env
           pnpm prisma migrate deploy
