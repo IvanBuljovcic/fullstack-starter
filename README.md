@@ -186,9 +186,9 @@ docker compose up -d
 ### 5. Initialize Database
 
 ```bash
-cd api
+cd apps/api
 npx prisma migrate dev --name init
-cd ..
+cd ../..
 ```
 
 ### 6. Start Development Servers
@@ -245,9 +245,9 @@ Comprehensive documentation is organized by topic:
 
 ### Quick References
 
-- **[Web CLAUDE.md](./web/CLAUDE.md)** - Frontend development patterns
-- **[Web README](./web/README.md)** - Next.js template specifics
-- **[GitHub Actions Guide](./web/GITHUB_ACTIONS.md)** - CI/CD recommendations
+- **[Web CLAUDE.md](./apps/web/CLAUDE.md)** - Frontend development patterns
+- **[Web README](./apps/web/README.md)** - Next.js template specifics
+- **[GitHub Actions Guide](./apps/web/GITHUB_ACTIONS.md)** - CI/CD recommendations
 
 ---
 
@@ -321,7 +321,7 @@ pnpm check:changed
 ### Database
 
 ```bash
-cd api
+cd apps/api
 
 # Create migration
 npx prisma migrate dev --name <migration_name>
@@ -336,7 +336,7 @@ npx prisma migrate reset
 ### Component Generation (Web)
 
 ```bash
-cd web
+cd apps/web
 
 # Interactive mode
 pnpm generate
@@ -358,9 +358,9 @@ pnpm nx g @nx/nest:resource users --project=api
 
 This creates:
 
-- `api/src/users/users.module.ts`
-- `api/src/users/users.controller.ts`
-- `api/src/users/users.service.ts`
+- `apps/api/src/users/users.module.ts`
+- `apps/api/src/users/users.controller.ts`
+- `apps/api/src/users/users.service.ts`
 - DTOs and entities
 
 See **[API Documentation](./docs/API.md)** for details.
@@ -368,7 +368,7 @@ See **[API Documentation](./docs/API.md)** for details.
 ### Frontend: Create a Component
 
 ```bash
-cd web
+cd apps/web
 pnpm generate MyComponent --client --styles
 ```
 
@@ -382,7 +382,7 @@ See **[Web Documentation](./docs/WEB.md)** for details.
 
 ### Add a Database Model
 
-1. Edit `api/prisma/schema.prisma`:
+1. Edit `apps/api/prisma/schema.prisma`:
 
    ```prisma
    model User {
@@ -396,7 +396,7 @@ See **[Web Documentation](./docs/WEB.md)** for details.
 2. Create migration:
 
    ```bash
-   cd api
+   cd apps/api
    npx prisma migrate dev --name add_user_model
    ```
 
@@ -448,7 +448,7 @@ See **[Web Documentation](./docs/WEB.md)** for details.
 ### Vercel (Web)
 
 ```bash
-cd web
+cd apps/web
 vercel
 ```
 

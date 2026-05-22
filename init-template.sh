@@ -80,19 +80,19 @@ if [ -f "package.json" ]; then
     echo "  [OK] Updated package.json"
 fi
 
-# Update api/package.json
-if [ -f "api/package.json" ]; then
-    sed -i "s/@starter/@$ORG_NAME/g" api/package.json
-    echo "  [OK] Updated api/package.json"
+# Update apps/api/package.json
+if [ -f "apps/api/package.json" ]; then
+    sed -i "s/@starter/@$ORG_NAME/g" apps/api/package.json
+    echo "  [OK] Updated apps/api/package.json"
 fi
 
-# Update web/package.json
-if [ -f "web/package.json" ]; then
-    sed -i "s/@starter/@$ORG_NAME/g" web/package.json
+# Update apps/web/package.json
+if [ -f "apps/web/package.json" ]; then
+    sed -i "s/@starter/@$ORG_NAME/g" apps/web/package.json
     # Update dev script to use the chosen port
-    sed -i "s/\"dev\": \"next dev --turbopack\"/\"dev\": \"next dev --turbopack --port $WEB_PORT\"/" web/package.json
-    sed -i "s/\"dev\": \"next dev\"/\"dev\": \"next dev --port $WEB_PORT\"/" web/package.json
-    echo "  [OK] Updated web/package.json"
+    sed -i "s/\"dev\": \"next dev --turbopack\"/\"dev\": \"next dev --turbopack --port $WEB_PORT\"/" apps/web/package.json
+    sed -i "s/\"dev\": \"next dev\"/\"dev\": \"next dev --port $WEB_PORT\"/" apps/web/package.json
+    echo "  [OK] Updated apps/web/package.json"
 fi
 
 # Update libs/shared/types/package.json
@@ -118,30 +118,30 @@ if [ -f "docker-compose.yml" ]; then
     echo "  [OK] Updated docker-compose.yml"
 fi
 
-# Update api/.env.example
-if [ -f "api/.env.example" ]; then
+# Update apps/api/.env.example
+if [ -f "apps/api/.env.example" ]; then
     DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}?schema=public"
-    sed -i "s|DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|" api/.env.example
-    sed -i "s/PORT=[0-9]*/PORT=$API_PORT/" api/.env.example
-    sed -i "s|CORS_ORIGIN=.*|CORS_ORIGIN=http://localhost:$WEB_PORT|" api/.env.example
-    echo "  [OK] Updated api/.env.example"
+    sed -i "s|DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|" apps/api/.env.example
+    sed -i "s/PORT=[0-9]*/PORT=$API_PORT/" apps/api/.env.example
+    sed -i "s|CORS_ORIGIN=.*|CORS_ORIGIN=http://localhost:$WEB_PORT|" apps/api/.env.example
+    echo "  [OK] Updated apps/api/.env.example"
 fi
 
-# Update api/.env.test
-if [ -f "api/.env.test" ]; then
+# Update apps/api/.env.test
+if [ -f "apps/api/.env.test" ]; then
     TEST_DB_NAME="${DB_NAME//_dev/_test}"
     TEST_DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${TEST_DB_NAME}?schema=public"
-    sed -i "s|DATABASE_URL=.*|DATABASE_URL=$TEST_DATABASE_URL|" api/.env.test
-    sed -i "s|CORS_ORIGIN=.*|CORS_ORIGIN=http://localhost:$WEB_PORT|" api/.env.test
-    echo "  [OK] Updated api/.env.test"
+    sed -i "s|DATABASE_URL=.*|DATABASE_URL=$TEST_DATABASE_URL|" apps/api/.env.test
+    sed -i "s|CORS_ORIGIN=.*|CORS_ORIGIN=http://localhost:$WEB_PORT|" apps/api/.env.test
+    echo "  [OK] Updated apps/api/.env.test"
 fi
 
-# Create api/.env from api/.env.example
-if [ -f "api/.env.example" ] && [ ! -f "api/.env" ]; then
-    cp api/.env.example api/.env
-    echo "  [OK] Created api/.env"
-elif [ -f "api/.env" ]; then
-    echo "  [SKIP] api/.env already exists"
+# Create apps/api/.env from apps/api/.env.example
+if [ -f "apps/api/.env.example" ] && [ ! -f "apps/api/.env" ]; then
+    cp apps/api/.env.example apps/api/.env
+    echo "  [OK] Created apps/api/.env"
+elif [ -f "apps/api/.env" ]; then
+    echo "  [SKIP] apps/api/.env already exists"
 fi
 
 # Update README.md
@@ -185,7 +185,7 @@ echo ""
 echo "  2. docker compose up -d"
 echo "     Start PostgreSQL container"
 echo ""
-echo "  3. cd api; npx prisma migrate dev --name init"
+echo "  3. cd apps/api; npx prisma migrate dev --name init"
 echo "     Initialize database schema"
 echo ""
 echo "  4. pnpm nx serve api"

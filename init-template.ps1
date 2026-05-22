@@ -96,23 +96,23 @@ if (Test-Path "package.json") {
     Write-Host "  [OK] Updated package.json" -ForegroundColor Green
 }
 
-# Update api/package.json
-if (Test-Path "api\package.json") {
-    $content = Get-Content "api\package.json" -Raw
+# Update apps/api/package.json
+if (Test-Path "apps\api\package.json") {
+    $content = Get-Content "apps\api\package.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
-    $content | Set-Content "api\package.json" -NoNewline
-    Write-Host "  [OK] Updated api/package.json" -ForegroundColor Green
+    $content | Set-Content "apps\api\package.json" -NoNewline
+    Write-Host "  [OK] Updated apps/api/package.json" -ForegroundColor Green
 }
 
-# Update web/package.json
-if (Test-Path "web\package.json") {
-    $content = Get-Content "web\package.json" -Raw
+# Update apps/web/package.json
+if (Test-Path "apps\web\package.json") {
+    $content = Get-Content "apps\web\package.json" -Raw
     $content = $content -replace '@starter', "@$ORG_NAME"
     # Update dev script to use the chosen port
     $content = $content -replace '"dev": "next dev --turbopack"', "`"dev`": `"next dev --turbopack --port $WEB_PORT`""
     $content = $content -replace '"dev": "next dev"', "`"dev`": `"next dev --port $WEB_PORT`""
-    $content | Set-Content "web\package.json" -NoNewline
-    Write-Host "  [OK] Updated web/package.json" -ForegroundColor Green
+    $content | Set-Content "apps\web\package.json" -NoNewline
+    Write-Host "  [OK] Updated apps/web/package.json" -ForegroundColor Green
 }
 
 # Update libs/shared/types/package.json
@@ -144,34 +144,34 @@ if (Test-Path "docker-compose.yml") {
     Write-Host "  [OK] Updated docker-compose.yml" -ForegroundColor Green
 }
 
-# Update api/.env.example
-if (Test-Path "api\.env.example") {
+# Update apps/api/.env.example
+if (Test-Path "apps\api\.env.example") {
     $DATABASE_URL = "postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}?schema=public"
-    $content = Get-Content "api\.env.example" -Raw
+    $content = Get-Content "apps\api\.env.example" -Raw
     $content = $content -replace 'DATABASE_URL=.*', "DATABASE_URL=$DATABASE_URL"
     $content = $content -replace 'PORT=\d+', "PORT=$API_PORT"
     $content = $content -replace 'CORS_ORIGIN=.*', "CORS_ORIGIN=http://localhost:$WEB_PORT"
-    $content | Set-Content "api\.env.example" -NoNewline
-    Write-Host "  [OK] Updated api/.env.example" -ForegroundColor Green
+    $content | Set-Content "apps\api\.env.example" -NoNewline
+    Write-Host "  [OK] Updated apps/api/.env.example" -ForegroundColor Green
 }
 
-# Update api/.env.test
-if (Test-Path "api\.env.test") {
+# Update apps/api/.env.test
+if (Test-Path "apps\api\.env.test") {
     $TEST_DB_NAME = $DB_NAME -replace '_dev$', '_test'
     $TEST_DATABASE_URL = "postgresql://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${TEST_DB_NAME}?schema=public"
-    $content = Get-Content "api\.env.test" -Raw
+    $content = Get-Content "apps\api\.env.test" -Raw
     $content = $content -replace 'DATABASE_URL=.*', "DATABASE_URL=$TEST_DATABASE_URL"
     $content = $content -replace 'CORS_ORIGIN=.*', "CORS_ORIGIN=http://localhost:$WEB_PORT"
-    $content | Set-Content "api\.env.test" -NoNewline
-    Write-Host "  [OK] Updated api/.env.test" -ForegroundColor Green
+    $content | Set-Content "apps\api\.env.test" -NoNewline
+    Write-Host "  [OK] Updated apps/api/.env.test" -ForegroundColor Green
 }
 
-# Create api/.env from api/.env.example
-if ((Test-Path "api\.env.example") -and (-not (Test-Path "api\.env"))) {
-    Copy-Item "api\.env.example" "api\.env"
-    Write-Host "  [OK] Created api/.env" -ForegroundColor Green
-} elseif (Test-Path "api\.env") {
-    Write-Host "  [SKIP] api/.env already exists" -ForegroundColor Yellow
+# Create apps/api/.env from apps/api/.env.example
+if ((Test-Path "apps\api\.env.example") -and (-not (Test-Path "apps\api\.env"))) {
+    Copy-Item "apps\api\.env.example" "apps\api\.env"
+    Write-Host "  [OK] Created apps/api/.env" -ForegroundColor Green
+} elseif (Test-Path "apps\api\.env") {
+    Write-Host "  [SKIP] apps/api/.env already exists" -ForegroundColor Yellow
 }
 
 # Update README.md
@@ -223,7 +223,7 @@ Write-Host ""
 Write-Host "  2. docker compose up -d" -ForegroundColor White
 Write-Host "     Start PostgreSQL container" -ForegroundColor Gray
 Write-Host ""
-Write-Host "  3. cd api; npx prisma migrate dev --name init" -ForegroundColor White
+Write-Host "  3. cd apps/api; npx prisma migrate dev --name init" -ForegroundColor White
 Write-Host "     Initialize database schema" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  4. pnpm nx serve api" -ForegroundColor White
