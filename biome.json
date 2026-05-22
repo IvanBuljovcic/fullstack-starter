@@ -49,7 +49,7 @@
   },
   "overrides": [
     {
-      "includes": ["api/**/*.ts"],
+      "includes": ["apps/api/**/*.ts"],
       "javascript": {
         "parser": {
           "unsafeParameterDecoratorsEnabled": true
